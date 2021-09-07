@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_wifis">Access Points</string>
+
+    <string name="title_favorite_wifis">Favorite Wifis</string>
+    <string name="subtitle_favorite_wifis" translatable="false">Total: %d</string>
+
+    <string name="title_empty_wifis" translatable="false">No Wifis</string>
+    <string name="message_empty_wifis" translatable="false">It seems you have not discovered nearby wifis yet. Please active wifi and disvover nearby wifis.</string>
+
+    <string name="title_empty_favorite_wifis" translatable="false">No Favorite Wifis</string>
+    <string name="message_empty_favorite_wifis" translatable="false">It seems you have not made any favorite wifi yet.</string>
+
+    <string name="channel_rating_best">"Best Channels:"</string>
+    <string name="channel_rating_best_none">"None"</string>
+    <string name="channel_rating_best_alternative">", try alternative Wi-Fi Band"</string>
+    <string name="channel_rating_heading_rating">"Channel Rating"</string>
+    <string name="channel_rating_heading_number">"Channel Number"</string>
+    <string name="channel_rating_heading_count">"Access Point Count"</string>
+    <string name="channel_short_name">"CH"</string>
+
+    <string name="format_ssid_bssid">%s (%s)</string>
+    <string name="format_wifi_level">%ddBm</string>
+    <string name="format_wifi_distance">~%.1fm</string>
+    <string name="format_wifi_channel">CH.%s</string>
+    <string name="format_wifi_frequency">%d%s</string>
+
+    <string name="title_wifi_band" translatable="false">"2.4/5 GHz"</string>
+    <string name="title_wifi_band_2ghz" translatable="false">"2.4 GHz"</string>
+    <string name="title_wifi_band_5ghz" translatable="false">"5 GHz"</string>
+
+</resources>

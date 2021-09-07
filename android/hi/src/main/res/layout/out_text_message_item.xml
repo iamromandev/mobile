@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="@dimen/margin_xlarge"
+            android:backgroundTint="@color/material_green200"
+            auto:cardCornerRadius="@dimen/cornerRadiusMedium"
+            auto:cardPreventCornerOverlap="false">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_4sdp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Find hello text stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection."
+                    android:textColor="@color/material_black"
+                    android:textSize="@dimen/textSizePrimary" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/datetime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/body"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="8 PM"
+                    android:textColor="@color/material_grey300"
+                    android:textSize="@dimen/textSizeSmall" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/status"
+                    android:layout_width="@dimen/statusSize"
+                    android:layout_height="@dimen/statusSize"
+                    android:layout_below="@id/body"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_toEndOf="@id/datetime"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    auto:actualImageScaleType="centerCrop"
+                    auto:placeholderImage="@drawable/ic_baseline_sent_24"
+                    auto:placeholderImageScaleType="centerCrop" />
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+
+</layout>

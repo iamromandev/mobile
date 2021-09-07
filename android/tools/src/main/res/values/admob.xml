@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="admob_app_id">ca-app-pub-3214989259252773~6989010914</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-3214989259252773/1465207521</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-3214989259252773/6967448661</string>
+    <string name="rewarded_ad_unit_id">ca-app-pub-3214989259252773/4449096530</string>
+
+</resources>

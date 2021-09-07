@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.auth.activity.AuthActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            auto:layout_constraintGuide_percent=".7" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_register"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_44sdp"
+            android:text="Create Account"
+            android:textAllCaps="false"
+            auto:cornerRadius="@dimen/_20sdp"
+            auto:layout_constraintEnd_toEndOf="parent"
+            auto:layout_constraintStart_toStartOf="parent"
+            auto:layout_constraintTop_toBottomOf="@id/line" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_login"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="Login"
+            android:textAllCaps="false"
+            android:textColor="@color/material_black"
+            auto:backgroundTint="@color/material_white"
+            auto:cornerRadius="@dimen/_20sdp"
+            auto:layout_constraintEnd_toEndOf="parent"
+            auto:layout_constraintStart_toStartOf="parent"
+            auto:layout_constraintTop_toBottomOf="@id/button_register" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_search"
+        android:animateLayoutChanges="true"
+        android:icon="@drawable/ic_baseline_search_24dp"
+        android:title="@string/search"
+        auto:actionViewClass="androidx.appcompat.widget.SearchView"
+        auto:showAsAction="always" />
+
+    <item
+        android:id="@+id/item_filter"
+        android:animateLayoutChanges="true"
+        android:icon="@drawable/ic_baseline_filter_list_24"
+        android:title="@string/filter"
+        auto:showAsAction="always" />
+
+</menu>

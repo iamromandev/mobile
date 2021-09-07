@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="${relativePackage}.${activityClass}">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        auto:cardCornerRadius="@dimen/cornerRadiusSmall"
+        auto:cardElevation="@dimen/cornerRadiusSmall"
+        auto:cardPreventCornerOverlap="false">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/_8sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/icon"
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    auto:srcCompat="@drawable/ic_signal_wifi_4_bar" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/security_icon"
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_gravity="end|center_vertical"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    auto:srcCompat="@drawable/ic_lock_black_24dp" />
+
+            </FrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/ssid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/_10ssp"
+                auto:fontFamily="@font/roboto_slab_bold"
+                tools:text="@string/title" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/_9ssp"
+                    auto:fontFamily="@font/roboto_slab_regular"
+                    tools:text="@string/title" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/channel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/_9ssp"
+                    auto:fontFamily="@font/roboto_slab_regular"
+                    tools:text="@string/title" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/_9ssp"
+                    auto:fontFamily="@font/roboto_slab_regular"
+                    tools:text="@string/title" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/connection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:text="Connected"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/textSizeSecondary"
+                auto:fontFamily="@font/roboto_slab_bold"
+                tools:text="@string/title" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

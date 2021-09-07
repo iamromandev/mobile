@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.player.VideoPlayerActivity">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.dreampany.stateful.StatefulLayout
+            android:id="@+id/stateful"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/player"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    auto:showYouTubeButton="false" />
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/align_margin"
+                            android:layout_marginTop="@dimen/align_margin"
+                            android:layout_marginEnd="@dimen/align_margin"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="@dimen/textSizeHeader"
+                            auto:fontFamily="@font/roboto_slab_bold" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/align_margin"
+                            android:layout_marginTop="@dimen/align_margin"
+                            android:layout_marginEnd="@dimen/align_margin"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/info"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_slab_regular"
+                                android:textColor="@color/material_grey600"
+                                android:textSize="@dimen/_10ssp"
+                                tools:text="Youtube Info" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tags"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/align_margin"
+                            android:layout_marginTop="@dimen/align_margin"
+                            android:layout_marginEnd="@dimen/align_margin"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="@dimen/textSizePrimary"
+                            auto:fontFamily="@font/roboto_slab_bold"
+                            tools:text="tags" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/align_margin"
+                            android:layout_marginTop="@dimen/align_margin"
+                            android:layout_marginEnd="@dimen/align_margin"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <com.like.LikeButton
+                                android:id="@+id/favorite"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="end"
+                                android:layout_marginStart="@dimen/_4sdp"
+                                auto:icon_size="@dimen/_20sdp"
+                                auto:icon_type="heart"
+                                auto:like_drawable="@drawable/ic_baseline_favorite_24"
+                                auto:unlike_drawable="@drawable/ic_baseline_favorite_border_24" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <!-- related videos -->
+                        <include
+                            android:id="@+id/layout_recycler"
+                            layout="@layout/content_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.core.widget.NestedScrollView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </com.dreampany.stateful.StatefulLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.dreampany.scan.HomeActivity">
+    <item
+        android:id="@+id/item_search"
+        auto:actionViewClass="androidx.appcompat.widget.SearchView"
+        auto:showAsAction="collapseActionView|always"
+        android:animateLayoutChanges="true"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/search" />
+
+    <item
+        android:id="@+id/item_favorites"
+        auto:showAsAction="ifRoom"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="@string/favorites" />
+</menu>

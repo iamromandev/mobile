@@ -1,0 +1,81 @@
+/*
+package com.dreampany.lca.ui.enums;
+
+import android.os.Parcel;
+
+import com.dreampany.frame.data.enums.Type;
+
+*/
+/**
+ * Created by Hawladar Roman on 30/4/18.
+ * Dreampany
+ * dreampanymail@gmail.com
+ *//*
+
+public enum UiType implements Type {
+    MORE, COIN, GRAPH, ICO, NEWS;
+
+    @Override
+    public boolean equals(Type type) {
+        if (UiType.class.isInstance(type)) {
+            UiType item = (UiType) type;
+            return compareTo(item) == 0;
+        }
+        return false;
+    }
+
+    @Override
+    public String value() {
+        return name();
+    }
+
+    @Override
+    public String toLowerValue() {
+        return value().toLowerCase();
+    }
+
+    @Override
+    public int ordinalValue() {
+        return ordinal();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(ordinal());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<UiType> CREATOR = new Creator<UiType>() {
+
+        @Override
+        public UiType createFromParcel(Parcel in) {
+            return UiType.values()[in.readInt()];
+        }
+
+        @Override
+        public UiType[] newArray(int size) {
+            return new UiType[size];
+        }
+
+    };
+
+    public static UiType valueOf(int ordinal) {
+        switch (ordinal) {
+            case 0:
+                return MORE;
+            case 1:
+                return COIN;
+            case 2:
+                return GRAPH;
+            case 3:
+                return ICO;
+            default:
+                return NEWS;
+        }
+    }
+}
+*/

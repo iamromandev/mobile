@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.dreampany.tube"
+    android:installLocation="auto">
+
+    <dist:module dist:instant="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        tools:node="remove" />
+
+    <application
+        android:name=".app.App"
+        android:allowBackup="true"
+        android:allowTaskReparenting="true"
+        android:appCategory="video"
+        android:fullBackupContent="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:isGame="false"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.App.Light"
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
+        tools:replace="android:allowBackup, android:label">
+
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
+
+        <!-- splash -->
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.home.activity.HomeActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.player.VideoPlayerActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Fullscreen"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.settings.activity.CategoriesActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize"
+            android:label="@string/title_categories"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.settings.activity.PagesActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize"
+            android:label="@string/title_pages"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.home.activity.FavoriteVideosActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize"
+            android:label="@string/title_favorites"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.web.WebActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize" />
+
+    </application>
+
+</manifest>

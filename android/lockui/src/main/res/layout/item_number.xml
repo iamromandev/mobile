@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="${relativePackage}.${activityClass}">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:textColor="@color/material_white"
+            android:textSize="@dimen/_14ssp"
+            auto:backgroundTint="@color/button_notpressed"
+            auto:cornerRadius="@dimen/_25sdp"
+            auto:iconPadding="0dp"
+            auto:strokeColor="@color/colorAccent"
+            auto:strokeWidth=".5dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

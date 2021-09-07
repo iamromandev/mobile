@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activity.MessageActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppBarOverlay">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top"
+                android:theme="@style/Theme.Toolbar.Light"
+                auto:contentInsetLeft="0dp"
+                auto:contentInsetStart="0dp"
+                auto:contentInsetStartWithNavigation="0dp"
+                auto:popupTheme="@style/PopupOverlay">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/photo"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/align_margin"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="true"
+                        android:visibility="gone"
+                        auto:actualImageScaleType="centerCrop"
+                        auto:failureImage="@drawable/ic_baseline_account_circle_24"
+                        auto:failureImageScaleType="centerInside"
+                        auto:layout_constraintBottom_toBottomOf="parent"
+                        auto:layout_constraintStart_toStartOf="parent"
+                        auto:layout_constraintTop_toTopOf="parent"
+                        auto:placeholderImage="@drawable/ic_baseline_account_circle_24"
+                        auto:placeholderImageScaleType="centerCrop"
+                        auto:roundAsCircle="true" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/align_margin"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/textSizePrimary"
+                            auto:fontFamily="@font/roboto_slab_bold"
+                            tools:text="@string/title" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="@dimen/_10ssp"
+                            auto:fontFamily="@font/roboto_slab_regular"
+                            tools:text="@string/title" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            auto:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scrollbars="none"
+                tools:itemCount="10" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_xxsmall">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="Type a message"
+                        android:textSize="@dimen/textSizePrimary" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:src="@drawable/ic_baseline_send_24"
+                    auto:elevation="0dp"
+                    auto:fabSize="normal"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

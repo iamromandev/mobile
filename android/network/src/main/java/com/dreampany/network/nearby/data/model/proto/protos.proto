@@ -1,0 +1,12 @@
+syntax = 'proto3';
+//package com.dreampany.network.nearby.data.model.proto;
+
+enum Type {
+  PEER = 0;
+  DATA = 1;
+  FILE = 2;
+}
+
+message Request {
+  Type type = 1;
+}

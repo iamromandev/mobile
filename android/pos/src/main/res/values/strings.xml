@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">pos</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Butler POS</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="search">Search Printers</string>
+    <string name="connect">Connect Printer</string>
+    <string name="print">Print</string>
+
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>

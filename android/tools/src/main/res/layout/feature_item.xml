@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="${relativePackage}.${activityClass}">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        auto:cardCornerRadius="@dimen/cornerRadiusSmall"
+        auto:cardElevation="@dimen/cornerRadiusSmall"
+        auto:cardPreventCornerOverlap="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:padding="@dimen/margin">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icon"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_centerInParent="true"
+                auto:srcCompat="@drawable/ic_android_black_24dp"
+                auto:tint="@color/textColorPrimary" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/icon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/_12ssp"
+                auto:fontFamily="@font/roboto_slab_bold"
+                tools:text="@string/title" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/full"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="@string/full"
+                android:textColor="@color/material_white"
+                android:textSize="@dimen/_8ssp"
+                auto:backgroundTint="@color/textColorSecondary"
+                auto:cornerRadius="@dimen/cornerRadiusSmall"
+                auto:elevation="@dimen/cornerRadiusSmall"
+                auto:fontFamily="@font/roboto_slab_bold" />
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

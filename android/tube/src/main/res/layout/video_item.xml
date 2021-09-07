@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="${relativePackage}.${activityClass}">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        auto:cardCornerRadius="@dimen/cornerRadiusSmall"
+        auto:cardElevation="@dimen/cornerRadiusSmall"
+        auto:cardPreventCornerOverlap="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/thumb"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_124sdp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    auto:actualImageScaleType="fitXY"
+                    auto:failureImage="@color/material_grey200"
+                    auto:failureImageScaleType="fitXY"
+                    auto:placeholderImage="@color/material_grey200"
+                    auto:placeholderImageScaleType="fitXY" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    auto:cardCornerRadius="@dimen/_2sdp">
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingStart="@dimen/_4sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingEnd="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    tools:text="4:03"
+                    android:textColor="@color/material_white"
+                    android:textSize="@dimen/_10ssp"
+                    auto:backgroundTint="@color/textColorPrimary"
+                    auto:cornerRadius="@dimen/_2sdp"
+                    auto:elevation="@dimen/_2sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/definition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|top"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingStart="@dimen/_4sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingEnd="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    tools:text="4:03"
+                    android:textColor="@color/material_white"
+                    android:textSize="@dimen/_10ssp"
+                    auto:backgroundTint="@color/textColorPrimary"
+                    auto:cornerRadius="@dimen/_2sdp"
+                    auto:elevation="@dimen/_2sdp" />
+
+            </FrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/channel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_slab_regular"
+                android:singleLine="true"
+                tools:text="Channel Title"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/textSizePrimary" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:maxLines="2"
+                tools:text="Youtube Title"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/textSizePrimary" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_slab_regular"
+                    tools:text="Youtube Info"
+                    android:textColor="@color/material_grey600"
+                    android:textSize="@dimen/_10ssp" />
+
+                <com.like.LikeButton
+                    android:id="@+id/favorite"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    auto:icon_size="@dimen/_20sdp"
+                    auto:icon_type="heart"
+                    auto:like_drawable="@drawable/ic_baseline_favorite_24"
+                    auto:unlike_drawable="@drawable/ic_baseline_favorite_border_24" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

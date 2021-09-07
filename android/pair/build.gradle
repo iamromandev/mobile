@@ -1,0 +1,133 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
+
+    defaultConfig {
+        applicationId 'com.dreampany.pair'
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName '0.0.0.1'
+
+        multiDexEnabled = true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('../keystore/debug.keystore.jks')
+            keyAlias 'debug.keystore'
+            storePassword 'debug.keystore'
+            keyPassword 'debug.keystore'
+        }
+
+        release {
+            storeFile file('../keystore/dreampany.keystore.jks')
+            keyAlias 'dreampany'
+            storePassword 'ROOT.net080208ROOT.net080208'
+            keyPassword 'ROOT.net080208ROOT.net080208'
+        }
+    }
+
+    buildTypes {
+        debug {
+            jniDebuggable = true
+            renderscriptDebuggable = true
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            /*firebaseCrashlytics {
+                nativeSymbolUploadEnabled true
+            }*/
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    applicationVariants.all { variant ->
+        def parts = variant.applicationId.split('\\.')
+        variant.outputs.all {
+            outputFileName = parts[2] + "-${variant.versionName}-${variant.buildType.name}.apk"
+        }
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+dependencies {
+    /* libs */
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    /* test */
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    /* library */
+    implementation project(':common')
+
+    /* androidx lifecycle */
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    /* androidx room */
+    kapt "androidx.room:room-compiler:$room_version"
+
+    /* dagger */
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+    kapt "com.google.dagger:dagger-android-processor:$dagger"
+
+    /* firebase */
+    implementation 'com.google.firebase:firebase-core:17.4.0'
+    implementation 'com.google.firebase:firebase-analytics:17.4.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
+    //implementation 'com.google.firebase:firebase-crashlytics-ndk:17.0.0-beta01'
+    implementation 'com.google.firebase:firebase-appindexing:19.1.0'
+    //implementation 'com.google.firebase:firebase-ads:19.0.0'
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-database:19.3.0'
+    implementation 'com.google.firebase:firebase-firestore:21.4.3'
+    implementation 'com.google.firebase:firebase-ml-vision:24.0.3'
+    implementation 'com.google.firebase:firebase-ml-vision-face-model:20.0.1'
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+
+    /* misc */
+    implementation 'me.relex:circleindicator:2.1.4'
+    implementation('com.facebook.fresco:fresco:2.1.0') {
+        exclude group: 'com.facebook.soloader', module: 'soloader'
+        exclude group: 'com.facebook.fresco', module: 'soloader'
+        exclude group: 'com.facebook.fresco', module: 'nativeimagefilters'
+        exclude group: 'com.facebook.fresco', module: 'nativeimagetranscoder'
+        exclude group: 'com.facebook.fresco', module: 'memory-type-native'
+        exclude group: 'com.facebook.fresco', module: 'imagepipeline-native'
+    }
+    implementation 'com.github.dhaval2404:imagepicker:1.6'
+    implementation 'com.github.florent37:inline-activity-result-kotlin:1.0.1'
+    implementation 'com.github.FrangSierra:RxFirebase:1.5.6'
+    implementation 'com.yuyakaido.android:card-stack-view:2.3.3'
+    implementation "com.github.nikartm:fit-button:1.2.1"
+}

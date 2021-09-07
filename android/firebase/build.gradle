@@ -1,0 +1,108 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.jakewharton.hugo'
+apply plugin: 'idea'
+
+idea {
+    module {
+        downloadJavadoc = true
+    }
+}
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 28
+        versionCode 1
+        versionName '0.0.1'
+
+        multiDexEnabled true
+
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            //useProguard false
+            //shrinkResources false
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //consumerProguardFiles 'proguard-rules.pro'
+            //zipAlignEnabled true
+            //shrinkResources true
+            //consumerProguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+
+        release {
+            minifyEnabled true
+            //shrinkResources true
+            //useProguard false
+            //crunchPngs false
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    lintOptions {
+        //abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    /* kotlin */
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    /* test */
+    testImplementation 'junit:junit:4.13-beta-3'
+    androidTestImplementation 'androidx.test:runner:1.2.0-beta01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-beta01'
+
+    /* dagger */
+    kapt 'com.google.dagger:dagger-compiler:2.22.1'
+    implementation 'com.google.dagger:dagger:2.22.1'
+    kapt 'com.google.dagger:dagger-android-processor:2.22.1'
+    implementation 'com.google.dagger:dagger-android-support:2.22.1'
+    implementation 'com.google.dagger:dagger-android:2.22.1'
+
+    /* firebase */
+    api 'com.google.firebase:firebase-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-database:17.0.0'
+    implementation 'com.google.firebase:firebase-storage:17.0.0'
+    api 'com.google.firebase:firebase-firestore:19.0.0'
+
+    /* rx */
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    /* misc */
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'org.apache.commons:commons-lang3:3.9'
+}

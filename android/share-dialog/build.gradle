@@ -1,0 +1,62 @@
+/*Properties props = new Properties()
+try {
+    props.load(file('twitter.properties').newDataInputStream())
+} catch (Exception ex) {
+    throw new GradleException("Missing twitter.properties, check the twitter.properties.sample file.")
+}*/
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+
+    defaultConfig {
+        applicationId "com.dreampany.share_dialog"
+        minSdkVersion 18
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+           // resValue "string", "com.twitter.sdk.android.CONSUMER_KEY", "\"${props.getProperty("twitterConsumerKey")}\""
+           // resValue "string", "com.twitter.sdk.android.CONSUMER_SECRET", "\"${props.getProperty("twitterConsumerSecret")}\""
+        }
+        release {
+          //  resValue "string", "com.twitter.sdk.android.CONSUMER_KEY", "\"${props.getProperty("twitterConsumerKey")}\""
+           // resValue "string", "com.twitter.sdk.android.CONSUMER_SECRET", "\"${props.getProperty("twitterConsumerSecret")}\""
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.facebook.android:facebook-android-sdk:5.8.0'
+    implementation('com.twitter.sdk.android:twitter:3.3.0@aar') {
+        transitive = true
+    }
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
+}
