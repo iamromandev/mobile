@@ -9,10 +9,9 @@ plugins {
 
 android {
     compileSdk 31
-    buildToolsVersion '31.0.0'
 
     defaultConfig {
-        applicationId 'com.dreampany.hi'
+        applicationId 'com.dreampany.word'
         minSdk 26
         targetSdk 31
         versionCode 1
@@ -92,7 +91,6 @@ dependencies {
     implementation project(':common')
     implementation project(':pref')
     implementation project(':device')
-    implementation project(':network')
 
     /* room */
     kapt "androidx.room:room-compiler:$room_version"
@@ -108,9 +106,6 @@ dependencies {
     //implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'com.google.firebase:firebase-messaging-ktx'
-    implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-common-ktx'
 
     /* google */
@@ -123,5 +118,4 @@ dependencies {
 
     /* misc */
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
-
 }
