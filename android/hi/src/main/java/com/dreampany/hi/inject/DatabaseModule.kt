@@ -1,6 +1,7 @@
 package com.dreampany.hi.inject
 
 import android.content.Context
+import com.dreampany.hi.data.source.room.dao.FileDao
 import com.dreampany.hi.data.source.room.dao.MessageDao
 import com.dreampany.hi.data.source.room.database.DatabaseManager
 import dagger.Module
@@ -26,5 +27,8 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideMessageDao(database: DatabaseManager): MessageDao = database.messageDao()
+
+    @Singleton
+    fun provideFileDao(database: DatabaseManager): FileDao = database.fileDao()
 
 }

@@ -21,8 +21,7 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): DatabaseManager =
-        DatabaseManager.instanceOf(context)
+    fun provideDatabase(@ApplicationContext context: Context): DatabaseManager = DatabaseManager(context)
 
     @Provides
     @Singleton

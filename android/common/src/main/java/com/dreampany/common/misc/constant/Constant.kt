@@ -20,21 +20,21 @@ import java.util.*
 class Constant {
     companion object {
         fun database(context: Context?): String {
-            return lastAppId(context).plus(Sep.DOT).plus(Room.POST_FIX_DB)
+            return lastAppId(context).plus(Sep.DOT).plus(Keys.Room.POST_FIX_DB)
         }
 
         fun database(context: Context?, type: String): String {
             return lastAppId(context).lastPart(Sep.DOT).plus(Sep.DOT).plus(type).plus(Sep.DOT)
-                .plus(Room.POST_FIX_DB)
+                .plus(Keys.Room.POST_FIX_DB)
         }
 
         fun database(name: String): String {
-            return name.lastPart(Sep.DOT).plus(Sep.DOT).plus(Room.POST_FIX_DB)
+            return name.lastPart(Sep.DOT).plus(Sep.DOT).plus(Keys.Room.POST_FIX_DB)
         }
 
         fun database(name: String, type: String): String {
             return name.lastPart(Sep.DOT).plus(Sep.DOT).plus(type).plus(Sep.DOT)
-                .plus(Room.POST_FIX_DB)
+                .plus(Keys.Room.POST_FIX_DB)
         }
 
         fun appId(context: Context?): String = context.applicationId
@@ -141,13 +141,6 @@ class Constant {
         const val SHARP = "#"
     }
 
-    object Room {
-        const val TYPE_FRAMEWORK = "framework"
-        const val TYPE_TRANSLATION = "translation"
-        const val TYPE_DEFAULT = "default"
-        const val POST_FIX_DB = "db"
-    }
-
     object Count {
         const val THREAD_NETWORK = 5
     }
@@ -183,6 +176,11 @@ class Constant {
             const val INTERSTITIAL = "interstitial"
             const val REWARDED = "rewarded"
             const val HOUSE = "house"
+        }
+
+        object Room {
+            const val POST_FIX_DB = "db"
+            const val ROOM = "framework"
         }
     }
 

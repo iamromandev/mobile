@@ -21,6 +21,7 @@ import com.dreampany.hi.misc.constant.Constants
 abstract class DatabaseManager : RoomDatabase() {
 
     abstract fun messageDao(): MessageDao
+
     abstract fun fileDao(): FileDao
 
     companion object {

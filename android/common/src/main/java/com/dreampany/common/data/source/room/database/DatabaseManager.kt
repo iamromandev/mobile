@@ -19,32 +19,36 @@ import com.dreampany.common.misc.constant.Constant
 @Database(entities = [Store::class], version = 3, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class DatabaseManager : RoomDatabase() {
-    companion object {
-        private var instance: DatabaseManager? = null
-
-        @Synchronized
-        fun newInstance(context: Context, memoryOnly: Boolean): DatabaseManager {
-            val builder: Builder<DatabaseManager>
-
-            if (memoryOnly) {
-                builder = Room.inMemoryDatabaseBuilder(context, DatabaseManager::class.java)
-            } else {
-                val database = Constant.database(context, Constant.Room.TYPE_FRAMEWORK)
-                builder = Room.databaseBuilder(context, DatabaseManager::class.java, database)
-            }
-
-            return builder
-                .fallbackToDestructiveMigration()
-                .build()
-        }
-
-        @Synchronized
-        fun instanceOf(context: Context): DatabaseManager {
-            if (instance == null)
-                instance = newInstance(context, false)
-            return instance!!
-        }
-    }
 
     abstract fun storeDao(): StoreDao
+
+    companion object {
+        private val lock = Any()
+
+
+        @Volatile
+        private var instance: DatabaseManager? = null
+
+        operator fun invoke(context: Context) = instance ?: synchronized(lock) {
+            instance ?: newInstance(context, false).also { instance = it }
+        }
+
+        fun newInstance(context: Context, memoryOnly: Boolean): DatabaseManager =
+            synchronized(lock) {
+                val builder: Builder<DatabaseManager>
+
+                if (memoryOnly) {
+                    builder = Room.inMemoryDatabaseBuilder(context, DatabaseManager::class.java)
+                } else {
+                    val database = Constant.database(context, Constant.Keys.Room.ROOM)
+                    builder = Room.databaseBuilder(context, DatabaseManager::class.java, database)
+                }
+
+                return builder
+                    .fallbackToDestructiveMigration()
+                    .build()
+            }
+    }
+
+
 }
