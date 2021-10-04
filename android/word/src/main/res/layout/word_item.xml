@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginEnd="@dimen/margin_xlarge"
+        android:backgroundTint="@color/material_grey200"
+        auto:cardCornerRadius="@dimen/cornerRadiusMedium"
+        auto:cardPreventCornerOverlap="false">
+    </com.google.android.material.card.MaterialCardView>
+</layout>

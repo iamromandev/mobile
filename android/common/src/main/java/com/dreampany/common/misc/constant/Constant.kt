@@ -189,6 +189,10 @@ class Constant {
             const val ASCENDING = "asc"
             const val DESCENDING = "desc"
         }
+        object Http {
+            const val READ_TIMEOUT = 20L
+            const val WRITE_TIMEOUT = 10L
+        }
     }
 
     object Regex {

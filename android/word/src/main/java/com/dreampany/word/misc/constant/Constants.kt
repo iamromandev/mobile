@@ -23,5 +23,19 @@ class Constants {
         object Room {
             const val LANGUAGE_ID = "language_id"
         }
+        object DictionaryService {
+            const val WORD = "word"
+        }
+    }
+
+    object Values {
+        object Room {
+            const val ROOM = "room"
+        }
+        object DictionaryService {
+            const val BASE_URL = "http://api.epany.io/"
+
+            const val WORDS = "dictionary/words/{word}"
+        }
     }
 }
