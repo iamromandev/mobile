@@ -9,10 +9,7 @@ import com.google.common.base.Objects
  * Last modified $file.lastModified
  */
 abstract class Base(
-    @Transient open var ref: String,
     @Transient open var id: String,
-    @Transient open var createdAt: Long,
-    @Transient open var updatedAt: Long
 ) : BaseParcel() {
 
     override fun hashCode(): Int = Objects.hashCode(id)
@@ -24,5 +21,5 @@ abstract class Base(
         return Objects.equal(item.id, id)
     }
 
-    override fun toString(): String = "Base[ref:$ref][id:$id][createdAt:$createdAt]"
+    override fun toString(): String = "Base[id:$id"
 }

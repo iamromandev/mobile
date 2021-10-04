@@ -1,4 +1,4 @@
-package com.dreampany.word.data;
+package com.dreampany.word.misc;
 
 /**
  * Created by roman on 10/1/21

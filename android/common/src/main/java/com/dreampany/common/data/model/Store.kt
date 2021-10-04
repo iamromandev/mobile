@@ -25,32 +25,28 @@ import java.time.OffsetDateTime
     primaryKeys = [Constant.Keys.ID, Constant.Keys.TYPE, Constant.Keys.SUBTYPE, Constant.Keys.STATE]
 )
 data class Store(
-    override var ref: String = Constant.Default.STRING,
     override var id: String = Constant.Default.STRING,
-    @ColumnInfo(name = Constant.Keys.CREATED_AT)
-    override var createdAt: Long = Constant.Default.LONG,
-    @ColumnInfo(name = Constant.Keys.UPDATED_AT)
-    override var updatedAt: Long = Constant.Default.LONG,
     val type: String = Constant.Default.STRING,
     val subtype: String = Constant.Default.STRING,
     val state: String = Constant.Default.STRING,
-    var extra: String? = Constant.Default.NULL
-) : Base(ref, id, createdAt, updatedAt) {
+    var extra: String? = Constant.Default.NULL,
+    @ColumnInfo(name = Constant.Keys.CREATED_AT)
+    var createdAt: Long = Constant.Default.LONG,
+    @ColumnInfo(name = Constant.Keys.UPDATED_AT)
+    var updatedAt: Long = Constant.Default.LONG
+) : Base(id) {
 
     @Ignore
-    constructor() : this(ref = Constant.Default.STRING)
+    constructor() : this(id = Constant.Default.STRING)
 
-    constructor(id: String) : this(
-        ref = Constant.Default.STRING,
-        id = id
-    )
+    constructor(id: String) : this(id = id, createdAt = currentMillis)
 
     constructor(id: String, type: String, subtype: String, state: String) : this(
-        ref = Constant.Default.STRING,
         id = id,
         type = type,
         subtype = subtype,
-        state = state
+        state = state,
+        createdAt = currentMillis
     )
 
     override fun hashCode(): Int = Objects.hashCode(id, type, subtype, state)
@@ -65,7 +61,7 @@ data class Store(
                 Objects.equal(item.state, state)
     }
 
-    override fun toString(): String = "Store[ref:$ref][id:$id][createdAt:$createdAt]"
+    override fun toString(): String = "Store[id:$id][createdAt:$createdAt]"
 
     fun hasProperty(type: String, subtype: String, state: String): Boolean {
         return (Objects.equal(type, this.type)

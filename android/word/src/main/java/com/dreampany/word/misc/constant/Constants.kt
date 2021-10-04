@@ -1,4 +1,4 @@
-package com.dreampany.word.constant
+package com.dreampany.word.misc.constant
 
 /**
  * Created by roman on 10/1/21
@@ -18,6 +18,10 @@ class Constants {
             const val SIGNED = "signed"
             const val AUTH = "auth"
             const val USER = "user"
+        }
+
+        object Room {
+            const val LANGUAGE_ID = "language_id"
         }
     }
 }

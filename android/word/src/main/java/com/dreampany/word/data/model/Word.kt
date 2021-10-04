@@ -1,16 +1,16 @@
-package com.dreampany.hi.data.model
+package com.dreampany.word.data.model
 
 import androidx.room.*
 import com.dreampany.common.data.model.Base
 import com.dreampany.common.misc.constant.Constant
 import com.dreampany.common.misc.exts.currentMillis
-import com.dreampany.hi.misc.constant.Constants
+import com.dreampany.word.misc.constant.Constants
 import com.google.common.base.Objects
 import kotlinx.parcelize.Parcelize
 
 /**
- * Created by roman on 8/27/21
- * Copyright (c) 2021 butler. All rights reserved.
+ * Created by roman on 10/3/21
+ * Copyright (c) 2021 epany. All rights reserved.
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
@@ -20,25 +20,26 @@ import kotlinx.parcelize.Parcelize
         value = [Constant.Keys.ID],
         unique = true
     )],
-    primaryKeys = [Constant.Keys.ID]
+    primaryKeys = [Constant.Keys.ID],
+    foreignKeys = [
+        ForeignKey(
+            entity = Language::class,
+            parentColumns = [Constant.Keys.ID],
+            childColumns = [Constants.Keys.Room.LANGUAGE_ID],
+            onDelete = ForeignKey.NO_ACTION
+        )
+    ]
 )
-data class File(
+data class Word(
     override var id: String = Constant.Default.STRING,
-    var uri: String = Constant.Default.STRING,
-    @ColumnInfo(name = Constants.Keys.THUMB_URI)
-    var thumbUri: String = Constant.Default.STRING,
-    @ColumnInfo(name = Constants.Keys.MIME_TYPE)
-    var mimeType: String = Constant.Default.STRING,
-    @ColumnInfo(name = Constants.Keys.DISPLAY_NAME)
-    var displayName: String = Constant.Default.STRING,
-    var title: String = Constant.Default.STRING,
-    var size: Long = Constant.Default.LONG,
-    @Embedded
-    var coordinate: Coordinate? = Constant.Default.NULL,
+    @ColumnInfo(name = Constants.Keys.Room.LANGUAGE_ID)
+    var languageId: String = Constant.Default.STRING,
+    var word: String = Constant.Default.STRING,
+    var origin: String? = Constant.Default.NULL,
     @ColumnInfo(name = Constant.Keys.CREATED_AT)
     var createdAt: Long = Constant.Default.LONG,
     @ColumnInfo(name = Constant.Keys.UPDATED_AT)
-    var updatedAt: Long = Constant.Default.LONG
+    var updatedAt: Long = Constant.Default.LONG,
 ) : Base(id) {
 
     @Ignore
@@ -51,10 +52,9 @@ data class File(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
-        val item = other as Message
+        val item = other as Word
         return Objects.equal(this.id, item.id)
     }
 
-    override fun toString(): String = "File[uri:$uri][displayName:$displayName]"
-
+    override fun toString(): String = "Word: [id:$id] [word:$word]"
 }

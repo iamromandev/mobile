@@ -1,13 +1,13 @@
 package com.dreampany.common.ui.fragment
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.DrawableRes
-import androidx.annotation.LayoutRes
-import androidx.annotation.MenuRes
-import androidx.annotation.StringRes
+import android.text.InputType
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import androidx.annotation.*
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -24,12 +24,13 @@ import javax.inject.Inject
  * Last modified $file.lastModified
  */
 abstract class BaseFragment<T> : Fragment(),
-    SwipeRefreshLayout.OnRefreshListener
+    SwipeRefreshLayout.OnRefreshListener, SearchView.OnQueryTextListener
         where T : ViewDataBinding {
 
     @Inject
     protected lateinit var ex: Executors
     protected lateinit var binding: T
+    protected lateinit var menu: Menu
 
     private var progress: KProgressHUD? = null
     //private var sheetDialog: BottomSheetMaterialDialog? = null
@@ -45,6 +46,9 @@ abstract class BaseFragment<T> : Fragment(),
 
     @get:StringRes
     open val subtitleRes: Int = 0
+
+    @get:IdRes
+    open val searchMenuItemId: Int = 0
 
     protected abstract fun onStartUi(state: Bundle?)
 
@@ -68,6 +72,17 @@ abstract class BaseFragment<T> : Fragment(),
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        this.menu = menu
+        if (menuRes != 0) { //this need clear
+            menu.clear()
+            inflater.inflate(menuRes, menu)
+            //onMenuCreated(menu)
+            initSearch()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onStartUi(savedInstanceState)
@@ -79,6 +94,33 @@ abstract class BaseFragment<T> : Fragment(),
     }
 
     override fun onRefresh() {}
+
+    override fun onQueryTextChange(newText: String?): Boolean = false
+
+    override fun onQueryTextSubmit(query: String?): Boolean = false
+
+    protected fun findMenuItemById(menuItemId: Int): MenuItem? = menu.findItem(menuItemId)
+
+    protected fun getSearchMenuItem(): MenuItem? = findMenuItemById(searchMenuItemId)
+
+    protected fun getSearchView(): SearchView? {
+        val view = getSearchMenuItem()?.actionView ?: return null
+        return view as SearchView
+    }
+
+    private fun initSearch() {
+        val searchView = getSearchView()
+        searchView?.apply {
+            inputType = InputType.TYPE_TEXT_VARIATION_FILTER
+            imeOptions = EditorInfo.IME_ACTION_DONE or EditorInfo.IME_FLAG_NO_FULLSCREEN
+            //queryHint = getString(R.string.search)
+            val searchManager =
+                context.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+            setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+            setOnQueryTextListener(this@BaseFragment)
+            isIconified = false
+        }
+    }
 
     protected fun showProgress() {
         if (progress == null) {

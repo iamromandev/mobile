@@ -2,7 +2,7 @@ package com.dreampany.word.data.source.pref
 
 import android.content.Context
 import com.dreampany.common.data.source.pref.Pref
-import com.dreampany.word.constant.Constants
+import com.dreampany.word.misc.constant.Constants
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

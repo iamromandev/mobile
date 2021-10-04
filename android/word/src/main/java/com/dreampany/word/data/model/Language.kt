@@ -1,31 +1,33 @@
-package com.dreampany.hi.data.model
+package com.dreampany.word.data.model
 
-import android.os.Parcelable
 import androidx.room.ColumnInfo
+import androidx.room.Entity
 import androidx.room.Ignore
+import androidx.room.Index
 import com.dreampany.common.data.model.Base
 import com.dreampany.common.misc.constant.Constant
 import com.dreampany.common.misc.exts.currentMillis
 import com.google.common.base.Objects
 import kotlinx.parcelize.Parcelize
 
-
 /**
- * Created by roman on 5/14/21
- * Copyright (c) 2021 butler. All rights reserved.
+ * Created by roman on 10/3/21
+ * Copyright (c) 2021 epany. All rights reserved.
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
 @Parcelize
-data class Auth(
+@Entity(
+    indices = [Index(
+        value = [Constant.Keys.ID],
+        unique = true
+    )],
+    primaryKeys = [Constant.Keys.ID]
+)
+data class Language(
     override var id: String = Constant.Default.STRING,
-    var type: Type = Type.EMAIL,
-    var username: String? = Constant.Default.NULL,
-    var email: String? = Constant.Default.NULL,
-    var password: String? = Constant.Default.NULL,
-    var registered: Boolean = Constant.Default.BOOLEAN,
-    var verified: Boolean = Constant.Default.BOOLEAN,
-    var logged: Boolean = Constant.Default.BOOLEAN,
+    var code: String = Constant.Default.STRING,
+    var name: String = Constant.Default.STRING,
     @ColumnInfo(name = Constant.Keys.CREATED_AT)
     var createdAt: Long = Constant.Default.LONG,
     @ColumnInfo(name = Constant.Keys.UPDATED_AT)
@@ -42,22 +44,9 @@ data class Auth(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
-        val item = other as Auth
+        val item = other as Language
         return Objects.equal(this.id, item.id)
     }
 
-    override fun toString(): String = "Auth [id:$id][createdAt:$createdAt]"
-
-    @Parcelize
-    enum class Type : Parcelable {
-        EMAIL,
-        GOOGLE,
-        FACEBOOK;
-
-        val value: String
-            get() = name
-
-        val isSocial: Boolean
-            get() = this == GOOGLE || this == FACEBOOK
-    }
+    override fun toString(): String = "Language [code:$code][name:$name]"
 }

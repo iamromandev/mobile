@@ -36,12 +36,13 @@ class SplashActivity : BaseActivity<SplashActivityBinding>() {
         } else if (pref.isSigned) {
             openAuthInfoUi()
         } else {
-            //open(AuthActivity::class, true)
+            //open(AuthActivity::class, true
+            openHomeUi()
         }
     }
 
     private fun openHomeUi() {
-        //open(HomeActivity::class, true)
+        open(HomeActivity::class, true)
     }
 
     private fun openAuthInfoUi() {

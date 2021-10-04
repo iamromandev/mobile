@@ -4,6 +4,7 @@ import androidx.room.*
 import com.dreampany.common.data.enums.BaseEnum
 import com.dreampany.common.data.model.Base
 import com.dreampany.common.misc.constant.Constant
+import com.dreampany.common.misc.exts.currentMillis
 import com.dreampany.hi.misc.constant.Constants
 import com.google.common.base.Objects
 import kotlinx.parcelize.Parcelize
@@ -24,23 +25,22 @@ import kotlinx.parcelize.Parcelize
     primaryKeys = [Constant.Keys.ID]
 )
 data class Message(
-    override var ref: String = Constant.Default.STRING,
     override var id: String = Constant.Default.STRING,
-    @ColumnInfo(name = Constant.Keys.CREATED_AT)
-    override var createdAt: Long = Constant.Default.LONG,
-    @ColumnInfo(name = Constant.Keys.UPDATED_AT)
-    override var updatedAt: Long = Constant.Default.LONG,
     var author: String = Constant.Default.STRING,
     var type: Type = Type.TEXT,
     var text: String = Constant.Default.STRING,
     @Embedded(prefix = Constants.Keys.PREFIX_FILE)
-    var file : File? = Constant.Default.NULL
-) : Base(ref, id, createdAt, updatedAt) {
+    var file : File? = Constant.Default.NULL,
+    @ColumnInfo(name = Constant.Keys.CREATED_AT)
+    var createdAt: Long = Constant.Default.LONG,
+    @ColumnInfo(name = Constant.Keys.UPDATED_AT)
+    var updatedAt: Long = Constant.Default.LONG
+) : Base(id) {
 
     @Ignore
-    constructor() : this(ref = Constant.Default.STRING)
+    constructor() : this(id = Constant.Default.STRING)
 
-    constructor(id: String) : this(ref = Constant.Default.STRING, id = id)
+    constructor(id: String) : this(id = id, createdAt = currentMillis)
 
     override fun hashCode(): Int = Objects.hashCode(id)
 
@@ -52,7 +52,7 @@ data class Message(
     }
 
     override fun toString(): String =
-        "Message[ref:$ref][id:$id][createdAt:$createdAt][text:$text]"
+        "Message [id:$id][createdAt:$createdAt][text:$text]"
 
     @Parcelize
     enum class Type : BaseEnum {

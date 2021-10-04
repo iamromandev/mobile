@@ -118,4 +118,6 @@ dependencies {
 
     /* misc */
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'br.com.mauker.materialsearchview:materialsearchview:2.0.0-beta02'
+
 }

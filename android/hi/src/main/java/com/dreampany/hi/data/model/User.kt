@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Ignore
 import com.dreampany.common.data.model.Base
 import com.dreampany.common.misc.constant.Constant
+import com.dreampany.common.misc.exts.currentMillis
 import com.dreampany.hi.data.enums.Gender
 import com.google.common.base.Objects
 import kotlinx.parcelize.Parcelize
@@ -16,24 +17,23 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class User(
-    override var ref: String = Constant.Default.STRING,
     override var id: String = Constant.Default.STRING,
-    @ColumnInfo(name = Constant.Keys.CREATED_AT)
-    override var createdAt: Long = Constant.Default.LONG,
-    @ColumnInfo(name = Constant.Keys.UPDATED_AT)
-    override var updatedAt: Long = Constant.Default.LONG,
     var name: String? = Constant.Default.NULL,
     var birthday: Long = Constant.Default.LONG,
     var gender: Gender? = Constant.Default.NULL,
     var phone: String? = Constant.Default.NULL,
     var status: String? = Constant.Default.NULL,
-    var level: Int = Constant.Default.INT
-) : Base(ref, id, createdAt, updatedAt) {
+    var level: Int = Constant.Default.INT,
+    @ColumnInfo(name = Constant.Keys.CREATED_AT)
+    var createdAt: Long = Constant.Default.LONG,
+    @ColumnInfo(name = Constant.Keys.UPDATED_AT)
+    var updatedAt: Long = Constant.Default.LONG
+) : Base(id) {
 
     @Ignore
-    constructor() : this(ref = Constant.Default.STRING)
+    constructor() : this(id = Constant.Default.STRING)
 
-    constructor(id: String) : this(ref = Constant.Default.STRING, id = id)
+    constructor(id: String) : this(id = id, createdAt = currentMillis)
 
     override fun hashCode(): Int = Objects.hashCode(id)
 
@@ -44,5 +44,5 @@ data class User(
         return Objects.equal(this.id, item.id)
     }
 
-    override fun toString(): String = "User[ref:$ref][id:$id][createdAt:$createdAt]"
+    override fun toString(): String = "User [id:$id][createdAt:$createdAt]"
 }

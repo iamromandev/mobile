@@ -33,6 +33,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.activity.HomeActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize" />
+
     </application>
 
 </manifest>
