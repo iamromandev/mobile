@@ -8,6 +8,7 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -109,18 +110,8 @@ abstract class BaseFragment<T> : Fragment(),
         return view as SearchView
     }
 
-    private fun initSearch() {
-        val searchView = getSearchView()
-        searchView?.apply {
-            inputType = InputType.TYPE_TEXT_VARIATION_FILTER
-            imeOptions = EditorInfo.IME_ACTION_DONE or EditorInfo.IME_FLAG_NO_FULLSCREEN
-            //queryHint = getString(R.string.search)
-            val searchManager =
-                context.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-            setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
-            setOnQueryTextListener(this@BaseFragment)
-            isIconified = false
-        }
+    protected fun applyProgress(progress: Boolean) {
+        if (progress) showProgress() else hideProgress()
     }
 
     protected fun showProgress() {
@@ -183,5 +174,23 @@ abstract class BaseFragment<T> : Fragment(),
     protected fun hideDialog() {
 /*        sheetDialog?.run { dismiss() }
         sheetDialog = null*/
+    }
+
+    protected fun hideSearchView() {
+        //getSearchView()?.setIconified(true)
+        getSearchMenuItem()?.collapseActionView()
+    }
+
+    private fun initSearch() {
+        getSearchView()?.apply {
+            inputType = InputType.TYPE_TEXT_VARIATION_FILTER
+            imeOptions = EditorInfo.IME_ACTION_DONE or EditorInfo.IME_FLAG_NO_FULLSCREEN
+            //queryHint = getString(R.string.search)
+            val searchManager =
+                context.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+            setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+            setOnQueryTextListener(this@BaseFragment)
+            isIconified = false
+        }
     }
 }

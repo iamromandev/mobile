@@ -2,11 +2,9 @@ package com.dreampany.word.ui.fragment
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
-import com.afollestad.assent.Permission
-import com.afollestad.assent.runWithPermissions
 import com.dreampany.common.data.model.Response
+import com.dreampany.common.misc.exts.hideKeyboard
 import com.dreampany.common.misc.func.SmartError
 import com.dreampany.common.ui.fragment.BaseFragment
 import com.dreampany.word.R
@@ -66,6 +64,7 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
         if (query.isNullOrEmpty()) return false
 
         Timber.v(query)
+
         vm.read(query)
 
         return super.onQueryTextSubmit(query)
@@ -90,6 +89,12 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     private fun processResponse(response: Response<Type, Subtype, State, Action, WordItem>) {
         if (response is Response.Progress) {
             //binding.swipe.refresh(response.progress)
+            if (response.progress)
+                hideSearchView()
+                hideKeyboard()
+
+            applyProgress(response.progress)
+
         } else if (response is Response.Error) {
             processError(response.error)
         } else if (response is Response.Result<Type, Subtype, State, Action, WordItem>) {

@@ -33,7 +33,7 @@ abstract class BaseActivity<T> : AppCompatActivity(),
     protected lateinit var binding: T
 
     protected var toolbar: MaterialToolbar? = null
-    protected var menu : Menu? = null
+    protected var menu: Menu? = null
 
     private var progress: KProgressHUD? = null
     //private var sheetDialog: BottomSheetMaterialDialog? = null
@@ -100,35 +100,6 @@ abstract class BaseActivity<T> : AppCompatActivity(),
         return view as SearchView
     }
 
-    private fun initToolbar() {
-        if (toolbarId != 0) {
-            toolbar = findViewById<MaterialToolbar>(toolbarId)
-            setSupportActionBar(toolbar)
-            if (fullScreen)
-                supportActionBar?.hide()
-            if (homeUp) {
-                val actionBar = supportActionBar
-                actionBar?.apply {
-                    setDisplayHomeAsUpEnabled(true)
-                    setHomeButtonEnabled(true)
-                }
-            }
-        }
-    }
-
-    private fun initSearch() {
-        val searchView = getSearchView()
-        searchView?.apply {
-            inputType = InputType.TYPE_TEXT_VARIATION_FILTER
-            imeOptions = EditorInfo.IME_ACTION_DONE or EditorInfo.IME_FLAG_NO_FULLSCREEN
-            queryHint = getString(R.string.search)
-            val searchManager =
-                context.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-            setSearchableInfo(searchManager.getSearchableInfo(this@BaseActivity.componentName))
-            setOnQueryTextListener(this@BaseActivity)
-            isIconified = false
-        }
-    }
 
     protected fun showProgress() {
         if (progress == null) {
@@ -197,5 +168,38 @@ abstract class BaseActivity<T> : AppCompatActivity(),
                 dismiss()
             }
             sheetDialog = null*/
+    }
+
+    protected fun hideSearchView() {
+        getSearchMenuItem()?.collapseActionView()
+    }
+
+    private fun initToolbar() {
+        if (toolbarId != 0) {
+            toolbar = findViewById<MaterialToolbar>(toolbarId)
+            setSupportActionBar(toolbar)
+            if (fullScreen)
+                supportActionBar?.hide()
+            if (homeUp) {
+                val actionBar = supportActionBar
+                actionBar?.apply {
+                    setDisplayHomeAsUpEnabled(true)
+                    setHomeButtonEnabled(true)
+                }
+            }
+        }
+    }
+
+    private fun initSearch() {
+        getSearchView()?.apply {
+            inputType = InputType.TYPE_TEXT_VARIATION_FILTER
+            imeOptions = EditorInfo.IME_ACTION_DONE or EditorInfo.IME_FLAG_NO_FULLSCREEN
+            queryHint = getString(R.string.search)
+            val searchManager =
+                context.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+            setSearchableInfo(searchManager.getSearchableInfo(this@BaseActivity.componentName))
+            setOnQueryTextListener(this@BaseActivity)
+            isIconified = false
+        }
     }
 }

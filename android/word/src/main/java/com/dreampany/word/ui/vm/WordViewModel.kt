@@ -37,6 +37,7 @@ class WordViewModel
 
     fun read(word: String) {
         uiScope.launch {
+            postProgress(true)
             var result: Word? = null
             var errors: SmartError? = null
             try {
@@ -60,8 +61,18 @@ class WordViewModel
         }
     }
 
+    private fun postProgress(progress: Boolean) {
+        postSingle(
+            Type.WORD,
+            Subtype.DEFAULT,
+            State.DEFAULT,
+            Action.DEFAULT,
+            progress = progress
+        )
+    }
+
     private fun postError(error: SmartError) {
-        postMultiple(
+        postSingle(
             Type.WORD,
             Subtype.DEFAULT,
             State.DEFAULT,
@@ -78,7 +89,7 @@ class WordViewModel
             State.DEFAULT,
             Action.DEFAULT,
             result = result,
-            progress = false
+            progress = true
         )
     }
 }

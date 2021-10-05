@@ -103,3 +103,5 @@ val Fragment?.packageName: String get() = contextRef.packageName
 val Fragment?.versionCode: Long get() = contextRef.versionCode
 
 val Fragment?.versionName: String get() = contextRef.versionName
+
+fun Fragment.hideKeyboard() = activity?.hideKeyboard()

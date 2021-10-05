@@ -51,17 +51,12 @@ abstract class BaseViewModel<T : BaseEnum, ST : BaseEnum, S : BaseEnum, A : Base
 
     override fun onCleared() {
         super.onCleared()
-        singleOwners.forEach {
-            output.removeObservers(it)
-        }
-        multipleOwners.forEach {
-            outputs.removeObservers(it)
-        }
+        singleOwners.forEach { output.removeObservers(it) }
+        multipleOwners.forEach { outputs.removeObservers(it) }
         job.cancel()
     }
 
-    protected val context: Context
-        get() = getApplication()
+    protected val context: Context get() = getApplication()
 
     fun subscribe(owner: LifecycleOwner, observer: Observer<Response<T, ST, S, A, O>>) {
         singleOwners.add(owner)
