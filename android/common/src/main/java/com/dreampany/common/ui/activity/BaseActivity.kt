@@ -1,11 +1,15 @@
 package com.dreampany.common.ui.activity
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import androidx.annotation.DrawableRes
-import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
-import androidx.annotation.StringRes
+import android.text.InputType
+import android.view.Menu
+import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
+import androidx.annotation.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.dreampany.common.R
@@ -21,13 +25,15 @@ import javax.inject.Inject
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
-abstract class BaseActivity<T> : AppCompatActivity() where T : ViewDataBinding {
+abstract class BaseActivity<T> : AppCompatActivity(),
+    SearchView.OnQueryTextListener where T : ViewDataBinding {
 
     @Inject
     protected lateinit var ex: Executors
     protected lateinit var binding: T
 
     protected var toolbar: MaterialToolbar? = null
+    protected var menu : Menu? = null
 
     private var progress: KProgressHUD? = null
     //private var sheetDialog: BottomSheetMaterialDialog? = null
@@ -35,8 +41,14 @@ abstract class BaseActivity<T> : AppCompatActivity() where T : ViewDataBinding {
     @get:LayoutRes
     open val layoutRes: Int = 0
 
+    @get:MenuRes
+    open val menuRes: Int = 0
+
     @get:IdRes
     open val toolbarId: Int = 0
+
+    @get:IdRes
+    open val searchMenuItemId: Int = 0
 
     open val fullScreen: Boolean = false
 
@@ -56,9 +68,36 @@ abstract class BaseActivity<T> : AppCompatActivity() where T : ViewDataBinding {
         onStartUi(savedInstanceState)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        this.menu = menu
+        if (menuRes != 0) { //this need clear
+            menu.clear()
+            menuInflater.inflate(menuRes, menu)
+            ex.postToUi(Runnable {
+                //onMenuCreated(menu)
+                initSearch()
+            })
+            return true
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onDestroy() {
         onStopUi()
         super.onDestroy()
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean = false
+
+    override fun onQueryTextSubmit(query: String?): Boolean = false
+
+    protected fun findMenuItemById(menuItemId: Int): MenuItem? = menu?.findItem(menuItemId)
+
+    protected fun getSearchMenuItem(): MenuItem? = findMenuItemById(searchMenuItemId)
+
+    protected fun getSearchView(): SearchView? {
+        val view = getSearchMenuItem()?.actionView ?: return null
+        return view as SearchView
     }
 
     private fun initToolbar() {
@@ -74,6 +113,20 @@ abstract class BaseActivity<T> : AppCompatActivity() where T : ViewDataBinding {
                     setHomeButtonEnabled(true)
                 }
             }
+        }
+    }
+
+    private fun initSearch() {
+        val searchView = getSearchView()
+        searchView?.apply {
+            inputType = InputType.TYPE_TEXT_VARIATION_FILTER
+            imeOptions = EditorInfo.IME_ACTION_DONE or EditorInfo.IME_FLAG_NO_FULLSCREEN
+            queryHint = getString(R.string.search)
+            val searchManager =
+                context.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+            setSearchableInfo(searchManager.getSearchableInfo(this@BaseActivity.componentName))
+            setOnQueryTextListener(this@BaseActivity)
+            isIconified = false
         }
     }
 
@@ -94,7 +147,7 @@ abstract class BaseActivity<T> : AppCompatActivity() where T : ViewDataBinding {
         }
     }
 
-    protected fun progress(progress : Boolean) {
+    protected fun progress(progress: Boolean) {
         if (progress) showProgress() else hideProgress()
     }
 
@@ -140,9 +193,9 @@ abstract class BaseActivity<T> : AppCompatActivity() where T : ViewDataBinding {
     }
 
     protected fun hideDialog() {
-    /*    sheetDialog?.run {
-            dismiss()
-        }
-        sheetDialog = null*/
+        /*    sheetDialog?.run {
+                dismiss()
+            }
+            sheetDialog = null*/
     }
 }

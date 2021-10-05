@@ -7,7 +7,9 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.*
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.*
@@ -21,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewbinding.ViewBinding
 import com.dreampany.common.R
 import com.dreampany.common.misc.func.SafeClickListener
+import com.google.android.material.appbar.MaterialToolbar
 
 /**
  * Created by roman on 7/17/21
@@ -273,4 +276,13 @@ val List<TextView>.isEmpty: Boolean
 fun <VH : RecyclerView.ViewHolder> RecyclerView.apply(adapter: RecyclerView.Adapter<VH>, reverse : Boolean = false) {
     this.layoutManager = LinearLayoutManager(context).apply { this.stackFromEnd = reverse }
     this.adapter = adapter
+}
+
+fun MaterialToolbar.show() {
+    this.animate().translationY(0f).setInterpolator(DecelerateInterpolator()).start()
+}
+
+fun MaterialToolbar.hide() {
+    this.animate().translationY((-this.getBottom()).toFloat()).setInterpolator(AccelerateInterpolator()).start()
+
 }

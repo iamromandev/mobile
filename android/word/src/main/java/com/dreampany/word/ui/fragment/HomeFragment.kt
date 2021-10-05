@@ -2,11 +2,21 @@ package com.dreampany.word.ui.fragment
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.afollestad.assent.Permission
 import com.afollestad.assent.runWithPermissions
+import com.dreampany.common.data.model.Response
+import com.dreampany.common.misc.func.SmartError
 import com.dreampany.common.ui.fragment.BaseFragment
 import com.dreampany.word.R
+import com.dreampany.word.data.enums.Action
+import com.dreampany.word.data.enums.State
+import com.dreampany.word.data.enums.Subtype
+import com.dreampany.word.data.enums.Type
 import com.dreampany.word.databinding.HomeFragmentBinding
+import com.dreampany.word.ui.model.WordItem
+import com.dreampany.word.ui.vm.WordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,12 +30,14 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
 
-    @Transient
-    private var inited = false
-
     override val layoutRes: Int = R.layout.home_fragment
     override val menuRes: Int = R.menu.home_menu
     override val searchMenuItemId: Int = R.id.action_search
+
+    @Transient
+    private var inited = false
+
+    private val vm: WordViewModel by viewModels()
 
     override fun onStartUi(state: Bundle?) {
         inited = initUi(state)
@@ -51,9 +63,10 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        //if (query.isNullOrEmpty()) return false
+        if (query.isNullOrEmpty()) return false
 
         Timber.v(query)
+        vm.read(query)
 
         return super.onQueryTextSubmit(query)
     }
@@ -61,9 +74,12 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     private fun initUi(state: Bundle?): Boolean {
         if (inited) return true
 
-        runWithPermissions(Permission.ACCESS_FINE_LOCATION) {
+        vm.subscribe(this, { this.processResponse(it) })
+
+
+        /*runWithPermissions(Permission.ACCESS_FINE_LOCATION) {
             //vm.registerNearby()
-        }
+        }*/
 
         //binding.swipe.init(this)
         //binding.stateful.setStateView(StatefulLayout.State.EMPTY, R.layout.content_empty_stations)
@@ -71,7 +87,40 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
         return true
     }
 
+    private fun processResponse(response: Response<Type, Subtype, State, Action, WordItem>) {
+        if (response is Response.Progress) {
+            //binding.swipe.refresh(response.progress)
+        } else if (response is Response.Error) {
+            processError(response.error)
+        } else if (response is Response.Result<Type, Subtype, State, Action, WordItem>) {
+            Timber.v("Result [%s]", response.result)
+            processResult(response.result)
+        }
+    }
 
+    private fun processError(error: SmartError) {
+        val titleRes = if (error.hostError) R.string.title_no_internet else R.string.title_error
+        val message =
+            if (error.hostError) getString(R.string.message_no_internet) else error.message
+        showDialogue(
+            titleRes,
+            messageRes = R.string.message_unknown,
+            message = message,
+            onPositiveClick = {
+
+            },
+            onNegativeClick = {
+
+            }
+        )
+    }
+
+    private fun processResult(result: WordItem?) {
+        if (result != null) {
+
+        }
+
+    }
 
 
 }

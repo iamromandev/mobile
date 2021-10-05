@@ -13,7 +13,9 @@ import com.dreampany.word.data.model.Word
 import com.dreampany.word.data.source.repo.WordRepo
 import com.dreampany.word.ui.model.WordItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,7 +31,7 @@ class WordViewModel
     application: Application,
     rm: ResponseMapper,
     private val repo: WordRepo
-) : BaseViewModel<Type, Subtype, State, Action, Word, WordItem<*>, UiTask<Type, Subtype, State, Action, Word>>(
+) : BaseViewModel<Type, Subtype, State, Action, Word, WordItem, UiTask<Type, Subtype, State, Action, Word>>(
     application, rm
 ) {
 
@@ -44,10 +46,39 @@ class WordViewModel
                 errors = error
             }
             if (errors != null) {
-                //postError(errors)
+                postError(errors)
             } else {
-                //postResult(result?.toItems())
+                postResult(result?.toItem())
             }
         }
+    }
+
+    private suspend fun Word.toItem(): WordItem {
+        val input = this
+        return withContext(Dispatchers.IO) {
+            WordItem(input)
+        }
+    }
+
+    private fun postError(error: SmartError) {
+        postMultiple(
+            Type.WORD,
+            Subtype.DEFAULT,
+            State.DEFAULT,
+            Action.DEFAULT,
+            error = error,
+            progress = true
+        )
+    }
+
+    private fun postResult(result: WordItem?) {
+        postSingle(
+            Type.WORD,
+            Subtype.DEFAULT,
+            State.DEFAULT,
+            Action.DEFAULT,
+            result = result,
+            progress = false
+        )
     }
 }

@@ -39,8 +39,12 @@ class MessageActivity : BaseActivity<MessageActivityBinding>() {
 
     @Inject
     internal lateinit var pref: Pref
+
     @Inject
     internal lateinit var fileSheet: FileSheetFragment
+
+    override val layoutRes: Int = R.layout.message_activity
+    override val toolbarId: Int = R.id.toolbar
 
     private val vm: MessageViewModel by viewModels()
     private lateinit var adapter: MessageAdapter
@@ -50,12 +54,7 @@ class MessageActivity : BaseActivity<MessageActivityBinding>() {
 
     @Transient
     private var inited = false
-    private var count = 0;
-
-    override val layoutRes: Int  = R.layout.message_activity
-
-    override val toolbarId: Int
-        get() = R.id.toolbar
+    private var count = 0
 
     override fun onStartUi(state: Bundle?) {
         user = pref.user ?: return

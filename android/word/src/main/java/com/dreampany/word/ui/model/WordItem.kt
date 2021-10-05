@@ -14,7 +14,7 @@ import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
-class WordItem<B>(val input: Word) :
+class WordItem(val input: Word) :
     ModelAbstractBindingItem<Word, WordItemBinding>(input) {
 
     override fun hashCode(): Int = input.hashCode()

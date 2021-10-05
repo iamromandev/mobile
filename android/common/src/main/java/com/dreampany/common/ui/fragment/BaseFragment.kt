@@ -24,13 +24,14 @@ import javax.inject.Inject
  * Last modified $file.lastModified
  */
 abstract class BaseFragment<T> : Fragment(),
-    SwipeRefreshLayout.OnRefreshListener, SearchView.OnQueryTextListener
-        where T : ViewDataBinding {
+    SwipeRefreshLayout.OnRefreshListener,
+    SearchView.OnQueryTextListener where T : ViewDataBinding {
 
     @Inject
     protected lateinit var ex: Executors
     protected lateinit var binding: T
-    protected lateinit var menu: Menu
+
+    protected var menu: Menu? = null
 
     private var progress: KProgressHUD? = null
     //private var sheetDialog: BottomSheetMaterialDialog? = null
@@ -99,7 +100,7 @@ abstract class BaseFragment<T> : Fragment(),
 
     override fun onQueryTextSubmit(query: String?): Boolean = false
 
-    protected fun findMenuItemById(menuItemId: Int): MenuItem? = menu.findItem(menuItemId)
+    protected fun findMenuItemById(menuItemId: Int): MenuItem? = menu?.findItem(menuItemId)
 
     protected fun getSearchMenuItem(): MenuItem? = findMenuItemById(searchMenuItemId)
 

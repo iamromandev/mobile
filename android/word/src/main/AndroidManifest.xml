@@ -24,7 +24,7 @@
         <!-- splash -->
         <activity
             android:name=".ui.activity.SplashActivity"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,9 +33,12 @@
             </intent-filter>
         </activity>
 
+        <!-- home -->
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize" />
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|screenLayout|smallestScreenSize">
+
+        </activity>
 
     </application>
 

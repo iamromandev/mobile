@@ -20,11 +20,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<HomeActivityBinding>() {
 
-    @Transient private var inited = false
-
     override val layoutRes: Int = R.layout.home_activity
-
     override val toolbarId: Int = R.id.toolbar
+
+    @Transient
+    private var inited = false
 
     override fun onStartUi(state: Bundle?) {
         inited = initUi()
@@ -34,7 +34,7 @@ class HomeActivity : BaseActivity<HomeActivityBinding>() {
 
     }
 
-    private fun initUi() : Boolean {
+    private fun initUi(): Boolean {
         if (inited) return true
         val navView: BottomNavigationView = binding.navView
 
