@@ -4,6 +4,14 @@
     package="com.dreampany.word"
     android:installLocation="auto">
 
+    <uses-sdk tools:overrideLibrary="androidx.camera.core, androidx.camera.camera2, androidx.camera.view, androidx.camera.lifecycle" />
+
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".app.App"
         android:allowBackup="false"
