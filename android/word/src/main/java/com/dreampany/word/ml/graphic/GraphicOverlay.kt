@@ -1,4 +1,4 @@
-package com.dreampany.word.misc.graphic
+package com.dreampany.word.ml.graphic
 
 import android.content.Context
 import android.graphics.Matrix
@@ -19,7 +19,7 @@ class GraphicOverlay : View {
 
     private val lock = Any()
     private val graphics = ArrayList<Graphic>()
-    private val transformationMatrix = Matrix()
+    val transformationMatrix = Matrix()
 
     private var imageWidth = 0
     private var imageHeight = 0
@@ -56,4 +56,18 @@ class GraphicOverlay : View {
         @StyleRes defStyleRes: Int
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
+
+    fun clear() {
+        synchronized(lock) { graphics.clear() }
+        postInvalidate()
+    }
+
+    fun add(graphic: Graphic) {
+        synchronized(lock) { graphics.add(graphic) }
+    }
+
+    fun remove(graphic: Graphic) {
+        synchronized(lock) { graphics.remove(graphic) }
+        postInvalidate()
+    }
 }

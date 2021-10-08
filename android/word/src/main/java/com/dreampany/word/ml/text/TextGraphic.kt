@@ -4,8 +4,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import com.dreampany.word.misc.graphic.Graphic
-import com.dreampany.word.misc.graphic.GraphicOverlay
+import com.dreampany.word.ml.graphic.Graphic
+import com.dreampany.word.ml.graphic.GraphicOverlay
 import com.google.mlkit.vision.text.Text
 import timber.log.Timber
 import kotlin.math.max

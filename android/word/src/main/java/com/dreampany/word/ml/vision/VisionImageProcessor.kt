@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.os.Build.VERSION_CODES
 import androidx.annotation.RequiresApi
 import androidx.camera.core.ImageProxy
-import com.dreampany.word.misc.graphic.GraphicOverlay
+import com.dreampany.word.ml.graphic.GraphicOverlay
 import com.google.mlkit.common.MlKitException
 import java.nio.ByteBuffer
 
@@ -25,5 +25,4 @@ interface VisionImageProcessor {
     fun processImageProxy(image: ImageProxy, overlay: GraphicOverlay)
 
     fun stop()
-
 }
