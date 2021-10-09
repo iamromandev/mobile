@@ -40,15 +40,15 @@
                 android:background="?android:attr/windowBackground"
                 auto:labelVisibilityMode="selected"
                 auto:layout_constraintBottom_toBottomOf="parent"
-                auto:layout_constraintLeft_toLeftOf="parent"
-                auto:layout_constraintRight_toRightOf="parent"
+                auto:layout_constraintEnd_toEndOf="parent"
+                auto:layout_constraintStart_toStartOf="parent"
                 auto:menu="@menu/bottom_nav_menu" />
 
             <fragment
                 android:id="@+id/nav_host"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 auto:defaultNavHost="true"
                 auto:layout_constraintBottom_toTopOf="@id/nav_view"
                 auto:layout_constraintLeft_toLeftOf="parent"
