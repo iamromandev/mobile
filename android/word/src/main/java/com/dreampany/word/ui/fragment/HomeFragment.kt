@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.viewModels
 import com.dreampany.common.data.model.Response
+import com.dreampany.common.misc.exts.hide
 import com.dreampany.common.misc.exts.hideKeyboard
 import com.dreampany.common.misc.exts.setOnSafeClickListener
 import com.dreampany.common.misc.exts.show
@@ -47,7 +48,6 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     }
 
     override fun onStopUi() {
-        //vm.unregisterNearby()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -75,6 +75,15 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
         return super.onQueryTextSubmit(query)
     }
 
+    override val hasBackPressed: Boolean
+        get() {
+            if (ocrSheetFragment.isVisible) {
+                closeOcrSheet()
+                return true
+            }
+            return false
+        }
+
     private fun initUi(state: Bundle?): Boolean {
         if (inited) return true
 
@@ -84,6 +93,11 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
 
         vm.subscribe(this, { this.processResponse(it) })
 
+        /*ocrSheetFragment.setListener({
+            ex.postToUi({
+                closeOcrSheet()
+            })
+        })*/
 
         /*runWithPermissions(Permission.ACCESS_FINE_LOCATION) {
             //vm.registerNearby()
@@ -96,10 +110,17 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     }
 
     private fun openOcrSheet() {
+        binding.fab.hide()
         binding.ocrSheetFragment.show()
         childFragmentManager.beginTransaction()
             .replace(R.id.ocr_sheet_fragment, ocrSheetFragment)
             .commit()
+    }
+
+    private fun closeOcrSheet() {
+        childFragmentManager.beginTransaction().remove(ocrSheetFragment).commit();
+        binding.fab.show()
+        binding.ocrSheetFragment.hide()
     }
 
     private fun processResponse(response: Response<Type, Subtype, State, Action, WordItem>) {

@@ -8,6 +8,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import timber.log.Timber
 
 /**
  * Created by roman on 10/7/21
@@ -30,6 +31,7 @@ class TextRecognitionProcessor(private val context: Context, options: TextRecogn
 
     override fun onSuccess(result: Text, overlay: GraphicOverlay) {
         overlay.add(TextGraphic(overlay, result, shouldGroupRecognizedTextInBlocks))
+        Timber.v(result.text)
     }
 
     override fun onFailure(error: Throwable) {

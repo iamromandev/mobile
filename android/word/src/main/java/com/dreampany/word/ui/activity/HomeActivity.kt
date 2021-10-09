@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.dreampany.common.ui.activity.BaseActivity
 import com.dreampany.word.R
 import com.dreampany.word.databinding.HomeActivityBinding
+import com.dreampany.word.ui.fragment.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +33,15 @@ class HomeActivity : BaseActivity<HomeActivityBinding>() {
 
     override fun onStopUi() {
 
+    }
+
+    override fun onBackPressed() {
+        val currentFragment = currentFragmentOfNavHost
+        if (currentFragment is HomeFragment) {
+            if (currentFragment.hasBackPressed) return
+        }
+
+        super.onBackPressed()
     }
 
     private fun initUi(): Boolean {

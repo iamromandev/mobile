@@ -2,6 +2,7 @@ package com.dreampany.word.ui.fragment
 
 import android.os.Bundle
 import android.util.Size
+import android.view.View
 import android.widget.CompoundButton
 import androidx.camera.core.CameraInfoUnavailableException
 import androidx.camera.core.CameraSelector
@@ -54,12 +55,16 @@ class OcrSheetFragment
 
     private val permissions = arrayOf<Permission>(Permission.CAMERA)
 
+    private lateinit var onClose: () -> Unit
+
     override fun onStartUi(state: Bundle?) {
         inited = initUi(state)
     }
 
     override fun onStopUi() {
         if (::imageProcessor.isInitialized) imageProcessor.stop()
+        if (::onClose.isInitialized)
+            onClose()
     }
 
     override fun onResume() {
@@ -90,6 +95,10 @@ class OcrSheetFragment
         } catch (error: CameraInfoUnavailableException) {
 
         }
+    }
+
+    fun setListener(onClose: () -> Unit) {
+        this.onClose = onClose
     }
 
     private fun initUi(state: Bundle?): Boolean {

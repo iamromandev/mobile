@@ -52,6 +52,8 @@ abstract class BaseFragment<T> : Fragment(),
     @get:IdRes
     open val searchMenuItemId: Int = 0
 
+    open val hasBackPressed: Boolean = false
+
     protected abstract fun onStartUi(state: Bundle?)
 
     protected abstract fun onStopUi()

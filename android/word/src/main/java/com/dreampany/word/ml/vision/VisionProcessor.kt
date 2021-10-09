@@ -1,10 +1,12 @@
 package com.dreampany.word.ml.vision
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.SystemClock
 import androidx.annotation.GuardedBy
+import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
 import com.dreampany.word.ml.graphic.CameraImageGraphic
 import com.dreampany.word.ml.graphic.GraphicOverlay
@@ -85,8 +87,20 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
             processLatestImage(overlay)
     }
 
-    override fun processImageProxy(image: ImageProxy, overlay: GraphicOverlay) {
+    @ExperimentalGetImage
+    override fun processImageProxy(imageProxy: ImageProxy, overlay: GraphicOverlay) {
+        val frameStartMs = SystemClock.elapsedRealtime()
+        if (isShutdown) return
+        val image = imageProxy.image ?: return
+        val bitmap = null
 
+        requestDetectInImage(
+            InputImage.fromMediaImage(image, imageProxy.imageInfo.rotationDegrees),
+            overlay,
+            bitmap,
+            frameStartMs,
+            true
+        ).addOnCompleteListener { imageProxy.close() }
     }
 
     override fun stop() {
@@ -110,7 +124,7 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
 
     private fun processImage(data: ByteBuffer, meta: FrameMeta, overlay: GraphicOverlay) {
         val frameStartMs = SystemClock.elapsedRealtime()
-        val bitmap = BitmapUtils.getBitmap(data, meta)
+        val bitmap = null//BitmapUtils.getBitmap(data, meta)
 
         requestDetectInImage(
             InputImage.fromByteBuffer(

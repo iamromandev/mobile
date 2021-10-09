@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.dreampany.common.R
 import com.dreampany.common.misc.func.Executors
+import com.dreampany.common.ui.fragment.BaseFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.kaopiz.kprogresshud.KProgressHUD
 
@@ -91,6 +92,13 @@ abstract class BaseActivity<T> : AppCompatActivity(),
 
     override fun onQueryTextSubmit(query: String?): Boolean = false
 
+    protected val currentFragmentOfNavHost: BaseFragment<*>?
+        get() {
+            val navHostFragment = supportFragmentManager.primaryNavigationFragment
+            val currentFragment = navHostFragment?.childFragmentManager?.fragments?.firstOrNull()
+            return currentFragment as BaseFragment<*>?
+        }
+
     protected fun findMenuItemById(menuItemId: Int): MenuItem? = menu?.findItem(menuItemId)
 
     protected fun getSearchMenuItem(): MenuItem? = findMenuItemById(searchMenuItemId)
@@ -99,7 +107,6 @@ abstract class BaseActivity<T> : AppCompatActivity(),
         val view = getSearchMenuItem()?.actionView ?: return null
         return view as SearchView
     }
-
 
     protected fun showProgress() {
         if (progress == null) {

@@ -20,16 +20,17 @@
             android:id="@+id/overlay"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            auto:layout_constraintBottom_toBottomOf="@id/camera_preview"
             auto:layout_constraintLeft_toLeftOf="@id/camera_preview"
             auto:layout_constraintRight_toRightOf="@id/camera_preview"
-            auto:layout_constraintTop_toTopOf="@id/camera_preview"
-            auto:layout_constraintBottom_toBottomOf="@id/camera_preview"/>
+            auto:layout_constraintTop_toTopOf="@id/camera_preview" />
 
         <include
             android:id="@+id/settings_button"
             layout="@layout/settings_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             auto:layout_constraintRight_toRightOf="@id/camera_preview"
             auto:layout_constraintTop_toTopOf="@id/camera_preview" />
 
@@ -43,8 +44,8 @@
 
             <ToggleButton
                 android:id="@+id/facing_switch"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/toggle_style"
                 android:checked="false"
