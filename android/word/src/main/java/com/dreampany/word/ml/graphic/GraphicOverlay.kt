@@ -1,6 +1,7 @@
 package com.dreampany.word.ml.graphic
 
 import android.content.Context
+import android.graphics.Canvas
 import android.graphics.Matrix
 import android.os.Build
 import android.util.AttributeSet
@@ -8,6 +9,7 @@ import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StyleRes
+import com.google.common.base.Preconditions
 
 /**
  * Created by roman on 10/7/21
@@ -55,6 +57,23 @@ class GraphicOverlay : View {
         @AttrRes defStyleAttr: Int,
         @StyleRes defStyleRes: Int
     ) : super(context, attrs, defStyleAttr, defStyleRes)
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+    }
+
+    fun setImageSourceInfo(imageWidth: Int, imageHeight: Int, isFlipped : Boolean) {
+        Preconditions.checkState(imageWidth > 0, "image width must be positive")
+        Preconditions.checkState(imageHeight > 0, "image height must be positive")
+        synchronized(lock) {
+            this.imageWidth = imageWidth
+            this.imageHeight = imageHeight
+            isImageFlipped = isFlipped
+            needUpdateTransformation = true
+        }
+        postInvalidate()
+    }
 
 
     fun clear() {

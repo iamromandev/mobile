@@ -5,6 +5,8 @@ import android.view.MenuItem
 import androidx.fragment.app.viewModels
 import com.dreampany.common.data.model.Response
 import com.dreampany.common.misc.exts.hideKeyboard
+import com.dreampany.common.misc.exts.setOnSafeClickListener
+import com.dreampany.common.misc.exts.show
 import com.dreampany.common.misc.func.SmartError
 import com.dreampany.common.ui.fragment.BaseFragment
 import com.dreampany.word.R
@@ -27,6 +29,9 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
+
+    @Inject
+    internal lateinit var ocrSheetFragment: OcrSheetFragment
 
     override val layoutRes: Int = R.layout.home_fragment
     override val menuRes: Int = R.menu.home_menu
@@ -73,6 +78,10 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     private fun initUi(state: Bundle?): Boolean {
         if (inited) return true
 
+        binding.fab.setOnSafeClickListener {
+            openOcrSheet()
+        }
+
         vm.subscribe(this, { this.processResponse(it) })
 
 
@@ -86,12 +95,20 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
         return true
     }
 
+    private fun openOcrSheet() {
+        binding.ocrSheetFragment.show()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.ocr_sheet_fragment, ocrSheetFragment)
+            .commit()
+    }
+
     private fun processResponse(response: Response<Type, Subtype, State, Action, WordItem>) {
         if (response is Response.Progress) {
             //binding.swipe.refresh(response.progress)
-            if (response.progress)
+            if (response.progress) {
                 hideSearchView()
                 hideKeyboard()
+            }
 
             applyProgress(response.progress)
 

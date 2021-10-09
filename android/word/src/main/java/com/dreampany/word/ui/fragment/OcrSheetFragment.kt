@@ -8,13 +8,21 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
+import com.afollestad.assent.Permission
+import com.afollestad.assent.runWithPermissions
 import com.dreampany.common.misc.exts.contextRef
+import com.dreampany.common.misc.exts.hasPermission
 import com.dreampany.common.ui.fragment.BaseFragment
+import com.dreampany.word.R
 import com.dreampany.word.databinding.OcrSheetFragmentBinding
 import com.dreampany.word.ml.text.TextRecognitionProcessor
 import com.dreampany.word.ml.vision.VisionImageProcessor
+import com.google.mlkit.common.MlKitException
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import java.util.concurrent.ExecutionException
 import javax.inject.Inject
 
 /**
@@ -30,6 +38,8 @@ class OcrSheetFragment
 ) : BaseFragment<OcrSheetFragmentBinding>(),
     CompoundButton.OnCheckedChangeListener {
 
+    override val layoutRes: Int =  R.layout.ocr_sheet_fragment
+
     @Transient
     private var inited = false
 
@@ -42,12 +52,24 @@ class OcrSheetFragment
 
     private var needUpdateGraphicOverlayImageSourceInfo = false
 
+    private val permissions = arrayOf<Permission>(Permission.CAMERA)
+
     override fun onStartUi(state: Bundle?) {
         inited = initUi(state)
     }
 
     override fun onStopUi() {
+        if (::imageProcessor.isInitialized) imageProcessor.stop()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if (allPermissionsGranted) bindAllCameraUseCases()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (::imageProcessor.isInitialized) imageProcessor.stop()
     }
 
     override fun onCheckedChanged(button: CompoundButton, isChecked: Boolean) {
@@ -71,10 +93,30 @@ class OcrSheetFragment
     }
 
     private fun initUi(state: Bundle?): Boolean {
+        val context = contextRef ?: return false
         if (inited) return true
 
         cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
         binding.facingSwitch.setOnCheckedChangeListener(this)
+
+        if (!::cameraProvider.isInitialized) {
+            val providerFuture = ProcessCameraProvider.getInstance(context.applicationContext)
+            providerFuture.addListener(
+                {
+                    try {
+                        cameraProvider = providerFuture.get()
+                        if (allPermissionsGranted) bindAllCameraUseCases()
+                    } catch (error: ExecutionException) {
+                        Timber.e(error)
+                    } catch (error: InterruptedException) {
+                        Timber.e(error)
+                    }
+                },
+                ContextCompat.getMainExecutor(context.applicationContext)
+            )
+        }
+
+        if (!allPermissionsGranted) checkPermissions()
         return true
     }
 
@@ -101,16 +143,50 @@ class OcrSheetFragment
     private fun bindAnalysisUseCase() {
         if (!::cameraProvider.isInitialized) return
         if (::analysisUseCase.isInitialized) cameraProvider.unbind(analysisUseCase)
-        if (!::imageProcessor.isInitialized) imageProcessor.stop()
+        if (::imageProcessor.isInitialized) imageProcessor.stop()
 
-        imageProcessor = TextRecognitionProcessor(contextRef!!, TextRecognizerOptions.Builder().build())
+        val context = contextRef ?: return
+        imageProcessor = TextRecognitionProcessor(context, TextRecognizerOptions.Builder().build())
         val builder = ImageAnalysis.Builder()
         val targetResolution = Size.parseSize("1000x1000")
         builder.setTargetResolution(targetResolution)
         analysisUseCase = builder.build()
         needUpdateGraphicOverlayImageSourceInfo = true
 
+        analysisUseCase.setAnalyzer(
+            ContextCompat.getMainExecutor(context),
+            { proxy ->
+                if (needUpdateGraphicOverlayImageSourceInfo) {
+                    needUpdateGraphicOverlayImageSourceInfo = false
+                    val isFlipped = lensFacing == CameraSelector.LENS_FACING_FRONT
+                    val degree = proxy.imageInfo.rotationDegrees
+                    if (degree == 0 || degree == 180)
+                        binding.overlay.setImageSourceInfo(proxy.width, proxy.height, isFlipped)
+                    else
+                        binding.overlay.setImageSourceInfo(proxy.height, proxy.width, isFlipped)
+                }
+                try {
+                    imageProcessor.processImageProxy(proxy, binding.overlay)
+                } catch (error: MlKitException) {
+                    Timber.e(error)
+                }
+            }
+        )
+        cameraProvider.bindToLifecycle(this, cameraSelector, analysisUseCase)
     }
 
+    private fun checkPermissions() {
+        runWithPermissions(*permissions) {
+            bindAllCameraUseCases()
+        }
 
+    }
+
+    private val allPermissionsGranted: Boolean
+        get() {
+            val context = contextRef
+            for (permission in permissions)
+                if (!context.hasPermission(permission.value)) return false
+            return true
+        }
 }
