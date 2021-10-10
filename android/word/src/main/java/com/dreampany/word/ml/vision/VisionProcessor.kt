@@ -1,6 +1,5 @@
 package com.dreampany.word.ml.vision
 
-import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.graphics.Bitmap
@@ -8,6 +7,7 @@ import android.os.SystemClock
 import androidx.annotation.GuardedBy
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
+import com.dreampany.word.misc.exts.bitmap
 import com.dreampany.word.ml.graphic.CameraImageGraphic
 import com.dreampany.word.ml.graphic.GraphicOverlay
 import com.google.android.gms.tasks.Task
@@ -80,9 +80,9 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
 
     }
 
-    override fun processByteBuffer(data: ByteBuffer, meta: FrameMeta, overlay: GraphicOverlay) {
+    override fun processByteBuffer(data: ByteBuffer, frameMeta: FrameMeta, overlay: GraphicOverlay) {
         latestImage = data
-        latestImageMeta = meta
+        latestImageMeta = frameMeta
         if (processingImage == null && processingMeta == null)
             processLatestImage(overlay)
     }
@@ -92,10 +92,30 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
         val frameStartMs = SystemClock.elapsedRealtime()
         if (isShutdown) return
         val image = imageProxy.image ?: return
+        val imageBitmap = imageProxy.bitmap ?: return
         val bitmap = null
 
+        val width = imageBitmap.width
+        val height = imageBitmap.height
+
+        var diameter = width
+        if (height < width) diameter = height
+
+        val offset = (0.05 * diameter).toInt()
+        diameter -= offset
+
+        val left = width / 2 - diameter / 3
+        val top = height / 4 - diameter / 8
+        val right = width / 2 + diameter / 3
+        val bottom = height / 4 + diameter / 8
+
+        val boxWidth = right - left
+        val boxHeight = bottom - top
+
+        val cropBitmap: Bitmap = Bitmap.createBitmap(imageBitmap, left, top, boxWidth, boxHeight)
+
         requestDetectInImage(
-            InputImage.fromMediaImage(image, imageProxy.imageInfo.rotationDegrees),
+            InputImage.fromBitmap(cropBitmap, imageProxy.imageInfo.rotationDegrees),
             overlay,
             bitmap,
             frameStartMs,
@@ -166,8 +186,8 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
     ): Task<T> {
         val detectorStartMs = SystemClock.elapsedRealtime()
         return task
-            .addOnSuccessListener(executor, { results: T ->
-                onSuccess(results, overlay, bitmap, frameStartMs, detectorStartMs)
+            .addOnSuccessListener(executor, { result: T ->
+                onSuccess(result, overlay, bitmap, frameStartMs, detectorStartMs)
             }).addOnFailureListener(executor, { error: Throwable ->
                 onFailure(error, overlay)
             })

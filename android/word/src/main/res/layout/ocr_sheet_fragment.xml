@@ -9,57 +9,96 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.camera.view.PreviewView
-            android:id="@+id/camera_preview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            auto:layout_constraintBottom_toTopOf="@+id/control"
-            auto:layout_constraintTop_toTopOf="parent" />
+        <!--        <SurfaceView
+                    android:id="@+id/overlay"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    auto:layout_constraintBottom_toBottomOf="parent"
+                    auto:layout_constraintEnd_toEndOf="parent"
+                    auto:layout_constraintStart_toStartOf="parent"
+                    auto:layout_constraintTop_toTopOf="parent" />-->
 
         <com.dreampany.word.ml.graphic.GraphicOverlay
             android:id="@+id/overlay"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            auto:layout_constraintBottom_toBottomOf="parent"
+            auto:layout_constraintEnd_toEndOf="parent"
+            auto:layout_constraintStart_toStartOf="parent"
+            auto:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/preview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            auto:layout_constraintBottom_toBottomOf="parent"
+            auto:layout_constraintEnd_toEndOf="parent"
+            auto:layout_constraintHorizontal_bias="0.0"
+            auto:layout_constraintStart_toStartOf="parent"
+            auto:layout_constraintTop_toTopOf="@id/overlay"
+            auto:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/_12sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            auto:layout_constraintBottom_toBottomOf="parent"
+            auto:layout_constraintEnd_toEndOf="parent"
+            auto:layout_constraintStart_toStartOf="parent"
+            auto:layout_constraintTop_toTopOf="parent"
+            auto:layout_constraintVertical_bias="0.96" />
+
+
+        <!--<com.dreampany.word.ml.graphic.GraphicOverlay
+            android:id="@+id/overlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
             auto:layout_constraintBottom_toBottomOf="@id/camera_preview"
             auto:layout_constraintLeft_toLeftOf="@id/camera_preview"
             auto:layout_constraintRight_toRightOf="@id/camera_preview"
-            auto:layout_constraintTop_toTopOf="@id/camera_preview" />
+            auto:layout_constraintTop_toTopOf="@id/camera_preview" />-->
 
-        <include
-            android:id="@+id/settings_button"
-            layout="@layout/settings_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            auto:layout_constraintRight_toRightOf="@id/camera_preview"
-            auto:layout_constraintTop_toTopOf="@id/camera_preview" />
+        <!--        <include
+                    android:id="@+id/settings_button"
+                    layout="@layout/settings_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    auto:layout_constraintRight_toRightOf="@id/camera_preview"
+                    auto:layout_constraintTop_toTopOf="@id/camera_preview" />-->
 
-        <LinearLayout
-            android:id="@+id/control"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#000"
-            android:orientation="horizontal"
-            auto:layout_constraintBottom_toBottomOf="parent">
+        <!--        <LinearLayout
+                    android:id="@+id/control"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="#000"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    auto:layout_constraintBottom_toBottomOf="parent">
 
-            <ToggleButton
-                android:id="@+id/facing_switch"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/toggle_style"
-                android:checked="false"
-                android:textOff=""
-                android:textOn="" />
+                    <ToggleButton
+                        android:id="@+id/facing_switch"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/toggle_style"
+                        android:checked="false"
+                        android:textOff=""
+                        android:textOn="" />
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1" />
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
 
-        </LinearLayout>
+                </LinearLayout>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

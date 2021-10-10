@@ -25,6 +25,8 @@ class TextRecognitionProcessor(
     private val shouldGroupRecognizedTextInBlocks = true
     val texts = HashSet<String>()
 
+    private lateinit var onNewText: (text: String) -> Unit
+
     override fun stop() {
         super.stop()
         recognizer.close()
@@ -33,14 +35,17 @@ class TextRecognitionProcessor(
     override fun detectInImage(image: InputImage): Task<Text> = recognizer.process(image)
 
     override fun onSuccess(result: Text, overlay: GraphicOverlay) {
-        overlay.add(TextGraphic(overlay, result, shouldGroupRecognizedTextInBlocks))
+        //overlay.add(TextGraphic(overlay, result, shouldGroupRecognizedTextInBlocks))
         texts.add(result.text)
         Timber.v(result.text)
+        onNewText(result.text)
     }
 
     override fun onFailure(error: Throwable) {
         Timber.e(error)
     }
 
-
+    fun setListener(onNewText: (text: String) -> Unit) {
+        this.onNewText = onNewText
+    }
 }

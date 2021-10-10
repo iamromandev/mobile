@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Matrix
 import android.os.Build
 import android.util.AttributeSet
-import android.view.View
+import android.view.SurfaceView
 import androidx.annotation.AttrRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StyleRes
@@ -17,7 +17,7 @@ import com.google.common.base.Preconditions
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
-class GraphicOverlay : View {
+class GraphicOverlay : SurfaceView {
 
     private val lock = Any()
     private val graphics = ArrayList<Graphic>()

@@ -2,12 +2,16 @@ package com.dreampany.common.misc.exts
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
+import android.view.WindowInsets
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.dreampany.common.data.model.Task
 import com.dreampany.common.misc.constant.Constant
@@ -82,7 +86,8 @@ val Fragment?.task: Task<*, *, *, *, *>?
         return bundle.getParcelable<Parcelable>(Constant.Keys.TASK) as Task<*, *, *, *, *>?
     }
 
-inline fun <reified T : View> Fragment?.findViewById(@IdRes id: Int): T? = this?.view?.findViewById(id)
+inline fun <reified T : View> Fragment?.findViewById(@IdRes id: Int): T? =
+    this?.view?.findViewById(id)
 
 @ColorInt
 fun Fragment?.color(@ColorRes resId: Int): Int =
@@ -105,3 +110,31 @@ val Fragment?.versionCode: Long get() = contextRef.versionCode
 val Fragment?.versionName: String get() = contextRef.versionName
 
 fun Fragment.hideKeyboard() = activity?.hideKeyboard()
+
+inline val Fragment.windowWidth: Int
+    get() {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val metrics = requireActivity().windowManager.currentWindowMetrics
+            val insets = metrics.windowInsets.getInsets(WindowInsets.Type.systemBars())
+            metrics.bounds.width() - insets.left - insets.right
+        } else {
+            val view = requireActivity().window.decorView
+            val insets = WindowInsetsCompat.toWindowInsetsCompat(view.rootWindowInsets, view)
+                .getInsets(WindowInsetsCompat.Type.systemBars())
+            resources.displayMetrics.widthPixels - insets.left - insets.right
+        }
+    }
+
+inline val Fragment.windowHeight: Int
+    get() {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val metrics = requireActivity().windowManager.currentWindowMetrics
+            val insets = metrics.windowInsets.getInsets(WindowInsets.Type.systemBars())
+            metrics.bounds.height() - insets.bottom - insets.top
+        } else {
+            val view = requireActivity().window.decorView
+            val insets = WindowInsetsCompat.toWindowInsetsCompat(view.rootWindowInsets, view)
+                .getInsets(WindowInsetsCompat.Type.systemBars())
+            resources.displayMetrics.heightPixels - insets.bottom - insets.top
+        }
+    }
