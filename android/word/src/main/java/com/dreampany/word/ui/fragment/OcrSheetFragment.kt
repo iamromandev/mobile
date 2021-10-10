@@ -61,10 +61,7 @@ class OcrSheetFragment
 
     private val permissions = arrayOf<Permission>(Permission.CAMERA)
 
-
     private lateinit var paint: Paint
-    private var xOffset = 0
-    private var yOffset = 0
     private var boxWidth = 0
     private var boxHeight = 0
 
@@ -169,6 +166,9 @@ class OcrSheetFragment
         val width = binding.preview.width
         val height = binding.preview.height
 
+
+        Timber.v("drawFocusRect width $width height $height")
+
         var diameter = width
         if (height < width) diameter = height
 
@@ -184,14 +184,14 @@ class OcrSheetFragment
         paint.strokeWidth = 8f
 
         val left = width / 2 - diameter / 3
-        val top = height / 4 - diameter / 8
+        val top = height / 2 - diameter / 3
         val right = width / 2 + diameter / 3
-        val bottom = height / 4 + diameter / 8
+        val bottom = height / 2 + diameter / 3
 
-        xOffset = left
-        yOffset = top
         boxWidth = right - left
         boxHeight = bottom - top
+
+        Timber.v("boxWidth $boxWidth boxHeight $boxHeight")
 
         focusCanvas.drawRect(
             left.toFloat(),
@@ -259,7 +259,7 @@ class OcrSheetFragment
                         binding.overlay.setImageSourceInfo(proxy.height, proxy.width, isFlipped)
                 }
                 try {
-                    imageProcessor.processImageProxy(proxy, binding.overlay)
+                    imageProcessor.processImageProxy(proxy, binding.overlay, boxWidth, boxHeight)
                 } catch (error: MlKitException) {
                     Timber.e(error)
                 }

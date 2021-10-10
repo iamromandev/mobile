@@ -38,20 +38,44 @@
             auto:layout_constraintTop_toTopOf="@id/overlay"
             auto:layout_constraintVertical_bias="0.0" />
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:visibility="invisible"
+            auto:layout_constraintBottom_toBottomOf="parent"
+            auto:layout_constraintEnd_toEndOf="parent"
+            auto:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:text="Retry" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="View" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_30sdp"
             android:gravity="center_horizontal"
             android:padding="@dimen/_12sdp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"
-            auto:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="@dimen/_16ssp"
+            auto:layout_constraintBottom_toTopOf="@id/buttons"
             auto:layout_constraintEnd_toEndOf="parent"
             auto:layout_constraintStart_toStartOf="parent"
             auto:layout_constraintTop_toTopOf="parent"
             auto:layout_constraintVertical_bias="0.96" />
-
 
         <!--<com.dreampany.word.ml.graphic.GraphicOverlay
             android:id="@+id/overlay"

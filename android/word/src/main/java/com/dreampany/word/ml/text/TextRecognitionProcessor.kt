@@ -1,6 +1,7 @@
 package com.dreampany.word.ml.text
 
 import android.content.Context
+import com.dreampany.word.misc.exts.first
 import com.dreampany.word.ml.graphic.GraphicOverlay
 import com.dreampany.word.ml.vision.VisionProcessor
 import com.google.android.gms.tasks.Task
@@ -25,7 +26,7 @@ class TextRecognitionProcessor(
     private val shouldGroupRecognizedTextInBlocks = true
     val texts = HashSet<String>()
 
-    private lateinit var onNewText: (text: String) -> Unit
+    private lateinit var onNewText: (text: String?) -> Unit
 
     override fun stop() {
         super.stop()
@@ -37,15 +38,15 @@ class TextRecognitionProcessor(
     override fun onSuccess(result: Text, overlay: GraphicOverlay) {
         //overlay.add(TextGraphic(overlay, result, shouldGroupRecognizedTextInBlocks))
         texts.add(result.text)
-        Timber.v(result.text)
-        onNewText(result.text)
+        Timber.v("RecognitionProcessor ${result.text}")
+        onNewText(result.first)
     }
 
     override fun onFailure(error: Throwable) {
         Timber.e(error)
     }
 
-    fun setListener(onNewText: (text: String) -> Unit) {
+    fun setListener(onNewText: (text: String?) -> Unit) {
         this.onNewText = onNewText
     }
 }

@@ -24,5 +24,14 @@ interface VisionImageProcessor {
     @Throws(MlKitException::class)
     fun processImageProxy(imageProxy: ImageProxy, overlay: GraphicOverlay)
 
+    @RequiresApi(VERSION_CODES.KITKAT)
+    @Throws(MlKitException::class)
+    fun processImageProxy(
+        imageProxy: ImageProxy,
+        overlay: GraphicOverlay,
+        boxWidth: Int,
+        boxHeight: Int
+    )
+
     fun stop()
 }

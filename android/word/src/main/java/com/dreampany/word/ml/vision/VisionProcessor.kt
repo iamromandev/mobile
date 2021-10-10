@@ -89,6 +89,16 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
 
     @ExperimentalGetImage
     override fun processImageProxy(imageProxy: ImageProxy, overlay: GraphicOverlay) {
+
+    }
+
+    @ExperimentalGetImage
+    override fun processImageProxy(
+        imageProxy: ImageProxy,
+        overlay: GraphicOverlay,
+        boxWidth: Int,
+        boxHeight: Int
+    ) {
         val frameStartMs = SystemClock.elapsedRealtime()
         if (isShutdown) return
         val image = imageProxy.image ?: return
@@ -98,6 +108,9 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
         val width = imageBitmap.width
         val height = imageBitmap.height
 
+        Timber.v("drawFocusRect width $width height $height")
+        Timber.v("drawFocusRect width ${imageProxy.width} height ${imageProxy.height}")
+
         var diameter = width
         if (height < width) diameter = height
 
@@ -105,12 +118,11 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
         diameter -= offset
 
         val left = width / 2 - diameter / 3
-        val top = height / 4 - diameter / 8
+        val top = height / 2 - diameter / 3
         val right = width / 2 + diameter / 3
-        val bottom = height / 4 + diameter / 8
+        val bottom = height / 2 + diameter / 3
 
-        val boxWidth = right - left
-        val boxHeight = bottom - top
+        Timber.v("boxWidth $boxWidth boxHeight $boxHeight")
 
         val cropBitmap: Bitmap = Bitmap.createBitmap(imageBitmap, left, top, boxWidth, boxHeight)
 

@@ -2,6 +2,7 @@ package com.dreampany.word.misc.exts
 
 import android.graphics.*
 import androidx.camera.core.ImageProxy
+import com.google.mlkit.vision.text.Text
 import java.io.ByteArrayOutputStream
 
 /**
@@ -147,3 +148,13 @@ fun ImageProxy.apply(buffer: ByteArray, pixelCount: Int) {
         }
     }
 }
+
+val Text.first : String?
+    get() {
+        for (block in this.textBlocks)
+            for (line in block.lines)
+                for (element in line.elements)
+                    if (!element.text.trim().isEmpty()) return element.text
+
+        return null
+    }
