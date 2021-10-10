@@ -9,14 +9,23 @@ import androidx.annotation.ColorInt
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.afollestad.assent.Permission
 import com.afollestad.assent.runWithPermissions
+import com.dreampany.common.data.model.Response
 import com.dreampany.common.misc.exts.*
+import com.dreampany.common.misc.func.SmartError
 import com.dreampany.common.ui.fragment.BaseFragment
 import com.dreampany.word.R
+import com.dreampany.word.data.enums.Action
+import com.dreampany.word.data.enums.State
+import com.dreampany.word.data.enums.Subtype
+import com.dreampany.word.data.enums.Type
 import com.dreampany.word.databinding.OcrSheetFragmentBinding
 import com.dreampany.word.misc.exts.applyLink
 import com.dreampany.word.ml.text.TextRecognitionProcessor
+import com.dreampany.word.ui.model.WordItem
+import com.dreampany.word.ui.vm.WordViewModel
 import com.google.mlkit.common.MlKitException
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,6 +77,8 @@ class OcrSheetFragment
     private var analysisPaused = false
 
     private lateinit var onClose: () -> Unit
+
+    private val vm: WordViewModel by viewModels()
 
     @ExperimentalGetImage
     override fun onStartUi(state: Bundle?) {
@@ -166,11 +177,14 @@ class OcrSheetFragment
         }
 
         if (!allPermissionsGranted) checkPermissions()
+
+        vm.subscribe(this, { this.processResponse(it) })
         return true
     }
 
     private fun onClickedText(text: String) {
         Timber.v(text)
+        vm.read(text)
     }
 
     private fun drawFocusRect(@ColorInt color: Int) {
@@ -314,5 +328,39 @@ class OcrSheetFragment
             return true
         }
 
+    private fun processResponse(response: Response<Type, Subtype, State, Action, WordItem>) {
+        if (response is Response.Progress) {
+            applyProgress(response.progress)
+        } else if (response is Response.Error) {
+            processError(response.error)
+        } else if (response is Response.Result<Type, Subtype, State, Action, WordItem>) {
+            Timber.v("Result [%s]", response.result)
+            processResult(response.result)
+        }
+    }
+
+    private fun processError(error: SmartError) {
+        val titleRes = if (error.hostError) R.string.title_no_internet else R.string.title_error
+        val message =
+            if (error.hostError) getString(R.string.message_no_internet) else error.message
+        showDialogue(
+            titleRes,
+            messageRes = R.string.message_unknown,
+            message = message,
+            onPositiveClick = {
+
+            },
+            onNegativeClick = {
+
+            }
+        )
+    }
+
+    private fun processResult(result: WordItem?) {
+        if (result != null) {
+
+        }
+
+    }
 
 }
