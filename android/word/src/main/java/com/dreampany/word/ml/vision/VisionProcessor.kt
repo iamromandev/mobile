@@ -7,6 +7,7 @@ import android.os.SystemClock
 import androidx.annotation.GuardedBy
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
+import com.dreampany.common.misc.exts.resize
 import com.dreampany.word.misc.exts.bitmap
 import com.dreampany.word.ml.graphic.CameraImageGraphic
 import com.dreampany.word.ml.graphic.GraphicOverlay
@@ -96,6 +97,8 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
     override fun processImageProxy(
         imageProxy: ImageProxy,
         overlay: GraphicOverlay,
+        baseWidth:Int,
+        baseHeight:Int,
         boxWidth: Int,
         boxHeight: Int
     ) {
@@ -127,7 +130,7 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
         val cropBitmap: Bitmap = Bitmap.createBitmap(imageBitmap, left, top, boxWidth, boxHeight)
 
         requestDetectInImage(
-            InputImage.fromBitmap(cropBitmap, imageProxy.imageInfo.rotationDegrees),
+            InputImage.fromBitmap(cropBitmap.resize(baseWidth, baseHeight), imageProxy.imageInfo.rotationDegrees),
             overlay,
             bitmap,
             frameStartMs,

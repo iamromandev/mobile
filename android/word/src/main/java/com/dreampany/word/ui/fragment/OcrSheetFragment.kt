@@ -11,11 +11,11 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.afollestad.assent.Permission
 import com.afollestad.assent.runWithPermissions
-import com.dreampany.common.misc.exts.contextRef
-import com.dreampany.common.misc.exts.hasPermission
+import com.dreampany.common.misc.exts.*
 import com.dreampany.common.ui.fragment.BaseFragment
 import com.dreampany.word.R
 import com.dreampany.word.databinding.OcrSheetFragmentBinding
+import com.dreampany.word.misc.exts.applyLink
 import com.dreampany.word.ml.text.TextRecognitionProcessor
 import com.google.mlkit.common.MlKitException
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -64,6 +64,8 @@ class OcrSheetFragment
     private lateinit var paint: Paint
     private var boxWidth = 0
     private var boxHeight = 0
+
+    private var analysisPaused = false
 
     private lateinit var onClose: () -> Unit
 
@@ -133,6 +135,11 @@ class OcrSheetFragment
         if (inited) return true
         val context = contextRef?.applicationContext ?: return false
 
+        binding.retry.setOnSafeClickListener {
+            analysisPaused = false
+            binding.buttons.invisible()
+        }
+
         binding.overlay.setZOrderOnTop(true)
         holder = binding.overlay.holder
         holder.setFormat(PixelFormat.TRANSPARENT)
@@ -162,10 +169,13 @@ class OcrSheetFragment
         return true
     }
 
+    private fun onClickedText(text: String) {
+        Timber.v(text)
+    }
+
     private fun drawFocusRect(@ColorInt color: Int) {
         val width = binding.preview.width
         val height = binding.preview.height
-
 
         Timber.v("drawFocusRect width $width height $height")
 
@@ -217,8 +227,8 @@ class OcrSheetFragment
         if (::previewUseCase.isInitialized) cameraProvider.unbind(previewUseCase)
 
         val builder = Preview.Builder()
-        //val targetResolution = Size.parseSize("700x1488")
-        //builder.setTargetResolution(targetResolution)
+        val targetResolution = Size.parseSize("700x800")
+        builder.setTargetResolution(targetResolution)
 
         previewUseCase = builder.build()
         previewUseCase.setSurfaceProvider(binding.preview.surfaceProvider)
@@ -235,17 +245,27 @@ class OcrSheetFragment
 
         imageProcessor = TextRecognitionProcessor(context, TextRecognizerOptions.Builder().build())
         imageProcessor.setListener { text ->
-            binding.text.text = text
+            if (!analysisPaused) {
+                binding.text.text = text
+                text?.split(" ")?.forEach {
+                    binding.text.applyLink(it) { onClickedText(it) }
+                }
+            }
+            if (!text.isNullOrEmpty()) {
+                binding.buttons.show()
+                analysisPaused = true
+            }
         }
 
         val builder = ImageAnalysis.Builder()
-        val targetResolution = Size.parseSize("700x1488")
+        val targetResolution = Size.parseSize("700x800")
         builder.setTargetResolution(targetResolution)
         builder.setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
 
         analysisUseCase = builder.build()
         needUpdateGraphicOverlayImageSourceInfo = true
 
+        var analyzed = 0
         analysisUseCase.setAnalyzer(
             ContextCompat.getMainExecutor(context),
             { proxy ->
@@ -258,8 +278,19 @@ class OcrSheetFragment
                     else
                         binding.overlay.setImageSourceInfo(proxy.height, proxy.width, isFlipped)
                 }
+                if (analyzed++ % 10 == 0) {
+                    proxy.close()
+                    return@setAnalyzer
+                }
                 try {
-                    imageProcessor.processImageProxy(proxy, binding.overlay, boxWidth, boxHeight)
+                    imageProcessor.processImageProxy(
+                        proxy,
+                        binding.overlay,
+                        binding.preview.width,
+                        binding.preview.height,
+                        boxWidth,
+                        boxHeight
+                    )
                 } catch (error: MlKitException) {
                     Timber.e(error)
                 }

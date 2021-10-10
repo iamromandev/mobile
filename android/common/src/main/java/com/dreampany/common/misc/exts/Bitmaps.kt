@@ -1,7 +1,7 @@
 package com.dreampany.common.misc.exts
 
 import android.graphics.Bitmap
-import android.media.Image
+import android.graphics.Matrix
 
 /**
  * Created by roman on 10/10/21
@@ -9,20 +9,17 @@ import android.media.Image
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
-/*
-val Image.bitmap: Bitmap
-    get() {
-        val planes = planes
-        val yBuffer = planes[0].buffer
-        val uBuffer = planes[1].buffer
-        val vBuffer = planes[2].buffer
+fun Bitmap.resize(newWidth: Int, newHeight: Int) : Bitmap {
+    val width = width
+    val height = height
 
-        val ySize = yBuffer.remaining()
-        val uSize = uBuffer.remaining()
-        val vSize = vBuffer.remaining()
+    val scaleWidth = newWidth.toFloat() / width
+    val scaleHeight = newHeight.toFloat() / height
 
-        val nv21 = ByteArray(ySize + uSize + vSize)
+    val matrix = Matrix()
+    matrix.postScale(scaleWidth, scaleHeight)
 
-        yBuffer.get(nv21, 0, ySize)
-        uBuffer.get(nv21, ySize, ySize)
-    }*/
+    val resizedBitmap = Bitmap.createBitmap(this, 0, 0, width, height, matrix, false)
+    this.recycle()
+    return resizedBitmap
+}

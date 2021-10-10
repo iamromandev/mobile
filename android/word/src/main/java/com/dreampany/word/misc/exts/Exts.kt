@@ -1,8 +1,12 @@
 package com.dreampany.word.misc.exts
 
 import android.graphics.*
+import android.widget.TextView
 import androidx.camera.core.ImageProxy
 import com.google.mlkit.vision.text.Text
+import com.klinker.android.link_builder.Link
+import com.klinker.android.link_builder.applyLinkedText
+import com.klinker.android.link_builder.applyLinks
 import java.io.ByteArrayOutputStream
 
 /**
@@ -131,7 +135,8 @@ fun ImageProxy.apply(buffer: ByteArray, pixelCount: Int) {
         for (row in 0 until planeHeight) {
             // Move buffer position to the beginning of this row
             planeBuffer.position(
-                (row + planeCrop.top) * rowStride + planeCrop.left * pixelStride)
+                (row + planeCrop.top) * rowStride + planeCrop.left * pixelStride
+            )
             if (pixelStride == 1 && outputStride == 1) {
                 // When there is a single stride value for pixel and output, we can just copy
                 // the entire row in a single step
@@ -149,12 +154,36 @@ fun ImageProxy.apply(buffer: ByteArray, pixelCount: Int) {
     }
 }
 
-val Text.first : String?
+val Text.first: String?
     get() {
         for (block in this.textBlocks)
             for (line in block.lines)
                 for (element in line.elements)
-                    if (!element.text.trim().isEmpty()) return element.text
+                    if (!element.text.trim().isEmpty()) return element.text.trim()
 
         return null
     }
+
+val Text.first5: String
+    get() {
+        val builder = StringBuilder()
+        var index = 0
+        for (block in this.textBlocks)
+            for (line in block.lines)
+                for (element in line.elements)
+                    if (!element.text.trim().isEmpty())
+                        if (index++ < 5) {
+                            if (!builder.isEmpty()) builder.append(" ")
+                            builder.append(element.text.trim())
+                        }
+
+
+        return builder.toString()
+    }
+
+fun TextView.applyLink(text: String, onClickedText : (text:String) -> Unit) {
+    val link = Link(text)
+        .setUnderlined(true)
+        .setOnClickListener(onClickedText)
+    applyLinks(link)
+}

@@ -29,6 +29,8 @@ interface VisionImageProcessor {
     fun processImageProxy(
         imageProxy: ImageProxy,
         overlay: GraphicOverlay,
+        baseWidth:Int,
+        baseHeight:Int,
         boxWidth: Int,
         boxHeight: Int
     )
