@@ -58,13 +58,13 @@ class GraphicOverlay : View {
         @StyleRes defStyleRes: Int
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         synchronized(lock) {
             updateTransformationIfNeeded()
             for (graphic in graphics) {
-                graphic.draw(canvas!!)
+                graphic.draw(canvas)
             }
         }
     }
@@ -81,14 +81,15 @@ class GraphicOverlay : View {
         postInvalidate()
     }
 
-
     fun clear() {
         synchronized(lock) { graphics.clear() }
         postInvalidate()
     }
 
     fun add(graphic: Graphic) {
-        synchronized(lock) { graphics.add(graphic) }
+        synchronized(lock) {
+            graphics.add(graphic)
+        }
     }
 
     fun remove(graphic: Graphic) {

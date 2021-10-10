@@ -16,11 +16,14 @@ import timber.log.Timber
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
-class TextRecognitionProcessor(private val context: Context, options: TextRecognizerOptions) :
-    VisionProcessor<Text>(context) {
+class TextRecognitionProcessor(
+    context: Context,
+    options: TextRecognizerOptions
+) : VisionProcessor<Text>(context) {
 
     private val recognizer = TextRecognition.getClient(options)
     private val shouldGroupRecognizedTextInBlocks = true
+    val texts = HashSet<String>()
 
     override fun stop() {
         super.stop()
@@ -31,10 +34,12 @@ class TextRecognitionProcessor(private val context: Context, options: TextRecogn
 
     override fun onSuccess(result: Text, overlay: GraphicOverlay) {
         overlay.add(TextGraphic(overlay, result, shouldGroupRecognizedTextInBlocks))
+        texts.add(result.text)
         Timber.v(result.text)
     }
 
     override fun onFailure(error: Throwable) {
+        Timber.e(error)
     }
 
 

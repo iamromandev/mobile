@@ -78,6 +78,8 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     override val hasBackPressed: Boolean
         get() {
             if (ocrSheetFragment.isVisible) {
+                val text = ocrSheetFragment.texts
+                Timber.v(text.toString())
                 closeOcrSheet()
                 return true
             }

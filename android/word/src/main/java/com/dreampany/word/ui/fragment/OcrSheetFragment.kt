@@ -49,7 +49,7 @@ class OcrSheetFragment
     private lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var previewUseCase: Preview
     private lateinit var analysisUseCase: ImageAnalysis
-    private lateinit var imageProcessor: VisionImageProcessor
+    private lateinit var imageProcessor: TextRecognitionProcessor
 
     private var needUpdateGraphicOverlayImageSourceInfo = false
 
@@ -96,6 +96,9 @@ class OcrSheetFragment
 
         }
     }
+
+    val texts : List<String>
+        get() = imageProcessor.texts.toList()
 
     fun setListener(onClose: () -> Unit) {
         this.onClose = onClose

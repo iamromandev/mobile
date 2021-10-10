@@ -111,6 +111,8 @@ dependencies {
     /* google */
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    /* mlkit */
     implementation 'com.google.mlkit:text-recognition:16.0.0-beta1'
 
     /* camerax */

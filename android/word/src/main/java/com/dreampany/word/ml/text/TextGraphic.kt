@@ -28,7 +28,7 @@ constructor(
         private const val TAG = "TextGraphic"
         private const val TEXT_COLOR = Color.BLACK
         private const val MARKER_COLOR = Color.WHITE
-        private const val TEXT_SIZE = 54.0f
+        private const val TEXT_SIZE = 42.0f
         private const val STROKE_WIDTH = 4.0f
     }
 
@@ -86,7 +86,7 @@ constructor(
         rect.top = translateY(rect.top)
         rect.bottom = translateY(rect.bottom)
 
-        canvas.drawRect(rect, rectPaint)
+        //canvas.drawRect(rect, rectPaint)
 
         val textWidth = textPaint.measureText(text)
         canvas.drawRect(

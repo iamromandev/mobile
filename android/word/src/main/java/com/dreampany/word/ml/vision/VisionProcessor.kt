@@ -99,7 +99,7 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
             overlay,
             bitmap,
             frameStartMs,
-            true
+            false
         ).addOnCompleteListener { imageProxy.close() }
     }
 
@@ -140,7 +140,6 @@ abstract class VisionProcessor<T>(context: Context) : VisionImageProcessor {
             true
         )
     }
-
 
     private fun requestDetectInImage(
         image: InputImage,
