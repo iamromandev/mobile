@@ -7,11 +7,12 @@ import androidx.room.Index
 import com.dreampany.common.data.model.Base
 import com.dreampany.common.misc.constant.Constant
 import com.dreampany.common.misc.exts.currentMillis
+import com.dreampany.word.misc.constant.Constants
 import com.google.common.base.Objects
 import kotlinx.parcelize.Parcelize
 
 /**
- * Created by roman on 10/3/21
+ * Created by roman on 10/11/21
  * Copyright (c) 2021 epany. All rights reserved.
  * ifte.net@gmail.com
  * Last modified $file.lastModified
@@ -24,10 +25,10 @@ import kotlinx.parcelize.Parcelize
     )],
     primaryKeys = [Constant.Keys.ID]
 )
-data class Language(
+data class PartOfSpeech(
     override var id: String = Constant.Default.STRING,
-    var code: String = Constant.Default.STRING,
-    var name: String = Constant.Default.STRING,
+    @ColumnInfo(name = Constants.Keys.Room.PART_OF_SPEECH)
+    var partOfSpeech: String = Constant.Default.STRING,
     @ColumnInfo(name = Constant.Keys.CREATED_AT)
     var createdAt: Long = Constant.Default.LONG,
     @ColumnInfo(name = Constant.Keys.UPDATED_AT)
@@ -44,9 +45,9 @@ data class Language(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
-        val item = other as Language
+        val item = other as PartOfSpeech
         return Objects.equal(this.id, item.id)
     }
 
-    override fun toString(): String = "Language [code:$code][name:$name]"
+    override fun toString(): String = "PartOfSpeech [partOfSpeech:$partOfSpeech]"
 }

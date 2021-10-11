@@ -7,7 +7,12 @@ package com.dreampany.word.data.source.remote.model
  * Last modified $file.lastModified
  */
 data class WordObject(
-    val id : String,
-    val word:String,
-    val origin:String?
+    val id: String,
+    val word: String,
+    val origin: String?,
+    val language: LanguageObject,
+    val pronunciations: List<PronunciationObject>? = null,
+    val definitions: List<DefinitionObject>? = null,
+    val examples: List<ExampleObject>? = null,
+    val relations: MutableMap<String, ArrayList<String>>? = null
 )

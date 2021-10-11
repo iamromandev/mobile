@@ -22,7 +22,17 @@ class Constants {
 
         object Room {
             const val LANGUAGE_ID = "language_id"
+            const val SOURCE_ID = "source_id"
+            const val PART_OF_SPEECH_ID = "part_of_speech_id"
+            const val PART_OF_SPEECH = "part_of_speech"
+            const val WORD_ID = "word_id"
+            const val DEFINITION_ID = "definition_id"
+            const val RELATION_TYPE = "relation_type"
+            const val RELATION_TYPE_ID = "relation_type_id"
+            const val LEFT_WORD_ID = "left_word_id"
+            const val RIGHT_WORD_ID = "right_word_id"
         }
+
         object DictionaryService {
             const val WORD = "word"
         }

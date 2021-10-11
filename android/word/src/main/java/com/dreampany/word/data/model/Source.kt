@@ -11,7 +11,7 @@ import com.google.common.base.Objects
 import kotlinx.parcelize.Parcelize
 
 /**
- * Created by roman on 10/3/21
+ * Created by roman on 10/11/21
  * Copyright (c) 2021 epany. All rights reserved.
  * ifte.net@gmail.com
  * Last modified $file.lastModified
@@ -24,10 +24,9 @@ import kotlinx.parcelize.Parcelize
     )],
     primaryKeys = [Constant.Keys.ID]
 )
-data class Language(
+data class Source(
     override var id: String = Constant.Default.STRING,
-    var code: String = Constant.Default.STRING,
-    var name: String = Constant.Default.STRING,
+    var source: String = Constant.Default.STRING,
     @ColumnInfo(name = Constant.Keys.CREATED_AT)
     var createdAt: Long = Constant.Default.LONG,
     @ColumnInfo(name = Constant.Keys.UPDATED_AT)
@@ -44,9 +43,9 @@ data class Language(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
-        val item = other as Language
+        val item = other as Source
         return Objects.equal(this.id, item.id)
     }
 
-    override fun toString(): String = "Language [code:$code][name:$name]"
+    override fun toString(): String = "Source [source:$source]"
 }

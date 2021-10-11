@@ -5,9 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.dreampany.common.misc.constant.Constant
-import com.dreampany.word.data.model.Language
-import com.dreampany.word.data.model.Word
-import com.dreampany.word.data.source.room.dao.WordDao
+import com.dreampany.word.data.model.*
+import com.dreampany.word.data.source.room.dao.*
 import com.dreampany.word.misc.constant.Constants
 
 /**
@@ -16,10 +15,32 @@ import com.dreampany.word.misc.constant.Constants
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
-@Database(entities = [Language::class, Word::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        Language::class,
+        Source::class,
+        PartOfSpeech::class,
+        Word::class,
+        Pronunciation::class,
+        Definition::class,
+        Example::class,
+        RelationType::class,
+        Relation::class,
+    ],
+    version = 1,
+    exportSchema = false
+)
 abstract class DatabaseManager : RoomDatabase() {
 
+    abstract fun languageDao(): LanguageDao
+    abstract fun sourceDao(): SourceDao
+    abstract fun partOfSpeechDao(): PartOfSpeechDao
     abstract fun wordDao(): WordDao
+    abstract fun pronunciationDao(): PronunciationDao
+    abstract fun definitionDao(): DefinitionDao
+    abstract fun exampleDao(): ExampleDao
+    abstract fun relationTypeDao(): RelationTypeDao
+    abstract fun relationDao(): RelationDao
 
     companion object {
         private val lock = Any()

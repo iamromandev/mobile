@@ -31,7 +31,6 @@ class MessageMapper
 
     @Synchronized
     fun convert(message: Message): ByteArray? {
-
         val json = parser.toJson<Message>(message)
         val data = json.toByteArray()
         return data.textMessagePacket

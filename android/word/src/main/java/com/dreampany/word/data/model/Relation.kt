@@ -6,12 +6,10 @@ import com.dreampany.common.misc.constant.Constant
 import com.dreampany.common.misc.exts.currentMillis
 import com.dreampany.word.misc.constant.Constants
 import com.google.common.base.Objects
-import com.google.common.collect.Maps
 import kotlinx.parcelize.Parcelize
-import java.util.*
 
 /**
- * Created by roman on 10/3/21
+ * Created by roman on 10/11/21
  * Copyright (c) 2021 epany. All rights reserved.
  * ifte.net@gmail.com
  * Last modified $file.lastModified
@@ -25,33 +23,43 @@ import java.util.*
     primaryKeys = [Constant.Keys.ID],
     foreignKeys = [
         ForeignKey(
-            entity = Language::class,
+            entity = RelationType::class,
             parentColumns = [Constant.Keys.ID],
-            childColumns = [Constants.Keys.Room.LANGUAGE_ID],
+            childColumns = [Constants.Keys.Room.RELATION_TYPE_ID],
+            onDelete = ForeignKey.NO_ACTION
+        ),
+        ForeignKey(
+            entity = Word::class,
+            parentColumns = [Constant.Keys.ID],
+            childColumns = [Constants.Keys.Room.LEFT_WORD_ID],
+            onDelete = ForeignKey.NO_ACTION
+        ),
+        ForeignKey(
+            entity = Word::class,
+            parentColumns = [Constant.Keys.ID],
+            childColumns = [Constants.Keys.Room.RIGHT_WORD_ID],
             onDelete = ForeignKey.NO_ACTION
         )
     ]
 )
-data class Word(
+data class Relation(
     override var id: String = Constant.Default.STRING,
-    @ColumnInfo(name = Constants.Keys.Room.LANGUAGE_ID)
-    var languageId: String = Constant.Default.STRING,
-    var word: String = Constant.Default.STRING,
-    var origin: String? = Constant.Default.NULL,
+    @ColumnInfo(name = Constants.Keys.Room.RELATION_TYPE_ID)
+    var relationTypeId: String = Constant.Default.STRING,
+    @ColumnInfo(name = Constants.Keys.Room.LEFT_WORD_ID)
+    var leftWordId: String = Constant.Default.STRING,
+    @ColumnInfo(name = Constants.Keys.Room.RIGHT_WORD_ID)
+    var rightWordId: String = Constant.Default.STRING,
     @ColumnInfo(name = Constant.Keys.CREATED_AT)
     var createdAt: Long = Constant.Default.LONG,
     @ColumnInfo(name = Constant.Keys.UPDATED_AT)
     var updatedAt: Long = Constant.Default.LONG,
     @Ignore
-    var language: Language = Language(),
+    var relationType: RelationType = RelationType(),
     @Ignore
-    var pronunciations: MutableList<Pronunciation> = arrayListOf(),
+    var leftWord: Word = Word(),
     @Ignore
-    var definitions: MutableList<Definition> = arrayListOf(),
-    @Ignore
-    var examples: MutableList<Example> = Collections.emptyList(),
-    @Ignore
-    var relations: MutableMap<String, MutableList<String>> = Maps.newHashMap()
+    var rightWord: Word = Word(),
 ) : Base(id) {
 
     @Ignore
@@ -64,9 +72,10 @@ data class Word(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
-        val item = other as Word
+        val item = other as Relation
         return Objects.equal(this.id, item.id)
     }
 
-    override fun toString(): String = "Word: [id:$id] [word:$word]"
+    override fun toString(): String =
+        "Relation: [relationType:${relationType.relationType}][leftWord:${leftWord.word}][rightWord:${rightWord.word}]"
 }

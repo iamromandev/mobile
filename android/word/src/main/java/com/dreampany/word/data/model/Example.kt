@@ -6,12 +6,10 @@ import com.dreampany.common.misc.constant.Constant
 import com.dreampany.common.misc.exts.currentMillis
 import com.dreampany.word.misc.constant.Constants
 import com.google.common.base.Objects
-import com.google.common.collect.Maps
 import kotlinx.parcelize.Parcelize
-import java.util.*
 
 /**
- * Created by roman on 10/3/21
+ * Created by roman on 10/11/21
  * Copyright (c) 2021 epany. All rights reserved.
  * ifte.net@gmail.com
  * Last modified $file.lastModified
@@ -25,33 +23,34 @@ import java.util.*
     primaryKeys = [Constant.Keys.ID],
     foreignKeys = [
         ForeignKey(
-            entity = Language::class,
+            entity = Word::class,
             parentColumns = [Constant.Keys.ID],
-            childColumns = [Constants.Keys.Room.LANGUAGE_ID],
+            childColumns = [Constants.Keys.Room.WORD_ID],
+            onDelete = ForeignKey.NO_ACTION
+        ),
+        ForeignKey(
+            entity = Definition::class,
+            parentColumns = [Constant.Keys.ID],
+            childColumns = [Constants.Keys.Room.DEFINITION_ID],
             onDelete = ForeignKey.NO_ACTION
         )
     ]
 )
-data class Word(
+data class Example(
     override var id: String = Constant.Default.STRING,
-    @ColumnInfo(name = Constants.Keys.Room.LANGUAGE_ID)
-    var languageId: String = Constant.Default.STRING,
-    var word: String = Constant.Default.STRING,
-    var origin: String? = Constant.Default.NULL,
+    @ColumnInfo(name = Constants.Keys.Room.WORD_ID)
+    var wordId: String = Constant.Default.STRING,
+    @ColumnInfo(name = Constants.Keys.Room.DEFINITION_ID)
+    var definitionId: String? = Constant.Default.NULL,
+    var author: String? = Constant.Default.NULL,
+    var title: String? = Constant.Default.NULL,
+    var example: String? = Constant.Default.NULL,
+    var url: String? = Constant.Default.NULL,
+    var year: Long = Constant.Default.LONG,
     @ColumnInfo(name = Constant.Keys.CREATED_AT)
     var createdAt: Long = Constant.Default.LONG,
     @ColumnInfo(name = Constant.Keys.UPDATED_AT)
-    var updatedAt: Long = Constant.Default.LONG,
-    @Ignore
-    var language: Language = Language(),
-    @Ignore
-    var pronunciations: MutableList<Pronunciation> = arrayListOf(),
-    @Ignore
-    var definitions: MutableList<Definition> = arrayListOf(),
-    @Ignore
-    var examples: MutableList<Example> = Collections.emptyList(),
-    @Ignore
-    var relations: MutableMap<String, MutableList<String>> = Maps.newHashMap()
+    var updatedAt: Long = Constant.Default.LONG
 ) : Base(id) {
 
     @Ignore
@@ -64,9 +63,9 @@ data class Word(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
-        val item = other as Word
+        val item = other as Example
         return Objects.equal(this.id, item.id)
     }
 
-    override fun toString(): String = "Word: [id:$id] [word:$word]"
+    override fun toString(): String = "Example: [example:$example]"
 }
