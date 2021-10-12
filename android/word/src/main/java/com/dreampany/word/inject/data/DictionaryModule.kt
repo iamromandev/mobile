@@ -50,6 +50,7 @@ object DictionaryModule {
     @Remote
     @Provides
     fun remote(
+        dictionaryMapper: DictionaryMapper,
         dictionaryService: DictionaryService
-    ): DictionaryDataSource = DictionaryRemoteDataSource(dictionaryService)
+    ): DictionaryDataSource = DictionaryRemoteDataSource(dictionaryMapper, dictionaryService)
 }

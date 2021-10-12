@@ -6,9 +6,7 @@ import com.dreampany.common.misc.constant.Constant
 import com.dreampany.common.misc.exts.currentMillis
 import com.dreampany.word.misc.constant.Constants
 import com.google.common.base.Objects
-import com.google.common.collect.Maps
 import kotlinx.parcelize.Parcelize
-import java.util.*
 
 /**
  * Created by roman on 10/3/21
@@ -45,13 +43,13 @@ data class Word(
     @Ignore
     var language: Language = Language(),
     @Ignore
-    var pronunciations: MutableList<Pronunciation> = Collections.emptyList(),
+    var pronunciations: MutableList<Pronunciation> = arrayListOf(),
     @Ignore
-    var definitions: MutableList<Definition> = Collections.emptyList(),
+    var definitions: MutableList<Definition> = arrayListOf(),
     @Ignore
-    var examples: MutableList<Example> = Collections.emptyList(),
+    var examples: MutableList<Example> = arrayListOf(),
     @Ignore
-    var relations: MutableMap<RelationType, MutableList<Word>> = Maps.newHashMap()
+    var relations: MutableMap<RelationType, MutableList<Relation>> = mutableMapOf()
 ) : Base(id) {
 
     @Ignore

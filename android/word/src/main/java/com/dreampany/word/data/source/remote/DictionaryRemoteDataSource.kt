@@ -1,7 +1,9 @@
 package com.dreampany.word.data.source.remote
 
-import com.dreampany.word.data.model.*
+import com.dreampany.word.data.model.Word
 import com.dreampany.word.data.source.api.DictionaryDataSource
+import com.dreampany.word.data.source.mapper.DictionaryMapper
+import com.dreampany.word.data.source.remote.model.WordObject
 
 /**
  * Created by roman on 10/4/21
@@ -11,69 +13,32 @@ import com.dreampany.word.data.source.api.DictionaryDataSource
  */
 class DictionaryRemoteDataSource
 constructor(
+    private val dictionaryMapper: DictionaryMapper,
     private val dictionaryService: DictionaryService
 ) : DictionaryDataSource {
-    override suspend fun write(input: Language): Long {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun write(input: Source): Long {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun write(input: PartOfSpeech): Long {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun write(input: Word): Long {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun write(input: Pronunciation): Long {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun write(input: Definition): Long {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun write(input: Example): Long {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun write(input: RelationType): Long {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun write(input: Relation): Long {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun writePronunciations(inputs: List<Pronunciation>): List<Long> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun writeDefinitions(inputs: List<Definition>): List<Long> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun writeExamples(inputs: List<Example>): List<Long> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun writeRelations(inputs: List<Relation>): List<Long> {
-        TODO("Not yet implemented")
-    }
 
     override suspend fun read(word: String): Word? {
-        TODO("Not yet implemented")
-    }
-/*    override suspend fun read(word: String): Word? {
         val response = dictionaryService.getWord(word)
-        if (response.isSuccessful) {
-            val data = response.body() ?: return null
-            return Word(id=data.id, word=data.word)
+        if (!response.isSuccessful) return null
+
+        val input: WordObject = response.body() ?: return null
+        val output: Word = dictionaryMapper.createWord(input) ?: return null
+        if (input.pronunciations != null) {
+            val pronunciations = dictionaryMapper.createPronunciations(input.pronunciations, output)
+            output.pronunciations = pronunciations
         }
-        return null
-    }*/
+        if (input.definitions != null) {
+            val definitions = dictionaryMapper.createDefinitions(input.definitions, output)
+            output.definitions = definitions
+        }
+        if (input.examples != null) {
+            val examples = dictionaryMapper.createExamples(input.examples, output, null)
+            output.examples = examples
+        }
+        if (input.relations != null) {
+            val relations = dictionaryMapper.createRelations(input.relations, output)
+            output.relations = relations
+        }
+        return output
+    }
 }

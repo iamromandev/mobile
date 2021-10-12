@@ -55,11 +55,11 @@ data class Relation(
     @ColumnInfo(name = Constant.Keys.UPDATED_AT)
     var updatedAt: Long = Constant.Default.LONG,
     @Ignore
-    var relationType: RelationType = RelationType(),
+    var relationType: String = Constant.Default.STRING,
     @Ignore
-    var leftWord: Word = Word(),
+    var leftWord: String = Constant.Default.STRING,
     @Ignore
-    var rightWord: Word = Word(),
+    var rightWord: String = Constant.Default.STRING,
 ) : Base(id) {
 
     @Ignore
@@ -77,5 +77,5 @@ data class Relation(
     }
 
     override fun toString(): String =
-        "Relation: [relationType:${relationType.relationType}][leftWord:${leftWord.word}][rightWord:${rightWord.word}]"
+        "Relation: [relationType:$relationType][leftWord:$leftWord][rightWord:$rightWord]"
 }

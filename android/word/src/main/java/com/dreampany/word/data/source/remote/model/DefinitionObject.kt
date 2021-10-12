@@ -13,5 +13,6 @@ data class DefinitionObject(
     val source: String,
     @SerializedName("part_of_speech")
     val partOfSpeech: String,
-    val definition: String
+    val definition: String,
+    val examples: MutableList<ExampleObject>? = null
 )

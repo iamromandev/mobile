@@ -20,7 +20,16 @@ import javax.inject.Singleton
 @Singleton
 class DictionaryMapper
 @Inject constructor(
-    private val parser: GsonParser
+    private val parser: GsonParser,
+    private val languageDao: LanguageDao,
+    private val sourceDao: SourceDao,
+    private val partOfSpeechDao: PartOfSpeechDao,
+    private val wordDao: WordDao,
+    private val pronunciationDao: PronunciationDao,
+    private val definitionDao: DefinitionDao,
+    private val exampleDao: ExampleDao,
+    private val relationTypeDao: RelationTypeDao,
+    private val relationDao: RelationDao
 ) {
     companion object {
         const val PATTERN_DATE = "yyyy-MM-dd"
@@ -61,20 +70,20 @@ class DictionaryMapper
         get() = relations.values.find { it.leftWordId == first.id && it.rightWordId == second.id }
 
     @Synchronized
-    suspend fun createLanguage(input: LanguageObject, dao: LanguageDao): Language? {
+    suspend fun createLanguage(input: LanguageObject): Language? {
         var output = languages.get(input.id)
         if (output == null) {
-            if (dao.count(input.id) <= 0) {
+            if (languageDao.count(input.id) <= 0) {
                 output = Language(
                     id = uuid,
                     code = input.code,
                     name = input.name,
                     createdAt = currentMillis
                 )
-                dao.insertOrReplace(output)
+                languageDao.insertOrReplace(output)
                 languages.put(output.id, output)
             } else {
-                output = dao.read(input.id)
+                output = languageDao.read(input.id)
                 if (output != null) languages.put(output.id, output)
             }
         }
@@ -82,15 +91,15 @@ class DictionaryMapper
     }
 
     @Synchronized
-    suspend fun createSource(input: String, dao: SourceDao): Source? {
+    suspend fun createSource(input: String): Source? {
         var output = input.source
         if (output == null) {
-            if (dao.countBySource(input) <= 0) {
+            if (sourceDao.countBySource(input) <= 0) {
                 output = Source(id = uuid, source = input, createdAt = currentMillis)
-                dao.insertOrReplace(output)
+                sourceDao.insertOrReplace(output)
                 sources.put(output.id, output)
             } else {
-                output = dao.readBySource(input)
+                output = sourceDao.readBySource(input)
                 if (output != null) sources.put(output.id, output)
             }
         }
@@ -98,15 +107,15 @@ class DictionaryMapper
     }
 
     @Synchronized
-    suspend fun createPartOfSpeech(input: String, dao: PartOfSpeechDao): PartOfSpeech? {
+    suspend fun createPartOfSpeech(input: String): PartOfSpeech? {
         var output = input.partOfSpeech
         if (output == null) {
-            if (dao.countByPartOfSpeech(input) <= 0) {
+            if (partOfSpeechDao.countByPartOfSpeech(input) <= 0) {
                 output = PartOfSpeech(id = uuid, partOfSpeech = input, createdAt = currentMillis)
-                dao.insertOrReplace(output)
+                partOfSpeechDao.insertOrReplace(output)
                 partOfSpeechs.put(output.id, output)
             } else {
-                output = dao.readByPartOfSpeech(input)
+                output = partOfSpeechDao.readByPartOfSpeech(input)
                 if (output != null) partOfSpeechs.put(output.id, output)
             }
         }
@@ -114,11 +123,11 @@ class DictionaryMapper
     }
 
     @Synchronized
-    suspend fun createWord(input: WordObject, dao: WordDao, languageDao: LanguageDao): Word? {
-        val language = createLanguage(input.language, languageDao) ?: return null
+    suspend fun createWord(input: WordObject): Word? {
+        val language = createLanguage(input.language) ?: return null
         var output = words.get(input.id)
         if (output == null) {
-            if (dao.count(input.id) <= 0) {
+            if (wordDao.count(input.id) <= 0) {
                 output = Word(
                     id = input.id,
                     languageId = language.id,
@@ -126,35 +135,35 @@ class DictionaryMapper
                     origin = input.origin,
                     createdAt = currentMillis
                 )
-                dao.insertOrReplace(output)
+                wordDao.insertOrReplace(output)
                 words.put(output.id, output)
             } else {
-                output = dao.read(input.id)
+                output = wordDao.read(input.id)
                 if (output != null) words.put(output.id, output)
             }
         }
+        output?.language = language
         return output
     }
 
     @Synchronized
     suspend fun createWord(
         input: Map.Entry<String, String>,
-        languageId: String,
-        dao: WordDao
+        languageId: String
     ): Word? {
         var output = words.get(input.key)
         if (output == null) {
-            if (dao.count(input.key) <= 0) {
+            if (wordDao.count(input.key) <= 0) {
                 output = Word(
                     id = input.key,
                     languageId = languageId,
                     word = input.value,
                     createdAt = currentMillis
                 )
-                dao.insertOrReplace(output)
+                wordDao.insertOrReplace(output)
                 words.put(output.id, output)
             } else {
-                output = dao.read(input.key)
+                output = wordDao.read(input.key)
                 if (output != null) words.put(output.id, output)
             }
         }
@@ -164,25 +173,18 @@ class DictionaryMapper
     @Synchronized
     suspend fun createPronunciations(
         inputs: List<PronunciationObject>,
-        word: Word,
-        dao: PronunciationDao,
-        sourceDao: SourceDao
+        word: Word
     ): MutableList<Pronunciation> {
-        return inputs.map { createPronunciation(it, word, dao, sourceDao) }.filterNotNull()
+        return inputs.map { createPronunciation(it, word) }.filterNotNull()
             .toMutableList()
     }
 
     @Synchronized
-    suspend fun createPronunciation(
-        input: PronunciationObject,
-        word: Word,
-        dao: PronunciationDao,
-        sourceDao: SourceDao
-    ): Pronunciation? {
-        val source = createSource(input.source, sourceDao) ?: return null
+    suspend fun createPronunciation(input: PronunciationObject, word: Word): Pronunciation? {
+        val source = createSource(input.source) ?: return null
         var output = pronunciations.get(input.id)
         if (output == null) {
-            if (dao.count(input.id) <= 0) {
+            if (pronunciationDao.count(input.id) <= 0) {
                 output = Pronunciation(
                     id = input.id,
                     sourceId = source.id,
@@ -191,42 +193,34 @@ class DictionaryMapper
                     url = input.url,
                     createdAt = currentMillis
                 )
-                dao.insertOrReplace(output)
+                pronunciationDao.insertOrReplace(output)
                 pronunciations.put(output.id, output)
             } else {
-                output = dao.read(input.id)
+                output = pronunciationDao.read(input.id)
                 if (output != null) pronunciations.put(output.id, output)
             }
         }
+        output?.source = source
         return output
     }
 
     @Synchronized
     suspend fun createDefinitions(
         inputs: List<DefinitionObject>,
-        word: Word,
-        dao: DefinitionDao,
-        sourceDao: SourceDao,
-        partOfSpeechDao: PartOfSpeechDao
+        word: Word
     ): MutableList<Definition> {
-        return inputs.map { createDefinition(it, word, dao, sourceDao, partOfSpeechDao) }
+        return inputs.map { createDefinition(it, word) }
             .filterNotNull()
             .toMutableList()
     }
 
     @Synchronized
-    suspend fun createDefinition(
-        input: DefinitionObject,
-        word: Word,
-        dao: DefinitionDao,
-        sourceDao: SourceDao,
-        partOfSpeechDao: PartOfSpeechDao
-    ): Definition? {
-        val source = createSource(input.source, sourceDao) ?: return null
-        val partOfSpeech = createPartOfSpeech(input.partOfSpeech, partOfSpeechDao) ?: return null
+    suspend fun createDefinition(input: DefinitionObject, word: Word): Definition? {
+        val source = createSource(input.source) ?: return null
+        val partOfSpeech = createPartOfSpeech(input.partOfSpeech) ?: return null
         var output = definitions.get(input.id)
         if (output == null) {
-            if (dao.count(input.id) <= 0) {
+            if (definitionDao.count(input.id) <= 0) {
                 output = Definition(
                     id = input.id,
                     sourceId = source.id,
@@ -235,24 +229,26 @@ class DictionaryMapper
                     definition = input.definition,
                     createdAt = currentMillis
                 )
-                dao.insertOrReplace(output)
+                definitionDao.insertOrReplace(output)
                 definitions.put(output.id, output)
             } else {
-                output = dao.read(input.id)
+                output = definitionDao.read(input.id)
                 if (output != null) definitions.put(output.id, output)
             }
         }
+        output?.source = source
+        output?.partOfSpeech = partOfSpeech
+        input.examples?.let { output?.examples = createExamples(it, word, output) }
         return output
     }
 
     @Synchronized
     suspend fun createExamples(
-        inputs: List<ExampleObject>,
+        inputs: MutableList<ExampleObject>,
         word: Word,
-        definition: Definition?,
-        dao: ExampleDao
+        definition: Definition?
     ): MutableList<Example> {
-        return inputs.map { createExample(it, word, definition, dao) }.filterNotNull()
+        return inputs.map { createExample(it, word, definition) }.filterNotNull()
             .toMutableList()
     }
 
@@ -260,12 +256,11 @@ class DictionaryMapper
     suspend fun createExample(
         input: ExampleObject,
         word: Word,
-        definition: Definition?,
-        dao: ExampleDao
+        definition: Definition?
     ): Example? {
         var output = examples.get(input.id)
         if (output == null) {
-            if (dao.count(input.id) <= 0) {
+            if (exampleDao.count(input.id) <= 0) {
                 output = Example(
                     id = input.id,
                     wordId = word.id,
@@ -277,10 +272,10 @@ class DictionaryMapper
                     year = input.year?.utc(PATTERN_DATE) ?: 0L,
                     createdAt = currentMillis
                 )
-                dao.insertOrReplace(output)
+                exampleDao.insertOrReplace(output)
                 examples.put(output.id, output)
             } else {
-                output = dao.read(input.id)
+                output = exampleDao.read(input.id)
                 if (output != null) examples.put(output.id, output)
             }
         }
@@ -288,15 +283,15 @@ class DictionaryMapper
     }
 
     @Synchronized
-    suspend fun createRelationType(input: String, dao: RelationTypeDao): RelationType? {
+    suspend fun createRelationType(input: String): RelationType? {
         var output = input.relationType
         if (output == null) {
-            if (dao.countByRelationType(input) <= 0) {
+            if (relationTypeDao.countByRelationType(input) <= 0) {
                 output = RelationType(id = uuid, relationType = input, createdAt = currentMillis)
-                dao.insertOrReplace(output)
+                relationTypeDao.insertOrReplace(output)
                 relationTypes.put(output.id, output)
             } else {
-                output = dao.readByRelationType(input)
+                output = relationTypeDao.readByRelationType(input)
                 if (output != null) relationTypes.put(output.id, output)
             }
         }
@@ -306,46 +301,41 @@ class DictionaryMapper
     @Synchronized
     suspend fun createRelations(
         inputs: MutableMap<String, MutableMap<String, String>>,
-        word: Word,
-        dao: RelationDao,
-        relationTypeDao: RelationTypeDao,
-        wordDao: WordDao
-    ): MutableList<Relation> {
-        val relations = arrayListOf<Relation>()
-        inputs.forEach {
-            val output = createRelations(it.key, it.value, word, dao, relationTypeDao, wordDao)
-            if (output != null) relations.addAll(output)
+        word: Word
+    ): MutableMap<RelationType, MutableList<Relation>> {
+        val outputs = mutableMapOf<RelationType, MutableList<Relation>>()
+        inputs.forEach { entry ->
+            val relationType = createRelationType(entry.key)
+            if (relationType != null) {
+                val output = createRelations(entry.value, relationType, word)
+                outputs.put(relationType, output)
+            }
         }
-        return relations
+        return outputs
     }
 
     @Synchronized
     suspend fun createRelations(
-        inputRelationType: String,
         inputs: MutableMap<String, String>,
-        word: Word,
-        dao: RelationDao,
-        relationTypeDao: RelationTypeDao,
-        wordDao: WordDao
-    ): MutableList<Relation>? {
-        val relationType = createRelationType(inputRelationType, relationTypeDao) ?: return null
-        return inputs.map { createRelation(it, relationType, word, dao, wordDao) }.filterNotNull().toMutableList()
+        relationType: RelationType,
+        word: Word
+    ): MutableList<Relation> {
+        return inputs.map { createRelation(it, relationType, word) }.filterNotNull()
+            .toMutableList()
     }
 
     @Synchronized
     suspend fun createRelation(
         input: Map.Entry<String, String>,
         relationType: RelationType,
-        word: Word,
-        dao: RelationDao,
-        wordDao: WordDao
+        word: Word
     ): Relation? {
-        val relationWord = createWord(input, word.languageId, wordDao) ?: return null
+        val relationWord = createWord(input, word.languageId) ?: return null
         val leftWord = if (word.id.compareTo(relationWord.id) <= 0) word else relationWord
         val rightWord = if (word.id.compareTo(relationWord.id) <= 0) relationWord else word
         var output = Pair(leftWord, rightWord).relation
         if (output == null) {
-            if (dao.count(leftWord.id, rightWord.id) <= 0) {
+            if (relationDao.count(leftWord.id, rightWord.id) <= 0) {
                 output = Relation(
                     id = uuid,
                     relationTypeId = relationType.id,
@@ -353,16 +343,16 @@ class DictionaryMapper
                     rightWordId = rightWord.id,
                     createdAt = currentMillis
                 )
-                dao.insertOrReplace(output)
+                relationDao.insertOrReplace(output)
                 relations.put(output.id, output)
             } else {
-                output = dao.read(leftWord.id, rightWord.id)
+                output = relationDao.read(leftWord.id, rightWord.id)
                 if (output != null) relations.put(output.id, output)
             }
         }
-        output?.relationType = relationType
-        output?.leftWord = leftWord
-        output?.rightWord = rightWord
+        output?.relationType = relationType.relationType
+        output?.leftWord = leftWord.word
+        output?.rightWord = rightWord.word
         return output
     }
 }

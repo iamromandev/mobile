@@ -61,7 +61,7 @@ data class Definition(
     @Ignore
     var partOfSpeech: PartOfSpeech = PartOfSpeech(),
     @Ignore
-    var examples: MutableList<Example> = Collections.emptyList()
+    var examples: MutableList<Example> = arrayListOf()
 ) : Base(id) {
 
     @Ignore
