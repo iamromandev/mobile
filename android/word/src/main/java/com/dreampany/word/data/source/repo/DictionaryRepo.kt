@@ -4,6 +4,8 @@ import com.dreampany.common.inject.qualifier.Remote
 import com.dreampany.common.inject.qualifier.Room
 import com.dreampany.word.data.model.*
 import com.dreampany.word.data.source.api.DictionaryDataSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,8 +23,8 @@ class DictionaryRepo
 ) : DictionaryDataSource {
 
 
-    override suspend fun read(word: String): Word? {
-        TODO("Not yet implemented")
+    override suspend fun read(word: String)= withContext(Dispatchers.IO) {
+        remote.read(word)
     }
 
 
