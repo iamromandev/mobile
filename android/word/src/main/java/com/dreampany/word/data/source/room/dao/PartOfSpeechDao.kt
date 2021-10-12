@@ -13,6 +13,15 @@ import com.dreampany.word.data.model.PartOfSpeech
  */
 @Dao
 interface PartOfSpeechDao : BaseDao<PartOfSpeech> {
-    @Query("select * from partofspeech where part_of_speech = :partOfSpeech limit 1")
-    fun read(partOfSpeech: String): PartOfSpeech?
+    @Query("select count(*) from partofspeech where id=:id")
+    suspend fun count(id: String): Long
+
+    @Query("select count(*) from partofspeech where part_of_speech=:partOfSpeech")
+    suspend fun countByPartOfSpeech(partOfSpeech: String): Long
+
+    @Query("select * from partofspeech where id=:id limit 1")
+    fun read(id: String): PartOfSpeech?
+
+    @Query("select * from partofspeech where part_of_speech=:partOfSpeech limit 1")
+    fun readByPartOfSpeech(partOfSpeech: String): PartOfSpeech?
 }

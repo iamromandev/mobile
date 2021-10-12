@@ -13,6 +13,15 @@ import com.dreampany.word.data.model.Word
  */
 @Dao
 interface WordDao : BaseDao<Word>  {
-    @Query("select * from word where word = :word limit 1")
-    fun read(word: String): Word?
+    @Query("select count(*) from word where id=:id")
+    suspend fun count(id: String): Long
+
+    @Query("select count(*) from word where word=:word")
+    suspend fun countByWord(word: String): Long
+
+    @Query("select * from word where id=:id limit 1")
+    suspend fun read(id: String): Word?
+
+    @Query("select * from word where word=:word limit 1")
+    suspend fun readByWord(word: String): Word?
 }

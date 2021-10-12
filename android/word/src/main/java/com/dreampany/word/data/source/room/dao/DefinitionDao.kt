@@ -13,6 +13,9 @@ import com.dreampany.word.data.model.Definition
  */
 @Dao
 interface DefinitionDao : BaseDao<Definition>  {
-    @Query("select * from definition where word_id = :wordId")
-    fun reads(wordId: String): List<Definition>?
+    @Query("select count(*) from definition where id=:id")
+    suspend fun count(id: String): Long
+
+    @Query("select * from definition where id=:id limit 1")
+    suspend fun read(id: String): Definition?
 }

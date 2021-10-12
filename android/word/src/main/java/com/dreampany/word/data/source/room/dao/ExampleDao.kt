@@ -13,9 +13,15 @@ import com.dreampany.word.data.model.Example
  */
 @Dao
 interface ExampleDao : BaseDao<Example> {
-    @Query("select * from example where word_id = :wordId and definition_id is null")
-    fun reads(wordId: String): List<Example>?
+    @Query("select count(*) from example where id=:id")
+    suspend fun count(id: String): Long
 
-    @Query("select * from example where definition_id = :definitionId")
-    fun readsByDefinition(definitionId: String): List<Example>?
+    @Query("select * from example where id=:id limit 1")
+    suspend fun read(id: String): Example?
+
+    @Query("select * from example where word_id=:wordId and definition_id is null")
+    suspend fun reads(wordId: String): List<Example>?
+
+    @Query("select * from example where definition_id=:definitionId")
+    suspend fun readsByDefinition(definitionId: String): List<Example>?
 }

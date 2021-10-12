@@ -24,6 +24,9 @@ fun <T> LiveData<T>.reObserve(owner: LifecycleOwner, observer: Observer<T>) {
     observe(owner, observer)
 }
 
+val uuid: String
+    get() = UUID.randomUUID().toString()
+
 val randomId: String
     get() = UUID.randomUUID().toString().hash256
 

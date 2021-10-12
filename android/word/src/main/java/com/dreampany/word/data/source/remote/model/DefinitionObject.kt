@@ -10,7 +10,8 @@ import com.google.gson.annotations.SerializedName
  */
 data class DefinitionObject(
     val id: String,
+    val source: String,
     @SerializedName("part_of_speech")
     val partOfSpeech: String,
-    val definition: String,
+    val definition: String
 )

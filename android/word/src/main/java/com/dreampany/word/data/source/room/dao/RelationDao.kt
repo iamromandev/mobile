@@ -13,6 +13,12 @@ import com.dreampany.word.data.model.Relation
  */
 @Dao
 interface RelationDao : BaseDao<Relation> {
-    @Query("select * from relation where left_word_id = :wordId or right_word_id = :wordId")
-    fun reads(wordId: String): List<Relation>?
+    @Query("select count(*) from relation where left_word_id=:leftWordId and right_word_id=:rightWordId")
+    suspend fun count(leftWordId: String, rightWordId: String): Long
+
+    @Query("select * from relation where left_word_id=:leftWordId and right_word_id=:rightWordId limit 1")
+    suspend fun read(leftWordId: String, rightWordId: String): Relation?
+
+    @Query("select * from relation where left_word_id=:wordId or right_word_id=:wordId")
+    suspend fun reads(wordId: String): List<Relation>?
 }

@@ -11,8 +11,8 @@ data class WordObject(
     val word: String,
     val origin: String?,
     val language: LanguageObject,
-    val pronunciations: List<PronunciationObject>? = null,
-    val definitions: List<DefinitionObject>? = null,
-    val examples: List<ExampleObject>? = null,
-    val relations: MutableMap<String, ArrayList<String>>? = null
+    val pronunciations: MutableList<PronunciationObject>? = null,
+    val definitions: MutableList<DefinitionObject>? = null,
+    val examples: MutableList<ExampleObject>? = null,
+    val relations: MutableMap<String, MutableMap<String, String>>? = null
 )

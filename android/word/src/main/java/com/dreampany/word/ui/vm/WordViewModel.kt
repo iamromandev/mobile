@@ -10,7 +10,7 @@ import com.dreampany.word.data.enums.State
 import com.dreampany.word.data.enums.Subtype
 import com.dreampany.word.data.enums.Type
 import com.dreampany.word.data.model.Word
-import com.dreampany.word.data.source.repo.WordRepo
+import com.dreampany.word.data.source.repo.DictionaryRepo
 import com.dreampany.word.ui.model.WordItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +30,7 @@ class WordViewModel
 @Inject constructor(
     application: Application,
     rm: ResponseMapper,
-    private val repo: WordRepo
+    private val repo: DictionaryRepo
 ) : BaseViewModel<Type, Subtype, State, Action, Word, WordItem, UiTask<Type, Subtype, State, Action, Word>>(
     application, rm
 ) {

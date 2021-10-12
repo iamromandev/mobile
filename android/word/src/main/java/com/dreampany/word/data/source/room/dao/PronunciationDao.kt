@@ -13,6 +13,9 @@ import com.dreampany.word.data.model.Pronunciation
  */
 @Dao
 interface PronunciationDao : BaseDao<Pronunciation>  {
-    @Query("select * from pronunciation where word_id = :wordId")
-    fun reads(wordId: String): List<Pronunciation>?
+    @Query("select count(*) from pronunciation where id=:id")
+    suspend fun count(id: String): Long
+
+    @Query("select * from pronunciation where id=:id limit 1")
+    suspend fun read(id: String): Pronunciation?
 }

@@ -13,6 +13,15 @@ import com.dreampany.word.data.model.Source
  */
 @Dao
 interface SourceDao : BaseDao<Source> {
-    @Query("select * from source where source = :source limit 1")
-    fun read(source: String): Source?
+    @Query("select count(*) from source where id=:id")
+    suspend fun count(id: String): Long
+
+    @Query("select count(*) from source where source=:source")
+    suspend fun countBySource(source: String): Long
+
+    @Query("select * from source where id=:id limit 1")
+    suspend fun read(id: String): Source?
+
+    @Query("select * from source where source=:source limit 1")
+    suspend fun readBySource(source: String): Source?
 }

@@ -45,13 +45,13 @@ data class Word(
     @Ignore
     var language: Language = Language(),
     @Ignore
-    var pronunciations: MutableList<Pronunciation> = arrayListOf(),
+    var pronunciations: MutableList<Pronunciation> = Collections.emptyList(),
     @Ignore
-    var definitions: MutableList<Definition> = arrayListOf(),
+    var definitions: MutableList<Definition> = Collections.emptyList(),
     @Ignore
     var examples: MutableList<Example> = Collections.emptyList(),
     @Ignore
-    var relations: MutableMap<String, MutableList<String>> = Maps.newHashMap()
+    var relations: MutableMap<RelationType, MutableList<Word>> = Maps.newHashMap()
 ) : Base(id) {
 
     @Ignore
