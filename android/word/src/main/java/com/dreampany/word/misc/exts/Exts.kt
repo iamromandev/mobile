@@ -2,7 +2,9 @@ package com.dreampany.word.misc.exts
 
 import android.graphics.*
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.camera.core.ImageProxy
+import com.dreampany.common.misc.exts.color
 import com.google.mlkit.vision.text.Text
 import com.klinker.android.link_builder.Link
 import com.klinker.android.link_builder.applyLinkedText
@@ -164,7 +166,7 @@ val Text.first: String?
         return null
     }
 
-val Text.first5: String
+val Text.first20: String
     get() {
         val builder = StringBuilder()
         var index = 0
@@ -172,18 +174,22 @@ val Text.first5: String
             for (line in block.lines)
                 for (element in line.elements)
                     if (!element.text.trim().isEmpty())
-                        if (index++ < 5) {
+                        if (index < 20) {
                             if (!builder.isEmpty()) builder.append(" ")
-                            builder.append(element.text.trim())
+                            if (!builder.contains(element.text.trim())) {
+                                builder.append(element.text.trim())
+                                index++
+                            }
                         }
 
 
         return builder.toString()
     }
 
-fun TextView.applyLink(text: String, onClickedText : (text:String) -> Unit) {
+fun TextView.applyLink(@ColorRes textColor : Int, text: String, onClickedText : (text:String) -> Unit) {
     val link = Link(text)
         .setUnderlined(true)
+        .setTextColor(this.context.color(textColor))
         .setOnClickListener(onClickedText)
     applyLinks(link)
 }

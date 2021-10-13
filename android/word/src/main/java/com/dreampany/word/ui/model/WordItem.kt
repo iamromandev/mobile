@@ -2,7 +2,6 @@ package com.dreampany.word.ui.model
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
 import com.dreampany.word.R
 import com.dreampany.word.data.model.Word
 import com.dreampany.word.databinding.WordItemBinding
@@ -33,4 +32,16 @@ class WordItem(val input: Word) :
 
     override fun bindView(binding: WordItemBinding, payloads: List<Any>) {
     }
+
+    val pronunciation: String?
+        get() {
+            return input.pronunciations.filter { it.pronunciation.isNotEmpty() }
+                .minByOrNull { it.pronunciation.length }?.pronunciation
+        }
+
+    val definition: String?
+        get() {
+            val definition = input.definitions.filter { it.definition.isNotEmpty() }.firstOrNull() ?: return null
+            return "${definition.partOfSpeech.partOfSpeech} . ${definition.definition}"
+        }
 }

@@ -4,6 +4,7 @@ import android.graphics.*
 import android.os.Bundle
 import android.util.Size
 import android.view.SurfaceHolder
+import android.view.View
 import android.widget.CompoundButton
 import androidx.annotation.ColorInt
 import androidx.camera.core.*
@@ -106,7 +107,7 @@ class OcrSheetFragment
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-        drawFocusRect(Color.parseColor("#b3dabb"))
+        drawFocusRect(color(R.color.colorAccent))
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
@@ -148,6 +149,7 @@ class OcrSheetFragment
 
         binding.retry.setOnSafeClickListener {
             analysisPaused = false
+            binding.wordView.visibility = View.GONE
             binding.buttons.invisible()
         }
 
@@ -205,7 +207,7 @@ class OcrSheetFragment
         paint = Paint()
         paint.style = Paint.Style.STROKE
         paint.color = color
-        paint.strokeWidth = 8f
+        paint.strokeWidth = 5f
 
         val left = width / 2 - diameter / 3
         val top = height / 2 - diameter / 3
@@ -262,7 +264,7 @@ class OcrSheetFragment
             if (!analysisPaused) {
                 binding.text.text = text
                 text?.split(" ")?.forEach {
-                    binding.text.applyLink(it) { onClickedText(it) }
+                    binding.text.applyLink(R.color.white, it) { onClickedText(it) }
                 }
             }
             if (!text.isNullOrEmpty()) {
@@ -322,9 +324,8 @@ class OcrSheetFragment
 
     private val allPermissionsGranted: Boolean
         get() {
-            val context = contextRef
             for (permission in permissions)
-                if (!context.hasPermission(permission.value)) return false
+                if (!contextRef.hasPermission(permission.value)) return false
             return true
         }
 
@@ -358,9 +359,11 @@ class OcrSheetFragment
 
     private fun processResult(result: WordItem?) {
         if (result != null) {
-
+            binding.word.text = result.input.word
+            binding.pronunciation.text = result.pronunciation
+            binding.definition.text = result.definition.html
+            binding.wordView.visible()
         }
-
     }
 
 }

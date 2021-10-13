@@ -9,15 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--        <SurfaceView
-                    android:id="@+id/overlay"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    auto:layout_constraintBottom_toBottomOf="parent"
-                    auto:layout_constraintEnd_toEndOf="parent"
-                    auto:layout_constraintStart_toStartOf="parent"
-                    auto:layout_constraintTop_toTopOf="parent" />-->
-
         <com.dreampany.word.ml.graphic.GraphicOverlay
             android:id="@+id/overlay"
             android:layout_width="0dp"
@@ -67,13 +58,66 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="center_horizontal"
+            android:padding="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_14ssp"
             auto:layout_constraintBottom_toTopOf="@id/buttons"
             auto:layout_constraintEnd_toEndOf="parent"
             auto:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/word_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_3sdp"
+            android:visibility="gone"
+            auto:cardCornerRadius="@dimen/_2sdp"
+            auto:cardElevation="@dimen/_2sdp"
+            auto:cardPreventCornerOverlap="false"
+            auto:layout_constraintEnd_toEndOf="parent"
+            auto:layout_constraintStart_toStartOf="parent"
+            auto:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/material_grey100"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/_7sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_4sdp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:textColor="@color/material_grey900"
+                    android:textSize="@dimen/_14ssp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/pronunciation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:fontFamily="@font/roboto_slab_regular"
+                    android:textColor="@color/material_grey700"
+                    android:textSize="@dimen/_11ssp"
+                    android:textStyle="italic" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/definition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:fontFamily="@font/roboto_slab_regular"
+                    android:textColor="@color/material_grey800"
+                    android:textSize="@dimen/_12ssp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </com.google.android.material.card.MaterialCardView>
 
         <!--<com.dreampany.word.ml.graphic.GraphicOverlay
             android:id="@+id/overlay"
