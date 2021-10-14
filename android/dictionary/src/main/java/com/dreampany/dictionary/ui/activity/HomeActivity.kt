@@ -1,16 +1,12 @@
 package com.dreampany.dictionary.ui.activity
 
 import android.os.Bundle
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.dreampany.common.ui.activity.BaseActivity
 import com.dreampany.dictionary.R
 import com.dreampany.dictionary.databinding.HomeActivityBinding
 import com.dreampany.dictionary.ui.fragment.HomeFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Created by roman on 10/1/21
@@ -21,8 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<HomeActivityBinding>() {
 
+    @Inject
+    internal lateinit var homeFragment: HomeFragment
+
     override val layoutRes: Int = R.layout.home_activity
-    override val toolbarId: Int = R.id.toolbar
 
     @Transient
     private var inited = false
@@ -36,26 +34,20 @@ class HomeActivity : BaseActivity<HomeActivityBinding>() {
     }
 
     override fun onBackPressed() {
-        val currentFragment = currentFragmentOfNavHost
+/*        val currentFragment = currentFragmentOfNavHost
         if (currentFragment is HomeFragment) {
             if (currentFragment.hasBackPressed) return
-        }
+        }*/
 
         super.onBackPressed()
     }
 
     private fun initUi(): Boolean {
         if (inited) return true
-        val navView: BottomNavigationView = binding.navView
 
-        val controller = findNavController(R.id.nav_host)
-        val configuration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home
-            )
-        )
-        setupActionBarWithNavController(controller, configuration)
-        navView.setupWithNavController(controller)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.home_fragment, homeFragment)
+            .commit()
 
         return true
     }

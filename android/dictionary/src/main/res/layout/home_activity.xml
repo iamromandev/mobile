@@ -9,53 +9,11 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppBarOverlay">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="top"
-                android:theme="@style/Theme.Toolbar.Light"
-                auto:popupTheme="@style/PopupOverlay" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
+        <FrameLayout
+            android:id="@+id/home_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            auto:layout_behavior="@string/appbar_scrolling_view_behavior">
+            auto:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/nav_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:background="?android:attr/windowBackground"
-                auto:labelVisibilityMode="selected"
-                auto:layout_constraintBottom_toBottomOf="parent"
-                auto:layout_constraintEnd_toEndOf="parent"
-                auto:layout_constraintStart_toStartOf="parent"
-                auto:menu="@menu/bottom_nav_menu" />
-
-            <fragment
-                android:id="@+id/nav_host"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                auto:defaultNavHost="true"
-                auto:layout_constraintBottom_toTopOf="@id/nav_view"
-                auto:layout_constraintLeft_toLeftOf="parent"
-                auto:layout_constraintRight_toRightOf="parent"
-                auto:layout_constraintTop_toTopOf="parent"
-                auto:navGraph="@navigation/mobile_navigation" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
