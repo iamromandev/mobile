@@ -2,7 +2,7 @@
 
 buildscript {
     ext.gradle_version = '7.0.2'
-    ext.kotlin_version = '1.5.30'
+    ext.kotlin_version = '1.5.31'
     ext.google_service_version = '4.3.10'
     ext.multidex_version = '2.0.1'
     ext.perf_plugin_version = '1.4.0'
@@ -33,12 +33,13 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.gms:google-services:$google_service_version"
         classpath "com.google.firebase:perf-plugin:$perf_plugin_version"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30"
         classpath "com.google.protobuf:protobuf-gradle-plugin:$protobuf_version"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlytics_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:$about_version"
         //classpath 'com.google.firebase:firebase-plugins:1.1.5'
         //classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'

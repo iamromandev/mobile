@@ -3,7 +3,7 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:keepScreenOn="true"
-    tools:context=".ui.fragment.OcrSheetFragment">
+    tools:context=".ui.fragment.OcrFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

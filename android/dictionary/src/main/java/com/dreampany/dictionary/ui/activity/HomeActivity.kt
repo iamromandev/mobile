@@ -1,6 +1,8 @@
 package com.dreampany.dictionary.ui.activity
 
 import android.os.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.dreampany.common.ui.activity.BaseActivity
 import com.dreampany.dictionary.R
 import com.dreampany.dictionary.databinding.HomeActivityBinding
@@ -25,6 +27,8 @@ class HomeActivity : BaseActivity<HomeActivityBinding>() {
     @Transient
     private var inited = false
 
+    private lateinit var navController: NavController
+
     override fun onStartUi(state: Bundle?) {
         inited = initUi()
     }
@@ -33,22 +37,27 @@ class HomeActivity : BaseActivity<HomeActivityBinding>() {
 
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    /*
     override fun onBackPressed() {
-/*        val currentFragment = currentFragmentOfNavHost
+        val currentFragment = currentFragmentOfNavHost
         if (currentFragment is HomeFragment) {
             if (currentFragment.hasBackPressed) return
-        }*/
+        }
 
         super.onBackPressed()
     }
+    */
 
     private fun initUi(): Boolean {
         if (inited) return true
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.home_fragment, homeFragment)
-            .commit()
-
+        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        navController = navHost.navController
         return true
     }
+
+
 }

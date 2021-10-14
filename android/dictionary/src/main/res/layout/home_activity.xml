@@ -9,11 +9,15 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <FrameLayout
-            android:id="@+id/home_fragment"
+        <fragment
+            android:id="@+id/nav_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            auto:defaultNavHost="true"
+            auto:navGraph="@navigation/home_navigation"
             auto:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -8,19 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/ocr_sheet_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
-             auto:layout_constraintBottom_toBottomOf="parent"
+            auto:layout_constraintBottom_toBottomOf="parent"
             auto:layout_constraintEnd_toEndOf="parent"
             auto:srcCompat="@drawable/ic_baseline_switch_camera_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>

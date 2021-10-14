@@ -21,7 +21,7 @@ import com.dreampany.dictionary.data.enums.Action
 import com.dreampany.dictionary.data.enums.State
 import com.dreampany.dictionary.data.enums.Subtype
 import com.dreampany.dictionary.data.enums.Type
-import com.dreampany.dictionary.databinding.OcrSheetFragmentBinding
+import com.dreampany.dictionary.databinding.OcrFragmentBinding
 import com.dreampany.dictionary.misc.exts.applyLink
 import com.dreampany.dictionary.ml.text.TextRecognitionProcessor
 import com.dreampany.dictionary.ui.model.WordItem
@@ -42,14 +42,14 @@ import javax.inject.Inject
  * Last modified $file.lastModified
  */
 @AndroidEntryPoint
-class OcrSheetFragment
+class OcrFragment
 @Inject constructor(
 
-) : BaseFragment<OcrSheetFragmentBinding>(),
+) : BaseFragment<OcrFragmentBinding>(),
     SurfaceHolder.Callback,
     CompoundButton.OnCheckedChangeListener {
 
-    override val layoutRes: Int = R.layout.ocr_sheet_fragment
+    override val layoutRes: Int = R.layout.ocr_fragment
 
     @Transient
     private var inited = false

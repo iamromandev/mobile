@@ -2,7 +2,9 @@ package com.dreampany.dictionary.ui.fragment
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.dreampany.common.data.model.Response
 import com.dreampany.common.misc.exts.hide
 import com.dreampany.common.misc.exts.hideKeyboard
@@ -32,7 +34,7 @@ import javax.inject.Inject
 class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
 
     @Inject
-    internal lateinit var ocrSheetFragment: OcrSheetFragment
+    internal lateinit var ocrFragment: OcrFragment
 
     override val layoutRes: Int = R.layout.home_fragment
     override val menuRes: Int = R.menu.home_menu
@@ -75,22 +77,22 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
         return super.onQueryTextSubmit(query)
     }
 
-    override val hasBackPressed: Boolean
+/*    override val hasBackPressed: Boolean
         get() {
-            if (ocrSheetFragment.isVisible) {
-                val text = ocrSheetFragment.texts
+            if (ocrFragment.isVisible) {
+                val text = ocrFragment.texts
                 Timber.v(text.toString())
                 closeOcrSheet()
                 return true
             }
             return false
-        }
+        }*/
 
     private fun initUi(state: Bundle?): Boolean {
         if (inited) return true
 
         binding.fab.setOnSafeClickListener {
-            openOcrSheet()
+            openOcrUi()
         }
 
         vm.subscribe(this, { this.processResponse(it) })
@@ -111,18 +113,20 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
         return true
     }
 
-    private fun openOcrSheet() {
-        binding.fab.hide()
-        binding.ocrSheetFragment.show()
+    private fun openOcrUi() {
+        findNavController().navigate(R.id.action_home_to_ocr)
+        //binding.fab.hide()
+
+/*        binding.ocrSheetFragment.show()
         childFragmentManager.beginTransaction()
-            .replace(R.id.ocr_sheet_fragment, ocrSheetFragment)
-            .commit()
+            .replace(R.id.ocr_sheet_fragment, ocrFragment)
+            .commit()*/
     }
 
     private fun closeOcrSheet() {
-        childFragmentManager.beginTransaction().remove(ocrSheetFragment).commit();
-        binding.fab.show()
-        binding.ocrSheetFragment.hide()
+        //childFragmentManager.beginTransaction().remove(ocrFragment).commit();
+        //binding.fab.show()
+        //binding.ocrSheetFragment.hide()
     }
 
     private fun processResponse(response: Response<Type, Subtype, State, Action, WordItem>) {
