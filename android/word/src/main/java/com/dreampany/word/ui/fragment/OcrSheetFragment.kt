@@ -4,7 +4,6 @@ import android.graphics.*
 import android.os.Bundle
 import android.util.Size
 import android.view.SurfaceHolder
-import android.view.View
 import android.widget.CompoundButton
 import androidx.annotation.ColorInt
 import androidx.camera.core.*
@@ -87,7 +86,6 @@ class OcrSheetFragment
     }
 
     override fun onStopUi() {
-        if (::imageProcessor.isInitialized) imageProcessor.stop()
         if (::onClose.isInitialized)
             onClose()
     }
@@ -95,12 +93,12 @@ class OcrSheetFragment
     @ExperimentalGetImage
     override fun onResume() {
         super.onResume()
-        if (allPermissionsGranted) bindAllCameraUseCases()
+        startOcr()
     }
 
     override fun onPause() {
         super.onPause()
-        if (::imageProcessor.isInitialized) imageProcessor.stop()
+        stopOcr()
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
@@ -127,7 +125,7 @@ class OcrSheetFragment
             if (cameraProvider.hasCamera(newCameraSelector)) {
                 lensFacing = newLensFacing
                 cameraSelector = newCameraSelector
-                bindAllCameraUseCases()
+                startOcr()
                 return
             }
         } catch (error: CameraInfoUnavailableException) {
@@ -147,9 +145,8 @@ class OcrSheetFragment
         if (inited) return true
         val context = contextRef?.applicationContext ?: return false
 
-        binding.retry.setOnSafeClickListener {
+        binding.buttonRetry.setOnSafeClickListener {
             analysisPaused = false
-            binding.wordView.visibility = View.GONE
             binding.buttons.invisible()
         }
 
@@ -167,7 +164,7 @@ class OcrSheetFragment
                 {
                     try {
                         cameraProvider = providerFuture.get()
-                        if (allPermissionsGranted) bindAllCameraUseCases()
+                        startOcr()
                     } catch (error: ExecutionException) {
                         Timber.e(error)
                     } catch (error: InterruptedException) {
@@ -182,6 +179,15 @@ class OcrSheetFragment
 
         vm.subscribe(this, { this.processResponse(it) })
         return true
+    }
+
+    @ExperimentalGetImage
+    private fun startOcr() {
+        if (allPermissionsGranted) bindAllCameraUseCases()
+    }
+
+    private fun stopOcr() {
+        if (::imageProcessor.isInitialized) imageProcessor.stop()
     }
 
     private fun onClickedText(text: String) {
@@ -318,7 +324,7 @@ class OcrSheetFragment
     @ExperimentalGetImage
     private fun checkPermissions() {
         runWithPermissions(*permissions) {
-            bindAllCameraUseCases()
+            startOcr()
         }
     }
 
@@ -362,7 +368,7 @@ class OcrSheetFragment
             binding.word.text = result.input.word
             binding.pronunciation.text = result.pronunciation
             binding.definition.text = result.definition.html
-            binding.wordView.visible()
+            binding.layoutWord.visible()
         }
     }
 

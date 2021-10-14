@@ -41,9 +41,10 @@
             auto:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/retry"
+                android:id="@+id/button_retry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab_regular"
                 android:text="Retry" />
 
             <com.google.android.material.button.MaterialButton
@@ -67,7 +68,7 @@
             auto:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/word_view"
+            android:id="@+id/layout_word"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_3sdp"
@@ -115,6 +116,19 @@
                     android:fontFamily="@font/roboto_slab_regular"
                     android:textColor="@color/material_grey800"
                     android:textSize="@dimen/_12ssp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_view"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_slab_regular"
+                    android:minWidth="@dimen/_2sdp"
+                    android:minHeight="@dimen/_2sdp"
+                    android:text="View"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_10ssp"
+                    auto:strokeColor="@color/colorAccent" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.google.android.material.card.MaterialCardView>

@@ -35,6 +35,9 @@ import com.google.android.material.appbar.MaterialToolbar
 val View?.isNull: Boolean get() = this == null
 val View?.isNotNull: Boolean get() = this != null
 
+val View?.isVisible : Boolean
+    get() = this?.visibility == View.VISIBLE
+
 fun View?.visible() {
     this?.visibility = View.VISIBLE
 }
