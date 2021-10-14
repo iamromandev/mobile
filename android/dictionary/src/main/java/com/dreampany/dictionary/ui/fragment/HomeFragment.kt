@@ -2,6 +2,7 @@ package com.dreampany.dictionary.ui.fragment
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,6 +24,12 @@ import com.dreampany.dictionary.ui.vm.WordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
+import android.view.MotionEvent
+
+import android.view.View.OnTouchListener
+
+
+
 
 /**
  * Created by roman on 10/1/21
@@ -91,8 +98,11 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     private fun initUi(state: Bundle?): Boolean {
         if (inited) return true
 
-        binding.fab.setOnSafeClickListener {
-            openOcrUi()
+        binding.editEnter.setOnTouchListener { v, event ->
+            if (MotionEvent.ACTION_DOWN == event.action) {
+               openOcrUi()
+            }
+            true
         }
 
         vm.subscribe(this, { this.processResponse(it) })

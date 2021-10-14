@@ -6,17 +6,71 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/material_grey300">
 
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            auto:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/_3sdp"
+            auto:cardCornerRadius="@dimen/_2sdp"
+            auto:cardElevation="@dimen/_2sdp"
+            auto:cardPreventCornerOverlap="false"
             auto:layout_constraintEnd_toEndOf="parent"
-            auto:srcCompat="@drawable/ic_baseline_switch_camera_24" />
+            auto:layout_constraintStart_toStartOf="parent"
+            auto:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/_60sdp"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/profile"
+                    android:layout_width="@dimen/buttonSizeSecondary"
+                    android:layout_height="@dimen/buttonSizeSecondary"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    auto:actualImageScaleType="centerCrop"
+                    auto:failureImage="@drawable/ic_baseline_account_circle_24"
+                    auto:failureImageScaleType="centerInside"
+                    auto:layout_constraintBottom_toBottomOf="parent"
+                    auto:layout_constraintEnd_toEndOf="parent"
+                    auto:layout_constraintTop_toTopOf="parent"
+                    auto:placeholderImage="@drawable/ic_baseline_account_circle_24"
+                    auto:placeholderImageScaleType="centerCrop"
+                    auto:roundAsCircle="true" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edit_enter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:focusedByDefault="true"
+                    android:fontFamily="@font/roboto_slab_bold"
+                    android:hint="Enter text"
+                    android:textSize="@dimen/_16ssp"
+                    auto:layout_constraintBottom_toBottomOf="parent"
+                    auto:layout_constraintEnd_toStartOf="@id/profile"
+                    auto:layout_constraintStart_toStartOf="parent"
+                    auto:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/fab_margin"
+                    auto:layout_constraintBottom_toBottomOf="parent"
+                    auto:layout_constraintEnd_toEndOf="parent"
+                    auto:srcCompat="@drawable/ic_baseline_switch_camera_24" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
