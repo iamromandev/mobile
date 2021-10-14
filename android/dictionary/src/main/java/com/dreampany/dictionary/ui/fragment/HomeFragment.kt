@@ -1,16 +1,16 @@
 package com.dreampany.dictionary.ui.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
-import androidx.fragment.app.Fragment
+import android.speech.RecognizerIntent
+import android.view.MotionEvent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.dreampany.common.data.model.Response
-import com.dreampany.common.misc.exts.hide
 import com.dreampany.common.misc.exts.hideKeyboard
 import com.dreampany.common.misc.exts.setOnSafeClickListener
-import com.dreampany.common.misc.exts.show
 import com.dreampany.common.misc.func.SmartError
 import com.dreampany.common.ui.fragment.BaseFragment
 import com.dreampany.dictionary.R
@@ -24,11 +24,6 @@ import com.dreampany.dictionary.ui.vm.WordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
-import android.view.MotionEvent
-
-import android.view.View.OnTouchListener
-
-
 
 
 /**
@@ -59,50 +54,28 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     override fun onStopUi() {
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle toolbar item clicks here. It'll
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_search -> {
-                // Open the search view on the menu item click.
-                //searchView.openSearch()
-                //binding.searchView.openSearch()
-                return true
+    private val speechLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val spokenText =
+                    result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                        ?.firstOrNull() ?: return@registerForActivityResult
+                vm.read(spokenText)
             }
         }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query.isNullOrEmpty()) return false
-
-        Timber.v(query)
-
-        vm.read(query)
-
-        return super.onQueryTextSubmit(query)
-    }
-
-/*    override val hasBackPressed: Boolean
-        get() {
-            if (ocrFragment.isVisible) {
-                val text = ocrFragment.texts
-                Timber.v(text.toString())
-                closeOcrSheet()
-                return true
-            }
-            return false
-        }*/
 
     private fun initUi(state: Bundle?): Boolean {
         if (inited) return true
-
+        binding.editEnter.requestFocus()
         binding.editEnter.setOnTouchListener { v, event ->
             if (MotionEvent.ACTION_DOWN == event.action) {
-               openOcrUi()
+                openOcrUi()
             }
             true
+        }
+
+        binding.speak.setOnSafeClickListener {
+            displaySpeechRecognizer()
         }
 
         vm.subscribe(this, { this.processResponse(it) })
@@ -137,6 +110,16 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
         //childFragmentManager.beginTransaction().remove(ocrFragment).commit();
         //binding.fab.show()
         //binding.ocrSheetFragment.hide()
+    }
+
+    private fun displaySpeechRecognizer() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+        }
+        speechLauncher.launch(intent)
     }
 
     private fun processResponse(response: Response<Type, Subtype, State, Action, WordItem>) {

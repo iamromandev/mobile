@@ -23,14 +23,13 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/_60sdp"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_8sdp">
+                android:minHeight="@dimen/_60sdp">
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/profile"
-                    android:layout_width="@dimen/buttonSizeSecondary"
-                    android:layout_height="@dimen/buttonSizeSecondary"
+                    android:layout_width="@dimen/_48sdp"
+                    android:layout_height="@dimen/_48sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:adjustViewBounds="true"
                     android:cropToPadding="true"
                     auto:actualImageScaleType="centerCrop"
@@ -43,17 +42,34 @@
                     auto:placeholderImageScaleType="centerCrop"
                     auto:roundAsCircle="true" />
 
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/speak"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_14sdp"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    auto:actualImageScaleType="centerCrop"
+                    auto:failureImage="@drawable/ic_baseline_keyboard_voice_24"
+                    auto:failureImageScaleType="centerInside"
+                    auto:layout_constraintBottom_toBottomOf="parent"
+                    auto:layout_constraintEnd_toStartOf="@id/profile"
+                    auto:layout_constraintTop_toTopOf="parent"
+                    auto:placeholderImage="@drawable/ic_baseline_keyboard_voice_24"
+                    auto:placeholderImageScaleType="centerCrop"
+                    auto:roundAsCircle="true" />
+
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edit_enter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:background="@null"
-                    android:focusedByDefault="true"
                     android:fontFamily="@font/roboto_slab_bold"
                     android:hint="Enter text"
                     android:textSize="@dimen/_16ssp"
                     auto:layout_constraintBottom_toBottomOf="parent"
-                    auto:layout_constraintEnd_toStartOf="@id/profile"
+                    auto:layout_constraintEnd_toStartOf="@id/speak"
                     auto:layout_constraintStart_toStartOf="parent"
                     auto:layout_constraintTop_toTopOf="parent" />
 
