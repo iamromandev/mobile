@@ -5,12 +5,12 @@
     android:viewportWidth="108"
     android:viewportHeight="108"
     android:tint="#FFFFFF">
-  <group android:scaleX="0.30912"
-      android:scaleY="0.30912"
-      android:translateX="34.68"
-      android:translateY="26.1792">
+  <group android:scaleX="0.34224"
+      android:scaleY="0.34224"
+      android:translateX="38.42808"
+      android:translateY="23.1984">
     <group android:translateY="135.36">
-      <path android:pathData="M-2.88,-96.048L29.664,-96.048L40.752,-62.496L51.84,-96.048L72.864,-96.048L83.952,-62.496L95.04,-96.048L127.584,-96.048L95.904,0L72,0L62.352,-29.088L52.704,0L28.8,0Z"
+      <path android:pathData="M5.04,0L5.04,-96.048L31.68,-96.048Q45.216,-96.048,55.8,-93.024Q66.384,-90,73.656,-83.952Q80.928,-77.904,84.744,-68.904Q88.56,-59.904,88.56,-48.096Q88.56,-36.288,84.744,-27.288Q80.928,-18.288,73.656,-12.24Q66.384,-6.192,55.8,-3.096Q45.216,0,31.68,0ZM35.712,-27.36Q46.512,-27.36,52.416,-32.472Q58.32,-37.584,58.32,-48.096Q58.32,-58.608,52.416,-63.648Q46.512,-68.688,35.712,-68.688Z"
           android:fillColor="#FFFFFF"/>
     </group>
   </group>
