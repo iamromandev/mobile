@@ -269,7 +269,7 @@ class OcrSheetFragment
         imageProcessor.setListener { text ->
             if (!analysisPaused) {
                 binding.text.text = text
-                text?.split(" ")?.forEach {
+                text?.split("  ")?.forEach {
                     binding.text.applyLink(R.color.white, it) { onClickedText(it) }
                 }
             }

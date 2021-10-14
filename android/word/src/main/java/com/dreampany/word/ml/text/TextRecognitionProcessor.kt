@@ -1,7 +1,7 @@
 package com.dreampany.word.ml.text
 
 import android.content.Context
-import com.dreampany.word.misc.exts.first20
+import com.dreampany.word.misc.exts.first25
 import com.dreampany.word.ml.graphic.GraphicOverlay
 import com.dreampany.word.ml.vision.VisionProcessor
 import com.google.android.gms.tasks.Task
@@ -39,7 +39,7 @@ class TextRecognitionProcessor(
         //overlay.add(TextGraphic(overlay, result, shouldGroupRecognizedTextInBlocks))
         texts.add(result.text)
         Timber.v("RecognitionProcessor ${result.text}")
-        onNewText(result.first20)
+        onNewText(result.first25)
     }
 
     override fun onFailure(error: Throwable) {

@@ -4,12 +4,13 @@ import android.graphics.*
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.camera.core.ImageProxy
+import androidx.compose.ui.text.toLowerCase
 import com.dreampany.common.misc.exts.color
 import com.google.mlkit.vision.text.Text
 import com.klinker.android.link_builder.Link
-import com.klinker.android.link_builder.applyLinkedText
 import com.klinker.android.link_builder.applyLinks
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 /**
  * Created by roman on 10/10/21
@@ -166,7 +167,7 @@ val Text.first: String?
         return null
     }
 
-val Text.first20: String
+val Text.first25: String
     get() {
         val builder = StringBuilder()
         var index = 0
@@ -175,9 +176,10 @@ val Text.first20: String
                 for (element in line.elements)
                     if (!element.text.trim().isEmpty())
                         if (index < 20) {
-                            if (!builder.isEmpty()) builder.append(" ")
-                            if (!builder.contains(element.text.trim())) {
-                                builder.append(element.text.trim())
+                            if (!builder.isEmpty()) builder.append("  ")
+                            val word = element.text.clean
+                            if (!builder.contains(word)) {
+                                builder.append(word)
                                 index++
                             }
                         }
@@ -185,6 +187,11 @@ val Text.first20: String
 
         return builder.toString()
     }
+
+val String.clean : String get() {
+    val extras = "[.,\"=:?()]".toRegex()
+    return this.trim().replace(extras, "").lowercase()
+}
 
 fun TextView.applyLink(@ColorRes textColor : Int, text: String, onClickedText : (text:String) -> Unit) {
     val link = Link(text)
