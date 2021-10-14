@@ -1,5 +1,5 @@
 rootProject.name='android'
-include ':framework'
+//include ':framework'
 include ':common'
 include ':pref'
 include ':device'

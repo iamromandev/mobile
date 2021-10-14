@@ -22,7 +22,7 @@ buildscript {
     ext.okhttp_version = '5.0.0-alpha.2'
     ext.retrofit_version = '2.9.0'
     ext.fast_adapter_version = '5.5.1'
-    ext.about_version = '8.9.1'
+    ext.about_version = '8.9.3'
     repositories {
         google()
         jcenter()
