@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.fragment.WordFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/material_grey300">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_3sdp"
+            auto:cardCornerRadius="@dimen/_2sdp"
+            auto:cardElevation="@dimen/_2sdp"
+            auto:cardPreventCornerOverlap="false"
+            auto:layout_constraintEnd_toEndOf="parent"
+            auto:layout_constraintStart_toStartOf="parent"
+            auto:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/_60sdp">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    auto:defaultQueryHint="Enter word"
+                    auto:iconifiedByDefault="false"
+                    auto:layout_constraintBottom_toBottomOf="parent"
+                    auto:layout_constraintEnd_toEndOf="parent"
+                    auto:layout_constraintStart_toStartOf="parent"
+                    auto:layout_constraintTop_toTopOf="parent"
+                    auto:queryBackground="@color/colorTransparent"
+                    auto:searchHintIcon="@null"
+                    auto:searchIcon="@null" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

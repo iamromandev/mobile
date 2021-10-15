@@ -8,7 +8,6 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.*
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment

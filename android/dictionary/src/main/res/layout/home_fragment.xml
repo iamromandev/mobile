@@ -23,6 +23,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/material_grey500"
                 android:minHeight="@dimen/_60sdp">
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -59,7 +60,7 @@
                     auto:placeholderImageScaleType="centerCrop"
                     auto:roundAsCircle="true" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/edit_enter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

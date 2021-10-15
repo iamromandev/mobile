@@ -3,6 +3,7 @@ package com.dreampany.dictionary.ui.activity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.dreampany.common.misc.exts.makeStatusBarTransparent
 import com.dreampany.common.ui.activity.BaseActivity
 import com.dreampany.dictionary.R
 import com.dreampany.dictionary.databinding.HomeActivityBinding
@@ -54,6 +55,7 @@ class HomeActivity : BaseActivity<HomeActivityBinding>() {
 
     private fun initUi(): Boolean {
         if (inited) return true
+        //makeStatusBarTransparent()
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = navHost.navController
         return true

@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.MotionEvent
+import android.view.animation.AnimationUtils
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.dreampany.common.data.model.Response
+import com.dreampany.common.misc.exts.contextRef
 import com.dreampany.common.misc.exts.hideKeyboard
 import com.dreampany.common.misc.exts.setOnSafeClickListener
 import com.dreampany.common.misc.func.SmartError
@@ -33,14 +35,15 @@ import javax.inject.Inject
  * Last modified $file.lastModified
  */
 @AndroidEntryPoint
-class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
+class HomeFragment
+@Inject constructor(
+
+) : BaseFragment<HomeFragmentBinding>() {
 
     @Inject
     internal lateinit var ocrFragment: OcrFragment
 
     override val layoutRes: Int = R.layout.home_fragment
-    override val menuRes: Int = R.menu.home_menu
-    override val searchMenuItemId: Int = R.id.action_search
 
     @Transient
     private var inited = false
@@ -54,6 +57,16 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
     override fun onStopUi() {
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        //binding.editEnter.clearAnimation()
+    }
+
     private val speechLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -65,13 +78,10 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
         }
 
     private fun initUi(state: Bundle?): Boolean {
-        if (inited) return true
-        binding.editEnter.requestFocus()
-        binding.editEnter.setOnTouchListener { v, event ->
-            if (MotionEvent.ACTION_DOWN == event.action) {
-                openOcrUi()
-            }
-            true
+        //if (inited) return true
+        binding.editEnter.setAnimation(AnimationUtils.loadAnimation(contextRef, R.anim.blink))
+        binding.editEnter.setOnSafeClickListener {
+            openWordUi()
         }
 
         binding.speak.setOnSafeClickListener {
@@ -80,36 +90,16 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
 
         vm.subscribe(this, { this.processResponse(it) })
 
-        /*ocrSheetFragment.setListener({
-            ex.postToUi({
-                closeOcrSheet()
-            })
-        })*/
-
-        /*runWithPermissions(Permission.ACCESS_FINE_LOCATION) {
-            //vm.registerNearby()
-        }*/
-
-        //binding.swipe.init(this)
-        //binding.stateful.setStateView(StatefulLayout.State.EMPTY, R.layout.content_empty_stations)
-
         return true
+    }
+
+    private fun openWordUi() {
+        val action = HomeFragmentDirections.actionHomeToWord()
+        findNavController().navigate(action)
     }
 
     private fun openOcrUi() {
         findNavController().navigate(R.id.action_home_to_ocr)
-        //binding.fab.hide()
-
-/*        binding.ocrSheetFragment.show()
-        childFragmentManager.beginTransaction()
-            .replace(R.id.ocr_sheet_fragment, ocrFragment)
-            .commit()*/
-    }
-
-    private fun closeOcrSheet() {
-        //childFragmentManager.beginTransaction().remove(ocrFragment).commit();
-        //binding.fab.show()
-        //binding.ocrSheetFragment.hide()
     }
 
     private fun displaySpeechRecognizer() {
@@ -124,7 +114,6 @@ class HomeFragment @Inject constructor() : BaseFragment<HomeFragmentBinding>() {
 
     private fun processResponse(response: Response<Type, Subtype, State, Action, WordItem>) {
         if (response is Response.Progress) {
-            //binding.swipe.refresh(response.progress)
             if (response.progress) {
                 hideSearchView()
                 hideKeyboard()

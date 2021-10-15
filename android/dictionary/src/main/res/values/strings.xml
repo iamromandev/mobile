@@ -2,5 +2,6 @@
     <string name="app_name">Smart Dictionary</string>
 
     <string name="title_home">Home</string>
+    <string name="title_word">Word</string>
     <string name="title_ocr">OCR</string>
 </resources>

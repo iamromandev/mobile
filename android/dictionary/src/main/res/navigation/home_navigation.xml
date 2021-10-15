@@ -11,8 +11,23 @@
         android:label="@string/title_home"
         tools:layout="@layout/home_fragment">
         <action
+            android:id="@+id/action_home_to_word"
+            auto:destination="@id/word_fragment" />
+        <action
             android:id="@+id/action_home_to_ocr"
             auto:destination="@id/ocr_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/word_fragment"
+        android:name="com.dreampany.dictionary.ui.fragment.WordFragment"
+        android:label="@string/title_word"
+        tools:layout="@layout/word_fragment">
+        <argument
+            android:name="query"
+            auto:argType="string"
+            auto:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment

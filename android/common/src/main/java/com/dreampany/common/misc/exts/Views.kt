@@ -289,3 +289,9 @@ fun MaterialToolbar.hide() {
     this.animate().translationY((-this.getBottom()).toFloat()).setInterpolator(AccelerateInterpolator()).start()
 
 }
+
+fun View.setMarginTop(marginTop: Int) {
+    val menuLayoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
+    menuLayoutParams.setMargins(0, marginTop, 0, 0)
+    this.layoutParams = menuLayoutParams
+}
