@@ -33,8 +33,8 @@ object HttpModule {
             interceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val client = OkHttpClient.Builder()
-            .readTimeout(Constant.Values.Http.READ_TIMEOUT, TimeUnit.SECONDS)
-            .writeTimeout(Constant.Values.Http.WRITE_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(Constant.Values.Http.READ_TIMEOUT, TimeUnit.MINUTES)
+            .writeTimeout(Constant.Values.Http.WRITE_TIMEOUT, TimeUnit.MINUTES)
             .connectionPool(pool)
             .addInterceptor(interceptor)
             .build()

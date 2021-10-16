@@ -190,8 +190,8 @@ class Constant {
             const val DESCENDING = "desc"
         }
         object Http {
-            const val READ_TIMEOUT = 20L
-            const val WRITE_TIMEOUT = 10L
+            const val READ_TIMEOUT = 1L
+            const val WRITE_TIMEOUT = 1L
         }
     }
 

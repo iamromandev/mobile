@@ -207,12 +207,21 @@ fun Activity?.rateUs(packageName: String?) {
     }
 }
 
+fun Activity?.showKeyboard() {
+    val view = this?.currentFocus ?: return
+    kotlinx.coroutines.Runnable {
+        val imm: InputMethodManager = (this.getSystemService(Context.INPUT_METHOD_SERVICE)
+            ?: return@Runnable) as InputMethodManager
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    }.run()
+}
+
 fun Activity?.hideKeyboard() {
     val view = this?.currentFocus ?: return
     kotlinx.coroutines.Runnable {
         val imm: InputMethodManager = (this.getSystemService(Context.INPUT_METHOD_SERVICE)
             ?: return@Runnable) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
     }.run()
 }
 

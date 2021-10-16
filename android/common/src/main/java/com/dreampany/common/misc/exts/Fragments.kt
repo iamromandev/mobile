@@ -1,5 +1,6 @@
 package com.dreampany.common.misc.exts
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -7,10 +8,10 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import android.view.WindowInsets
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
-import androidx.annotation.RequiresApi
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.dreampany.common.data.model.Task
@@ -109,8 +110,6 @@ val Fragment?.versionCode: Long get() = contextRef.versionCode
 
 val Fragment?.versionName: String get() = contextRef.versionName
 
-fun Fragment.hideKeyboard() = activity?.hideKeyboard()
-
 inline val Fragment.windowWidth: Int
     get() {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -138,3 +137,7 @@ inline val Fragment.windowHeight: Int
             resources.displayMetrics.heightPixels - insets.bottom - insets.top
         }
     }
+
+fun Fragment?.showKeyboard() = this?.activity.showKeyboard()
+
+fun Fragment?.hideKeyboard() = this?.activity.hideKeyboard()
