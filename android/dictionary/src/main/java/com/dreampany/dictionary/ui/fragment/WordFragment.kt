@@ -16,8 +16,11 @@ import com.dreampany.dictionary.data.enums.State
 import com.dreampany.dictionary.data.enums.Subtype
 import com.dreampany.dictionary.data.enums.Type
 import com.dreampany.dictionary.databinding.WordFragmentBinding
+import com.dreampany.dictionary.ui.adapter.SourcePageAdapter
+import com.dreampany.dictionary.ui.model.SourcePageItem
 import com.dreampany.dictionary.ui.model.WordItem
 import com.dreampany.dictionary.ui.vm.WordViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -42,6 +45,7 @@ class WordFragment
     private var inited = false
 
     private val vm: WordViewModel by viewModels()
+    private lateinit var pageAdapter: SourcePageAdapter
 
     override fun onStartUi(state: Bundle?) {
         inited = initUi(state)
@@ -52,6 +56,8 @@ class WordFragment
 
     private fun initUi(state: Bundle?): Boolean {
         //if (inited) return true
+        initPager()
+
         if (args.query.isNullOrEmpty()) {
             ex.postToUi(kotlinx.coroutines.Runnable {
                 binding.query.requestFocus()
@@ -85,6 +91,18 @@ class WordFragment
 
         vm.subscribe(this, { this.processResponse(it) })
         return true
+    }
+
+    private fun initPager() {
+        if (::pageAdapter.isInitialized) return
+        pageAdapter = SourcePageAdapter(this)
+        binding.pager.adapter = pageAdapter
+        TabLayoutMediator(
+            binding.tabs,
+            binding.pager,
+            { tab, position ->
+                tab.text = pageAdapter.getTitle(position)
+            }).attach()
     }
 
     private fun onClickOnQuery() {
@@ -162,10 +180,18 @@ class WordFragment
             binding.query.setFocusableInTouchMode(true)
         })
 
-
         if (result != null) {
-
+            if (!pageAdapter.isEmpty) pageAdapter.clear()
+            pageAdapter.addItems(result.pages)
         }
-
     }
+
+    private val WordItem.pages: List<SourcePageItem>
+        get() {
+            val pages = mutableListOf<SourcePageItem>()
+            this.sources.sortedWith({ a, b -> a.source.compareTo(b.source, true) }).forEach {
+                pages.add(SourcePageItem(it, this.input))
+            }
+            return pages
+        }
 }

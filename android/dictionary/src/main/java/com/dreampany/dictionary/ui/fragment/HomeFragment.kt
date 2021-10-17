@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import android.view.MotionEvent
 import android.view.animation.AnimationUtils
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -50,21 +49,12 @@ class HomeFragment
 
     private val vm: WordViewModel by viewModels()
 
+
     override fun onStartUi(state: Bundle?) {
         inited = initUi(state)
     }
 
     override fun onStopUi() {
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //binding.editEnter.clearAnimation()
     }
 
     private val speechLauncher =
@@ -89,6 +79,8 @@ class HomeFragment
         }
 
         vm.subscribe(this, { this.processResponse(it) })
+
+
 
         return true
     }

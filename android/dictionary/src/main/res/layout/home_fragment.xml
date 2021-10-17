@@ -10,6 +10,7 @@
         android:background="@color/material_grey300">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/layout_word"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_3sdp"
@@ -76,7 +77,6 @@
                     auto:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         </com.google.android.material.card.MaterialCardView>
 

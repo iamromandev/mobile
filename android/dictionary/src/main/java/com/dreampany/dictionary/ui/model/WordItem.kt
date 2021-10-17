@@ -3,6 +3,7 @@ package com.dreampany.dictionary.ui.model
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.dreampany.dictionary.R
+import com.dreampany.dictionary.data.model.Source
 import com.dreampany.dictionary.data.model.Word
 import com.dreampany.dictionary.databinding.WordItemBinding
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
@@ -32,6 +33,14 @@ class WordItem(val input: Word) :
 
     override fun bindView(binding: WordItemBinding, payloads: List<Any>) {
     }
+
+    val sources : List<Source>
+        get() {
+            val output = mutableSetOf<Source>()
+            input.pronunciations.forEach { output.add(it.source) }
+            input.definitions.forEach { output.add(it.source) }
+            return output.toMutableList()
+        }
 
     val pronunciation: String?
         get() {
