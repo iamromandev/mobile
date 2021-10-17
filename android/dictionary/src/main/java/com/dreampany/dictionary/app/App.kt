@@ -1,5 +1,6 @@
 package com.dreampany.dictionary.app
 
+import androidx.appcompat.app.AppCompatDelegate
 import com.dreampany.common.app.BaseApp
 import com.dreampany.common.misc.exts.isDebug
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -14,6 +15,10 @@ import dagger.hilt.android.HiltAndroidApp
  */
 @HiltAndroidApp
 class App : BaseApp() {
+
+    init {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+    }
 
     override fun onOpen() {
         initFirebase()

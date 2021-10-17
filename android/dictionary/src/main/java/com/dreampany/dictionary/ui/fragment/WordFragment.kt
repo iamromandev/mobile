@@ -24,6 +24,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
+import android.view.inputmethod.EditorInfo
+
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
+
 
 /**
  * Created by roman on 10/15/21
@@ -74,6 +79,14 @@ class WordFragment
             }
             false
         }
+
+        binding.query.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                search()
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
         binding.query.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(text: Editable) {
