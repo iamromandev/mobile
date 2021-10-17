@@ -7,8 +7,17 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/material_grey300"
         android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/layout_word"
@@ -23,7 +32,6 @@
                 android:id="@+id/layout_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/material_grey500"
                 android:minHeight="@dimen/_50sdp">
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -67,8 +75,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:background="@null"
-                    android:fontFamily="@font/roboto_slab_regular"
                     android:hint="Enter word"
                     android:textColor="@color/white_50"
                     android:textSize="@dimen/_16ssp"
@@ -85,7 +91,6 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/material_grey100"
             auto:tabGravity="fill"
             auto:tabIndicator="@drawable/tab_indicator"
             auto:tabIndicatorColor="@color/textColorPrimary"

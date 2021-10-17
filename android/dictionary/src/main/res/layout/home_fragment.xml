@@ -6,8 +6,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/material_grey300">
+        android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/layout_word"
@@ -24,7 +23,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/material_grey500"
                 android:minHeight="@dimen/_50sdp">
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -66,11 +64,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:background="@null"
-                    android:fontFamily="@font/roboto_slab_regular"
                     android:hint="Enter text"
-                    android:textColor="@color/white_50"
-                    android:textSize="@dimen/_16ssp"
                     auto:layout_constraintBottom_toBottomOf="parent"
                     auto:layout_constraintEnd_toStartOf="@id/speak"
                     auto:layout_constraintStart_toStartOf="parent"

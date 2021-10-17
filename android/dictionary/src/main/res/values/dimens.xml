@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_input">@dimen/_16ssp</dimen>
+    <dimen name="text_error">@dimen/_12ssp</dimen>
+    <dimen name="text_label">@dimen/_12ssp</dimen>
+
+    <dimen name="text_button_medium">@dimen/_14ssp</dimen>
+    <dimen name="text_tab_medium">@dimen/_14ssp</dimen>
+
+    <dimen name="widget_normal">@dimen/_48sdp</dimen>
+
+
+</resources>
