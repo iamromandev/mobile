@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_headline">@dimen/_24ssp</dimen>
+    <dimen name="text_headline_collapsed">@dimen/_16ssp</dimen>
     <dimen name="text_input">@dimen/_16ssp</dimen>
     <dimen name="text_error">@dimen/_12ssp</dimen>
     <dimen name="text_label">@dimen/_12ssp</dimen>
@@ -12,6 +13,15 @@
     <dimen name="top_app_bar_margin">@dimen/_16sdp</dimen>
     <dimen name="top_app_bar_menu">@dimen/_24sdp</dimen>
     <dimen name="top_app_bar_menu_gap">@dimen/_24sdp</dimen>
+
+    <dimen name="top_app_bar_height_medium">@dimen/_48sdp</dimen>
+
+    <dimen name="top_search_bar_height">@dimen/_56sdp</dimen>
+    <dimen name="top_search_bar_height_collapsed">@dimen/_36sdp</dimen>
+    <dimen name="top_search_bar_menu">@dimen/_20sdp</dimen>
+    <dimen name="top_search_bar_menu_gap">@dimen/_20sdp</dimen>
+
+    <dimen name="tab_indicator_height">@dimen/_2sdp</dimen>
 
 
 </resources>

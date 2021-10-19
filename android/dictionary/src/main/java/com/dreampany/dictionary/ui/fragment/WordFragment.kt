@@ -3,7 +3,11 @@ package com.dreampany.dictionary.ui.fragment
 import android.os.Bundle
 import android.text.Editable
 import android.view.MotionEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dreampany.common.data.model.Response
 import com.dreampany.common.misc.exts.*
@@ -24,10 +28,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
-import android.view.inputmethod.EditorInfo
-
-import android.widget.TextView
-import android.widget.TextView.OnEditorActionListener
 
 
 /**
@@ -63,6 +63,7 @@ class WordFragment
         //if (inited) return true
         initPager()
 
+
         if (args.query.isNullOrEmpty()) {
             ex.postToUi(kotlinx.coroutines.Runnable {
                 binding.query.requestFocus()
@@ -71,6 +72,16 @@ class WordFragment
         } else {
             binding.query.setText(args.query)
         }
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+
+                }
+            }
+        vm.read("hello")
+        //requireActivity().getOnBackPressedDispatcher().addCallback(this, callback)
+        binding.buttonBack.setOnSafeClickListener { onBackPressed() }
 
         binding.query.setOnTouchListener { view, event ->
             if (event.action == MotionEvent.ACTION_UP) {
@@ -118,9 +129,14 @@ class WordFragment
             }).attach()
     }
 
+    private fun onBackPressed() {
+        findNavController().navigateUp()
+    }
+
     private fun onClickOnQuery() {
         ex.postToUi(kotlinx.coroutines.Runnable {
-            binding.layoutSearch.layoutParams.height = contextRef.dimension(R.dimen._50sdp).toInt()
+            binding.layoutSearch.setHeight(R.dimen.top_app_bar_height)
+            binding.query.setTextSize(R.dimen.text_headline)
             binding.query.text = binding.query.text
             binding.query.setSelection(binding.query.length())
         })
@@ -185,8 +201,8 @@ class WordFragment
     private fun processResult(result: WordItem?) {
         ex.postToUi(kotlinx.coroutines.Runnable {
             binding.search.hide()
-            binding.layoutSearch.layoutParams.height =
-                (contextRef.dimension(R.dimen._50sdp) / 1.5).toInt()
+            binding.layoutSearch.setHeight(R.dimen.top_search_bar_height_collapsed)
+            binding.query.setTextSize(R.dimen.text_headline_collapsed)
             binding.query.setFocusable(false)
             binding.query.setFocusableInTouchMode(false)
             binding.query.setFocusable(true)

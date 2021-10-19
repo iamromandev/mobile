@@ -81,7 +81,7 @@ class HomeFragment
         vm.subscribe(this, { this.processResponse(it) })
 
 
-
+        openWordUi()
         return true
     }
 

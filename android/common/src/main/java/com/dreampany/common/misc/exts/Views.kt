@@ -6,10 +6,12 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.TypedValue
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.*
@@ -35,7 +37,7 @@ import com.google.android.material.appbar.MaterialToolbar
 val View?.isNull: Boolean get() = this == null
 val View?.isNotNull: Boolean get() = this != null
 
-val View?.isVisible : Boolean
+val View?.isVisible: Boolean
     get() = this?.visibility == View.VISIBLE
 
 fun View?.visible() {
@@ -276,7 +278,10 @@ val List<TextView>.isAnyEmpty: Boolean
 val List<TextView>.isEmpty: Boolean
     get() = find { it.isEmpty.not() } == null
 
-fun <VH : RecyclerView.ViewHolder> RecyclerView.apply(adapter: RecyclerView.Adapter<VH>, reverse : Boolean = false) {
+fun <VH : RecyclerView.ViewHolder> RecyclerView.apply(
+    adapter: RecyclerView.Adapter<VH>,
+    reverse: Boolean = false
+) {
     this.layoutManager = LinearLayoutManager(context).apply { this.stackFromEnd = reverse }
     this.adapter = adapter
 }
@@ -286,7 +291,8 @@ fun MaterialToolbar.show() {
 }
 
 fun MaterialToolbar.hide() {
-    this.animate().translationY((-this.getBottom()).toFloat()).setInterpolator(AccelerateInterpolator()).start()
+    this.animate().translationY((-this.getBottom()).toFloat())
+        .setInterpolator(AccelerateInterpolator()).start()
 
 }
 
@@ -295,3 +301,16 @@ fun View.setMarginTop(marginTop: Int) {
     menuLayoutParams.setMargins(0, marginTop, 0, 0)
     this.layoutParams = menuLayoutParams
 }
+
+fun View.setWidth(@DimenRes widthRes: Int) {
+    layoutParams.width = resources.getDimension(widthRes).toInt()
+}
+
+fun View.setHeight(@DimenRes heightRes: Int) {
+    layoutParams.height = resources.getDimension(heightRes).toInt()
+}
+
+fun TextView.setTextSize(@DimenRes textSize: Int) {
+    setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(textSize))
+}
+

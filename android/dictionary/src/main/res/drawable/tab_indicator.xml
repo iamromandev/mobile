@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:gravity="center">
+    <item android:gravity="center_horizontal">
 <!--        <shape
             android:shape="oval">
             <solid
@@ -10,7 +10,6 @@
                 android:height="@dimen/tabSize"/>
         </shape>-->
         <shape android:shape="rectangle">
-            <solid android:color="@color/textColorPrimary"/>
             <corners
                 android:bottomLeftRadius="@dimen/_3sdp"
                 android:bottomRightRadius="@dimen/_3sdp"

@@ -15,7 +15,7 @@
             android:layout_marginStart="@dimen/top_app_bar_margin"
             android:layout_marginEnd="@dimen/top_app_bar_margin"
             android:gravity="center_vertical"
-            android:minHeight="@dimen/top_app_bar_height"
+            android:minHeight="@dimen/top_app_bar_height_medium"
             android:orientation="horizontal">
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -40,89 +40,89 @@
             android:id="@+id/layout_word"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_4sdp"
-            auto:cardCornerRadius="@dimen/_2sdp"
-            auto:cardElevation="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            auto:cardCornerRadius="@dimen/_4sdp"
+            auto:cardElevation="@dimen/_4sdp"
             auto:cardPreventCornerOverlap="false">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/layout_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/top_app_bar_margin"
                 android:layout_marginEnd="@dimen/top_app_bar_margin"
-                android:minHeight="@dimen/top_app_bar_height">
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/top_app_bar_height"
+                android:orientation="horizontal">
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/search"
-                    android:layout_width="@dimen/top_app_bar_menu"
-                    android:layout_height="@dimen/top_app_bar_menu"
-                    android:adjustViewBounds="true"
-                    android:cropToPadding="true"
-                    android:visibility="gone"
-                    auto:actualImageScaleType="centerCrop"
-                    auto:failureImage="@drawable/ic_baseline_search_24"
-                    auto:failureImageScaleType="centerInside"
-                    auto:layout_constraintBottom_toBottomOf="parent"
-                    auto:layout_constraintEnd_toEndOf="parent"
-                    auto:layout_constraintTop_toTopOf="parent"
-                    auto:placeholderImage="@drawable/ic_baseline_search_24"
-                    auto:placeholderImageScaleType="centerCrop"
-                    auto:roundAsCircle="true" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/query"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="Enter word"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_headline"
+                    auto:layout_constraintTop_toTopOf="parent" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/clear"
-                    android:layout_width="@dimen/top_app_bar_menu"
-                    android:layout_height="@dimen/top_app_bar_menu"
-                    android:layout_marginEnd="@dimen/top_app_bar_menu_gap"
+                    android:layout_width="@dimen/top_search_bar_menu"
+                    android:layout_height="@dimen/top_search_bar_menu"
+                    android:layout_marginStart="@dimen/top_search_bar_menu_gap"
                     android:adjustViewBounds="true"
                     android:cropToPadding="true"
                     android:visibility="gone"
                     auto:actualImageScaleType="centerCrop"
                     auto:failureImage="@drawable/ic_baseline_clear_24"
                     auto:failureImageScaleType="centerInside"
-                    auto:layout_constraintBottom_toBottomOf="parent"
-                    auto:layout_constraintEnd_toStartOf="@id/search"
-                    auto:layout_constraintTop_toTopOf="parent"
                     auto:placeholderImage="@drawable/ic_baseline_clear_24"
                     auto:placeholderImageScaleType="centerCrop"
                     auto:roundAsCircle="true" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/query"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="Enter word"
-                    android:imeOptions="actionSearch"
-                    android:maxLines="1"
-                    android:inputType="text"
-                    android:textSize="@dimen/text_headline"
-                    auto:layout_constraintBottom_toBottomOf="parent"
-                    auto:layout_constraintEnd_toStartOf="@id/clear"
-                    auto:layout_constraintStart_toStartOf="parent"
-                    auto:layout_constraintTop_toTopOf="parent" />
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/search"
+                    android:layout_width="@dimen/top_search_bar_menu"
+                    android:layout_height="@dimen/top_search_bar_menu"
+                    android:layout_marginStart="@dimen/top_search_bar_menu_gap"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:visibility="gone"
+                    auto:actualImageScaleType="centerCrop"
+                    auto:failureImage="@drawable/ic_baseline_search_24"
+                    auto:failureImageScaleType="centerInside"
+                    auto:placeholderImage="@drawable/ic_baseline_search_24"
+                    auto:placeholderImageScaleType="centerCrop"
+                    auto:roundAsCircle="true" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            auto:tabGravity="fill"
+            android:background="@null"
+            android:layout_marginStart="@dimen/top_app_bar_margin"
+            android:layout_marginEnd="@dimen/top_app_bar_margin"
             auto:tabIndicator="@drawable/tab_indicator"
-            auto:tabIndicatorColor="@color/textColorPrimary"
-            auto:tabIndicatorHeight="@dimen/tabSize"
+            auto:tabIndicatorHeight="@dimen/tab_indicator_height"
             auto:tabMode="scrollable"
-            auto:tabSelectedTextColor="@color/textColorPrimary"
-            auto:tabTextAppearance="@style/TabTextLight" />
+            auto:tabTextAppearance="@style/TextAppearance.Tab" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="@dimen/top_app_bar_margin"
+            android:layout_marginEnd="@dimen/top_app_bar_margin"
             android:layout_weight="1"
             android:saveEnabled="false" />
 
