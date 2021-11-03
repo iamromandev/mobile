@@ -17,11 +17,8 @@ import com.dreampany.hi.misc.constant.Constants
 class InTextMessageItem(override var input: Message) : MessageItem<InTextMessageItemBinding>(input) {
 
     override fun hashCode(): Int = input.hashCode()
-
     override fun equals(other: Any?): Boolean = input.equals(other)
-
     override var identifier: Long = hashCode().toLong()
-
     override val type: Int
         get() = R.id.adapter_in_text_message_item_id
 

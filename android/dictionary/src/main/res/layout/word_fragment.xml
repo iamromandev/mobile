@@ -110,9 +110,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:layout_marginStart="@dimen/top_app_bar_margin"
-            android:layout_marginEnd="@dimen/top_app_bar_margin"
-            auto:tabIndicator="@drawable/tab_indicator"
             auto:tabIndicatorHeight="@dimen/tab_indicator_height"
             auto:tabMode="scrollable"
             auto:tabTextAppearance="@style/TextAppearance.Tab" />
@@ -121,8 +118,6 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/top_app_bar_margin"
-            android:layout_marginEnd="@dimen/top_app_bar_margin"
             android:layout_weight="1"
             android:saveEnabled="false" />
 

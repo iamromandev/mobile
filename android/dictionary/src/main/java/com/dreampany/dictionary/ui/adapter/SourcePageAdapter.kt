@@ -16,7 +16,7 @@ import com.dreampany.dictionary.ui.model.SourcePageItem
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
-class SourcePageAdapter (fragment: Fragment) : BasePagerAdapter<Fragment>(fragment) {
+class SourcePageAdapter(fragment: Fragment) : BasePagerAdapter<Fragment>(fragment) {
     private val pages = arrayListOf<SourcePageItem>()
 
     fun addItems(items: List<SourcePageItem>) {
@@ -25,11 +25,12 @@ class SourcePageAdapter (fragment: Fragment) : BasePagerAdapter<Fragment>(fragme
         items.forEach {
             pages.add(it)
             val task = UiTask(
-                Type.USER,
-                Subtype.DEFAULT,
-                State.DEFAULT,
-                Action.DEFAULT,
-                it.word
+                type = Type.USER,
+                subtype = Subtype.DEFAULT,
+                state = State.DEFAULT,
+                action = Action.DEFAULT,
+                input = it.word,
+                extra = it.source.source
             )
             addItem(
                 com.dreampany.common.misc.exts.createFragment(

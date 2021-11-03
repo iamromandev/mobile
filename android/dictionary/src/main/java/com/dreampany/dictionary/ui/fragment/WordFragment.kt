@@ -28,6 +28,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
+import android.view.Gravity
+
+import com.google.android.material.tabs.TabLayout
+
+
+
 
 
 /**
@@ -62,7 +68,6 @@ class WordFragment
     private fun initUi(state: Bundle?): Boolean {
         //if (inited) return true
         initPager()
-
 
         if (args.query.isNullOrEmpty()) {
             ex.postToUi(kotlinx.coroutines.Runnable {
@@ -212,6 +217,11 @@ class WordFragment
         if (result != null) {
             if (!pageAdapter.isEmpty) pageAdapter.clear()
             pageAdapter.addItems(result.pages)
+
+            for (i in 0 until binding.tabs.getTabCount()) {
+                val tab: TabLayout.Tab = binding.tabs.getTabAt(i) ?: continue
+                //tab.view.gravity = Gravity.START or Gravity.CENTER_VERTICAL
+            }
         }
     }
 

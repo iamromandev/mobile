@@ -10,5 +10,7 @@ import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
  * ifte.net@gmail.com
  * Last modified $file.lastModified
  */
-abstract class MessageItem<B>(open var input: Message) :
-    ModelAbstractBindingItem<Message, B>(input) where B : ViewDataBinding
+abstract class MessageItem<B>
+constructor(
+    open var input: Message
+) : ModelAbstractBindingItem<Message, B>(input) where B : ViewDataBinding

@@ -81,6 +81,7 @@ class HomeFragment
         vm.subscribe(this, { this.processResponse(it) })
 
 
+        // TODO will be removed in future
         openWordUi()
         return true
     }

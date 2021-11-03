@@ -5,19 +5,11 @@
     android:keepScreenOn="true"
     tools:context=".ui.fragment.SourcePageFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            auto:layout_constraintTop_toTopOf="parent"
-            auto:layout_constraintBottom_toBottomOf="parent"
-            auto:layout_constraintStart_toStartOf="parent"
-            auto:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:text="heelo kitt"
-            android:layout_height="wrap_content"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        tools:itemCount="10" />
 
 </layout>
