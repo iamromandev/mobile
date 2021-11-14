@@ -69,4 +69,6 @@ data class Word(
     override fun toString(): String = "Word: [id:$id] [word:$word]"
 
     fun findPronunciation(source: String): Pronunciation? = pronunciations.find { it.source.source == source }
+
+    fun findDefinitions(source: String): List<Definition> = definitions.filter { it.source.source == source }
 }
