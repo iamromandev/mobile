@@ -37,7 +37,7 @@ class WordItem(val input: Word) :
     val sources : List<Source>
         get() {
             val output = mutableSetOf<Source>()
-            input.pronunciations.forEach { output.add(it.source) }
+            //input.pronunciations.forEach { output.add(it.source) }
             input.definitions.forEach { output.add(it.source) }
             return output.toMutableList()
         }

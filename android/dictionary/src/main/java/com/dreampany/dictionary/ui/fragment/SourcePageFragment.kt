@@ -14,7 +14,7 @@ import com.dreampany.dictionary.data.model.Word
 import com.dreampany.dictionary.databinding.SourcePageFragmentBinding
 import com.dreampany.dictionary.ui.adapter.WordPartAdapter
 import com.dreampany.dictionary.ui.model.PronunciationItem
-import com.dreampany.dictionary.ui.model.SourceDefinitionsItem
+import com.dreampany.dictionary.ui.model.DefinitionsItem
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -55,10 +55,7 @@ class SourcePageFragment
         //if (inited) return true
 
         adapter = WordPartAdapter()
-        adapter.initRecycler(
-            state,
-            binding.recycler
-        )
+        adapter.initRecycler(state, binding.recycler)
 
         val pronunciation = word.findPronunciation(source)
         if (pronunciation != null) {
@@ -67,7 +64,7 @@ class SourcePageFragment
 
         val definitions = word.findDefinitions(source)
         if (definitions.isNotEmpty()) {
-            adapter.addItem(binding.recycler, SourceDefinitionsItem(definitions.toString))
+            adapter.addItem(binding.recycler, DefinitionsItem(definitions.toString))
         }
 
         return true
@@ -76,6 +73,6 @@ class SourcePageFragment
     private val List<Definition>.toString: String
         get() =
             this.map { "${it.partOfSpeech.partOfSpeech} . ${it.definition}" }
-                .joinToString(separator = "<br/>")
+                .joinToString(separator = "<br/><br/>")
 
 }
