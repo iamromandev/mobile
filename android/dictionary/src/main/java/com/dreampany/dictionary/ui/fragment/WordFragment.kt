@@ -84,7 +84,7 @@ class WordFragment
 
                 }
             }
-        vm.read("hello")
+        vm.read("like")
         //requireActivity().getOnBackPressedDispatcher().addCallback(this, callback)
         binding.buttonBack.setOnSafeClickListener { onBackPressed() }
 

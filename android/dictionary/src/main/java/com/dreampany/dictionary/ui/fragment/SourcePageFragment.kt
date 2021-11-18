@@ -10,11 +10,12 @@ import com.dreampany.dictionary.data.enums.State
 import com.dreampany.dictionary.data.enums.Subtype
 import com.dreampany.dictionary.data.enums.Type
 import com.dreampany.dictionary.data.model.Definition
+import com.dreampany.dictionary.data.model.Example
 import com.dreampany.dictionary.data.model.Word
 import com.dreampany.dictionary.databinding.SourcePageFragmentBinding
 import com.dreampany.dictionary.ui.adapter.WordPartAdapter
-import com.dreampany.dictionary.ui.model.PronunciationItem
 import com.dreampany.dictionary.ui.model.DefinitionsItem
+import com.dreampany.dictionary.ui.model.PronunciationItem
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -64,15 +65,28 @@ class SourcePageFragment
 
         val definitions = word.findDefinitions(source)
         if (definitions.isNotEmpty()) {
-            adapter.addItem(binding.recycler, DefinitionsItem(definitions.toString))
+            adapter.addItem(binding.recycler, DefinitionsItem(definitions.toDefinitionsString))
         }
 
         return true
     }
 
-    private val List<Definition>.toString: String
-        get() =
-            this.map { "${it.partOfSpeech.partOfSpeech} . ${it.definition}" }
+    private val List<Definition>.toDefinitionsString: String
+        get() {
+            var index = 0
+            return this.map { it->
+                val exampleBreak = if (it.examples.isEmpty()) "" else "<br/>"
+                "${++index}. ${it.partOfSpeech.partOfSpeech} - ${it.definition} ${exampleBreak}${it.examples.toExamplesString}"
+            }
                 .joinToString(separator = "<br/><br/>")
+        }
+
+
+    private val List<Example>.toExamplesString: String
+        get() {
+            var index = 0
+            return this.map { "Ex${++index} - ${it.example}" }
+                .joinToString(separator = "<br/>")
+        }
 
 }
