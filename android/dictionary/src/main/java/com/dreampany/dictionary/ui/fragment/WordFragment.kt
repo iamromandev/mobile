@@ -19,21 +19,19 @@ import com.dreampany.dictionary.data.enums.Action
 import com.dreampany.dictionary.data.enums.State
 import com.dreampany.dictionary.data.enums.Subtype
 import com.dreampany.dictionary.data.enums.Type
+import com.dreampany.dictionary.data.model.Relation
+import com.dreampany.dictionary.data.model.RelationType
+import com.dreampany.dictionary.data.model.Word
 import com.dreampany.dictionary.databinding.WordFragmentBinding
 import com.dreampany.dictionary.ui.adapter.SourcePageAdapter
 import com.dreampany.dictionary.ui.model.SourcePageItem
 import com.dreampany.dictionary.ui.model.WordItem
 import com.dreampany.dictionary.ui.vm.WordViewModel
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
-import android.view.Gravity
-
-import com.google.android.material.tabs.TabLayout
-
-
-
 
 
 /**
@@ -218,6 +216,7 @@ class WordFragment
             if (!pageAdapter.isEmpty) pageAdapter.clear()
             pageAdapter.addItems(result.pages)
 
+            binding.relations.text = result.input.toRelationsString.html
             for (i in 0 until binding.tabs.getTabCount()) {
                 val tab: TabLayout.Tab = binding.tabs.getTabAt(i) ?: continue
                 //tab.view.gravity = Gravity.START or Gravity.CENTER_VERTICAL
@@ -233,4 +232,20 @@ class WordFragment
             }
             return pages
         }
+
+    private val Word.toRelationsString: String
+        get() {
+            return this.relations.map { it.toRelationsString(this) }
+                .joinToString(separator = "<br/><br/>")
+        }
+
+    private fun Map.Entry<RelationType, List<Relation>>.toRelationsString(word: Word): String {
+        return "${key.relationType} - ${
+            value.map { it.findRelation(word) }.joinToString(separator = ", ")
+        }"
+    }
+
+    private fun Relation.findRelation(word: Word): String {
+        return if (leftWordId == word.id) rightWord else leftWord
+    }
 }
