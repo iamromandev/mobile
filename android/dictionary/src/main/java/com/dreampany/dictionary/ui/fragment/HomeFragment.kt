@@ -88,6 +88,7 @@ class HomeFragment
 
     private fun openWordUi() {
         val action = HomeFragmentDirections.actionHomeToWord()
+        action.query = "good"
         findNavController().navigate(action)
     }
 

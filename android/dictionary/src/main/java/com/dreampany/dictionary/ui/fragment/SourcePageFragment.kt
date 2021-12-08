@@ -74,7 +74,7 @@ class SourcePageFragment
     private val List<Definition>.toDefinitionsString: String
         get() {
             var index = 0
-            return this.map { it->
+            return this.map {
                 val exampleBreak = if (it.examples.isEmpty()) "" else "<br/>"
                 "${++index}. ${it.partOfSpeech.partOfSpeech} - ${it.definition} ${exampleBreak}${it.examples.toExamplesString}"
             }

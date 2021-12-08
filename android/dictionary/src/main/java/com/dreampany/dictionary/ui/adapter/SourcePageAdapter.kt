@@ -25,7 +25,7 @@ class SourcePageAdapter(fragment: Fragment) : BasePagerAdapter<Fragment>(fragmen
         items.forEach {
             pages.add(it)
             val task = UiTask(
-                type = Type.USER,
+                type = Type.WORD,
                 subtype = Subtype.DEFAULT,
                 state = State.DEFAULT,
                 action = Action.DEFAULT,

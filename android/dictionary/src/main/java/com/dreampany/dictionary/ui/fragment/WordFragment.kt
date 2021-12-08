@@ -74,7 +74,10 @@ class WordFragment
             })
         } else {
             binding.query.setText(args.query)
+            updateQueryUi(args.query.toString())
         }
+
+
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
