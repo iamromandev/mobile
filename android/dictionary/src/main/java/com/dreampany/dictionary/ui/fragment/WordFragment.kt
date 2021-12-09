@@ -67,17 +67,17 @@ class WordFragment
         //if (inited) return true
         initPager()
 
-        if (args.query.isNullOrEmpty()) {
+        val query = args.query.trimValue
+        if (query.isEmpty()) {
             ex.postToUi(kotlinx.coroutines.Runnable {
                 binding.query.requestFocus()
                 showKeyboard()
             })
         } else {
-            binding.query.setText(args.query)
-            updateQueryUi(args.query.toString())
+            binding.query.setText(query)
+            updateQueryUi(query)
+            vm.read(query)
         }
-
-
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
@@ -85,7 +85,6 @@ class WordFragment
 
                 }
             }
-        vm.read("like")
         //requireActivity().getOnBackPressedDispatcher().addCallback(this, callback)
         binding.buttonBack.setOnSafeClickListener { onBackPressed() }
 

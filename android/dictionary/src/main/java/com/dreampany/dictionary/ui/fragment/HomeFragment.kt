@@ -82,7 +82,7 @@ class HomeFragment
 
 
         // TODO will be removed in future
-        openWordUi()
+        //openWordUi()
         return true
     }
 
