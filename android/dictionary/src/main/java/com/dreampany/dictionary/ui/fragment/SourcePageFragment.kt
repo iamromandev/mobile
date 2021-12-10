@@ -1,7 +1,9 @@
 package com.dreampany.dictionary.ui.fragment
 
 import android.os.Bundle
+import android.view.View
 import com.dreampany.common.misc.exts.task
+import com.dreampany.common.misc.func.TtsService
 import com.dreampany.common.ui.fragment.BaseFragment
 import com.dreampany.common.ui.model.UiTask
 import com.dreampany.dictionary.R
@@ -16,6 +18,7 @@ import com.dreampany.dictionary.databinding.SourcePageFragmentBinding
 import com.dreampany.dictionary.ui.adapter.WordPartAdapter
 import com.dreampany.dictionary.ui.model.DefinitionsItem
 import com.dreampany.dictionary.ui.model.PronunciationItem
+import com.dreampany.dictionary.ui.model.WordPartItem
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,6 +36,9 @@ class SourcePageFragment
 ) : BaseFragment<SourcePageFragmentBinding>() {
 
     override val layoutRes: Int = R.layout.source_page_fragment
+
+    @Inject
+    internal lateinit var tts : TtsService
 
     @Transient
     private var inited = false
@@ -55,7 +61,7 @@ class SourcePageFragment
     private fun initUi(state: Bundle?): Boolean {
         //if (inited) return true
 
-        adapter = WordPartAdapter()
+        adapter = WordPartAdapter(clickListener = this::onItemPressed)
         adapter.initRecycler(state, binding.recycler)
 
         val pronunciation = word.findPronunciation(source)
@@ -70,6 +76,15 @@ class SourcePageFragment
 
         return true
     }
+
+    private fun onItemPressed(view: View, item: WordPartItem<*, *>) {
+        if (item is PronunciationItem) {
+            tts.speak(item.input.pronunciation)
+        }
+        //Timber.v(input.input.name)
+        //openMessageUi(input.input)
+    }
+
 
     private val List<Definition>.toDefinitionsString: String
         get() {
