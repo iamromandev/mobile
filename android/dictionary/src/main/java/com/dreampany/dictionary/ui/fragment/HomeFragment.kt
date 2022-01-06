@@ -63,7 +63,7 @@ class HomeFragment
                 val spokenText =
                     result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                         ?.firstOrNull() ?: return@registerForActivityResult
-                vm.read(spokenText)
+                openWordUi(spokenText)
             }
         }
 
@@ -86,9 +86,9 @@ class HomeFragment
         return true
     }
 
-    private fun openWordUi() {
+    private fun openWordUi(query : String? = "good") {
         val action = HomeFragmentDirections.actionHomeToWord()
-        action.query = "good"
+        action.query = query
         findNavController().navigate(action)
     }
 
