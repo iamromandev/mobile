@@ -75,12 +75,12 @@ dependencies {
     /* support */
     api "androidx.multidex:multidex:$multidex_version"
     api 'androidx.core:core-ktx:1.7.0'
-    api 'androidx.core:core-role:1.1.0-alpha01'
+    api 'androidx.core:core-role:1.1.0-rc01'
     api 'androidx.core:core-animation:1.0.0-alpha02'
     api 'androidx.collection:collection-ktx:1.2.0'
     api 'androidx.activity:activity-ktx:1.4.0'
-    api 'androidx.appcompat:appcompat:1.4.0-rc01'
-    api 'androidx.appcompat:appcompat-resources:1.4.0-rc01'
+    api 'androidx.appcompat:appcompat:1.4.0'
+    api 'androidx.appcompat:appcompat-resources:1.4.0'
     api 'androidx.preference:preference-ktx:1.1.1'
     api 'androidx.viewpager2:viewpager2:1.0.0'
     api 'androidx.mediarouter:mediarouter:1.2.5'
@@ -92,7 +92,7 @@ dependencies {
     api "androidx.navigation:navigation-fragment-ktx:$nav_version"
     api "androidx.navigation:navigation-ui-ktx:$nav_version"
     api "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
-    api 'androidx.navigation:navigation-compose:2.4.0-beta02'
+    api 'androidx.navigation:navigation-compose:2.4.0-rc01'
 
     api 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
